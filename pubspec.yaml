@@ -1,0 +1,76 @@
+name: qra
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_remix: ^0.0.3
+  lottie: ^1.2.1
+  cupertino_icons: ^1.0.2
+  jiffy: ^5.0.0
+  flutter_platform_widgets: ^1.20.0
+  flutter_feather_icons: ^2.0.0+1
+  freezed: ^0.14.1+1
+  get: ^4.6.5
+  dartz: ^0.10.0
+  shared_preferences: ^2.0.8
+  analyzer: ^1.0.0
+  qr_flutter: ^4.0.0
+  mobile_scanner: ^1.1.2
+
+  # State Management
+  hooks_riverpod: ^1.0.0
+
+  #UI
+  slide_to_confirm: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # No version number means the latest version
+  build_runner: ^2.1.10
+  json_serializable: ^4.1.4
+  flutter_lints: ^1.0.0
+  flutter_native_splash: ^2.1.1
+  mocktail:
+  http:
+
+#dependency_overrides:
+#  analyzer: ^4.1.0
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+flutter:
+
+  uses-material-design: true
+
+
+  assets:
+    - assets/images/
+    - assets/lottie/
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
