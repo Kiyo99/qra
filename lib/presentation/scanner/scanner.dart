@@ -19,7 +19,7 @@ class QrScanner extends HookConsumerWidget {
             final String code = barcode.rawValue!;
             debugPrint('Barcode found! $code');
             if (code ==
-                "Name: Kio Godsfavour, ID: 218CS0104885, Eligible: True") {
+                "Name: Kaleb Ackom, ID: 218CS0104885, Eligible: True") {
               Get.back();
               showDialog(
                   context: context,
@@ -38,3 +38,5 @@ class QrScanner extends HookConsumerWidget {
         });
   }
 }
+
+//todo; find a way to change the string to a map

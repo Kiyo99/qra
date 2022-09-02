@@ -22,12 +22,28 @@ dependencies:
   get: ^4.6.5
   dartz: ^0.10.0
   shared_preferences: ^2.0.8
-  analyzer: ^1.0.0
+
+  #Local auth
+  local_auth: ^1.1.6
+
+  #firebase
+  firebase_auth: ^3.3.5
+  firebase_core: ^1.11.0
+  cloud_firestore: ^3.1.6
+
+  #google font
+  google_fonts: ^3.0.1
+
+  #device preview
+  device_preview: ^1.0.0
+
+  #QR
   qr_flutter: ^4.0.0
   mobile_scanner: ^1.1.2
 
   # State Management
   hooks_riverpod: ^1.0.0
+  flutter_hooks: ^0.18.0
 
   #UI
   slide_to_confirm: ^1.1.0
@@ -37,14 +53,19 @@ dev_dependencies:
     sdk: flutter
   # No version number means the latest version
   build_runner: ^2.1.10
-  json_serializable: ^4.1.4
   flutter_lints: ^1.0.0
   flutter_native_splash: ^2.1.1
-  mocktail:
   http:
+  #generating icons
+  flutter_launcher_icons: "^0.10.0"
 
 #dependency_overrides:
 #  analyzer: ^4.1.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/qra_logo.jpg"
 
 flutter_native_splash:
   android: true
