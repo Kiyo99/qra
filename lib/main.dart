@@ -63,5 +63,12 @@ class MyApp extends HookConsumerWidget {
   }
 }
 
-//todo: icons, validation, registeration, firestore, cache user with shared preferences
-//todo: catch exception for login and registeration
+//todo: icons, validation,
+//todo: catch exception for login and registration
+//todo: generate list for UI
+//todo: figure out backend for scanning
+//todo: Lecturer should be able to select which course he wants to mark attendance for
+//todo: lecturer is greeted with a list of available courses for that day (Use current date as query???)
+//todo: When lecturer selects a choice, then the app makes a call to firebase to fetch that document. As a list most likely
+//todo: List tile should have a checkbox.
+//todo: List details should contain Name of student, ID, Level,

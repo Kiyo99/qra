@@ -5,6 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/attendance/attendance_page.dart';
+import 'package:qra/data/lesson.dart';
 import 'package:qra/presentation/generate/viewQr.dart';
 import 'package:qra/presentation/scanner/scanner.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
@@ -16,6 +18,60 @@ class QrGenerator extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    List getLessons() {
+      return [
+        Lesson(
+            title: "Godsfavour Ngo Kio",
+            level: "218CS01004885",
+            indicatorValue: 1,
+            price: 20,
+            content:
+            "Godsfavour Ngo Kio is from the Computer Science department. In level 300 having courses in Cos3, Cose33 this semester."),
+        Lesson(
+            title: "Observation at Junctions",
+            level: "Beginner",
+            indicatorValue: 0.33,
+            price: 50,
+            content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        Lesson(
+            title: "Reverse parallel Parking",
+            level: "Intermidiate",
+            indicatorValue: 0.66,
+            price: 30,
+            content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        Lesson(
+            title: "Reversing around the corner",
+            level: "Intermidiate",
+            indicatorValue: 0.66,
+            price: 30,
+            content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        Lesson(
+            title: "Incorrect Use of Signal",
+            level: "Advanced",
+            indicatorValue: 1.0,
+            price: 50,
+            content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        Lesson(
+            title: "Engine Challenges",
+            level: "Advanced",
+            indicatorValue: 1.0,
+            price: 50,
+            content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        Lesson(
+            title: "Self Driving Car",
+            level: "Advanced",
+            indicatorValue: 1.0,
+            price: 50,
+            content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.  ")
+      ];
+    }
+    List lesson = getLessons();
     final _fireStore = FirebaseFirestore.instance;
     final auth = FirebaseAuth.instance;
     User? currentUser = auth.currentUser;
@@ -103,7 +159,8 @@ class QrGenerator extends HookConsumerWidget {
                             fontWeight: FontWeight.w700,
                             fontSize: 15),
                         onConfirmation: () {
-                          Get.to(const QrScanner());
+                          // Get.to(const QrScanner());
+                          Get.to(AttendancePage(title: "COSC233", lessons: lesson,));
                           // ref.read(AppOrderViewModel.provider).generateOTP(
                           //     currentOrder['id'].toString(), 'true', 'Pick up');
                           // ref.read(AppOrderViewModel.Provider).getTripStage('PICKUP_CONFIRMED');

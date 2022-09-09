@@ -11,8 +11,9 @@ class ViewQr extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = useState(Get.arguments);
-    print("Incoming data: ${data.value}");
+    final args = useState(Get.arguments);
+    final data = Map<String, dynamic>.from(args.value);
+    print("Incoming data: ${data}");
     return Scaffold(
       backgroundColor: Colors.blueGrey.shade900,
       body: SafeArea(
@@ -29,7 +30,7 @@ class ViewQr extends HookConsumerWidget {
               child: QrImage(
                 foregroundColor: Colors.blue.shade900,
                 data:
-                    "Name: ${data.value['Full name']}, ID: ${data.value['ID']}, Eligible: ${data.value['isEligible']}",
+                    "{'Name': '${data['Full name']}', 'ID': '${data['ID']}', 'Eligible': '${data['isEligible']}'}",
               ),
             ),
           ),

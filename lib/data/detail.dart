@@ -25,13 +25,13 @@ class DetailPage extends StatelessWidget {
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const SizedBox(height: 120.0),
+        const SizedBox(height: 10.0),
         const Icon(
           Icons.directions_car,
           color: Colors.white,
           size: 40.0,
         ),
-        Container(
+        const SizedBox(
           width: 90.0,
           child: Divider(color: Colors.green),
         ),
@@ -46,7 +46,7 @@ class DetailPage extends StatelessWidget {
           children: <Widget>[
             Expanded(flex: 1, child: levelIndicator),
             Expanded(
-                flex: 6,
+                flex: 3,
                 child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
@@ -64,9 +64,9 @@ class DetailPage extends StatelessWidget {
         Container(
             padding: const EdgeInsets.only(left: 10.0),
             height: MediaQuery.of(context).size.height * 0.5,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("drive-steering-wheel.jpg"),
+                image: AssetImage("assets/images/qra_logo.jpg"),
                 fit: BoxFit.cover,
               ),
             )),
@@ -103,7 +103,7 @@ class DetailPage extends StatelessWidget {
           onPressed: () => {},
           color: const Color.fromRGBO(58, 66, 86, 1.0),
           child:
-              const Text("TAKE THIS LESSON", style: const TextStyle(color: Colors.white)),
+              const Text("TAKE THIS LESSON", style: TextStyle(color: Colors.white)),
         ));
     final bottomContent = Container(
       width: MediaQuery.of(context).size.width,
