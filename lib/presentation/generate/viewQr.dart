@@ -30,7 +30,7 @@ class ViewQr extends HookConsumerWidget {
               child: QrImage(
                 foregroundColor: Colors.blue.shade900,
                 data:
-                    "{'Name': '${data['Full name']}', 'ID': '${data['ID']}', 'Eligible': '${data['isEligible']}'}",
+                "{\n \"name\" : \"${data['Full name']}\",\n  \"iD\" : \"${data['ID']}\",\n \"eligible\" : \"${data['isEligible']}\"}",
               ),
             ),
           ),

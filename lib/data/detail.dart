@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qra/constants.dart';
 import 'package:qra/data/lesson.dart';
 
 class DetailPage extends StatelessWidget {
@@ -74,7 +75,8 @@ class DetailPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.5,
           padding: const EdgeInsets.all(40.0),
           width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
+          decoration:
+              const BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
           child: Center(
             child: topContentText,
           ),
@@ -96,15 +98,45 @@ class DetailPage extends StatelessWidget {
       lesson.content,
       style: const TextStyle(fontSize: 18.0),
     );
+    // final readButton = Container(
+    //     padding: const EdgeInsets.symmetric(vertical: 16.0),
+    //     decoration: BoxDecoration(
+    //       borderRadius: BorderRadius.circular(20),
+    //     ),
+    //     width: MediaQuery.of(context).size.width,
+    //     child: RaisedButton(
+    //       onPressed: () => {},
+    //       color: const Color.fromRGBO(58, 66, 86, 1.0),
+    //       child: const Text("Mark this student",
+    //           style: TextStyle(color: Colors.white)),
+    //     ));
+
     final readButton = Container(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        width: MediaQuery.of(context).size.width,
-        child: RaisedButton(
-          onPressed: () => {},
-          color: const Color.fromRGBO(58, 66, 86, 1.0),
-          child:
-              const Text("TAKE THIS LESSON", style: TextStyle(color: Colors.white)),
-        ));
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      width: MediaQuery.of(context).size.width,
+      child: GestureDetector(
+        onTap: (){
+          print("This was clicked");
+        },
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Constants.coolBlue,
+          ),
+          height: 60,
+          child: const Center(
+            child: Text(
+              "Mark this student",
+            ),
+          ),
+        ),
+      ),
+    );
+
     final bottomContent = Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(40.0),

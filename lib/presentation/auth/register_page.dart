@@ -5,6 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/attendance/attendance_page.dart';
+import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/generate/generator.dart';
 
@@ -29,6 +31,7 @@ class RegisterPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = useState(false);
     return Scaffold(
+      backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
             ? Padding(
                 padding: const EdgeInsets.all(10),
@@ -233,7 +236,7 @@ class RegisterPage extends HookConsumerWidget {
                                       _showToast(context, 'Failed to save');
                                       print('Faileddddddddd: $error');
                                     });
-                            Get.to(QrGenerator());
+                            Get.to(const AttendancePage(title: "QRA"));
                           }
                           print("objectsttttt: $user");
                         },
