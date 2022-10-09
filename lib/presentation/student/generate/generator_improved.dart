@@ -1,19 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qra/attendance/attendance_page.dart';
 import 'package:qra/constants.dart';
-import 'package:qra/data/lesson.dart';
-import 'package:qra/presentation/generate/viewQr.dart';
-import 'package:qra/presentation/scanner/scanner.dart';
+import 'package:qra/presentation/staff/scanner/scanner.dart';
+import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 class ImprovedQrGenerator extends HookConsumerWidget {
-  static const id = "generate";
+  static const id = "/generate";
 
   const ImprovedQrGenerator({Key? key}) : super(key: key);
 

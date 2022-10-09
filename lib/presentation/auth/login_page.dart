@@ -7,10 +7,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qra/attendance/attendance_page.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/register_page.dart';
-import 'package:qra/presentation/generate/generator.dart';
+import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 
 class LoginPage extends HookConsumerWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -21,10 +20,10 @@ class LoginPage extends HookConsumerWidget {
   final TextEditingController passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
   final store = FirebaseFirestore.instance;
-  final isLoading = useState(false);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isLoading = useState(false);
     return Scaffold(
         backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
@@ -112,7 +111,7 @@ class LoginPage extends HookConsumerWidget {
                                   contentPadding: EdgeInsets.all(10)));
                             } else {
                               print("Singrdddd: ${user.user}");
-                              Get.to(const AttendancePage(title: "Qra"));
+                              Get.to(const StaffPage(title: "Qra"));
                             }
                             // Map<String, dynamic> userDetail = {
                             //   "Full name": user.user.

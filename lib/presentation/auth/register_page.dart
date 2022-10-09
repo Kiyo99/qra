@@ -5,10 +5,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qra/attendance/attendance_page.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/login_page.dart';
-import 'package:qra/presentation/generate/generator.dart';
+import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 
 class RegisterPage extends HookConsumerWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -31,7 +30,7 @@ class RegisterPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = useState(false);
     return Scaffold(
-      backgroundColor: Constants.coolBlue,
+        backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
             ? Padding(
                 padding: const EdgeInsets.all(10),
@@ -225,10 +224,12 @@ class RegisterPage extends HookConsumerWidget {
                             db['Major'] = majorController.text;
                             db['isEligible'] = "false";
                             db['Phone number'] = numberController.text;
+                            //
+                            print("Iddddddd: ${db['ID'].toString()}");
 
                             _firestore
                                 .collection("Users")
-                                .doc(user.user!.email)
+                                .doc(db['ID'].toString())
                                 .set(db)
                                 .whenComplete(() {
                               _showToast(context, 'Successfully saved user');
@@ -236,7 +237,7 @@ class RegisterPage extends HookConsumerWidget {
                                       _showToast(context, 'Failed to save');
                                       print('Faileddddddddd: $error');
                                     });
-                            Get.to(const AttendancePage(title: "QRA"));
+                            Get.to(const StaffPage(title: "QRA"));
                           }
                           print("objectsttttt: $user");
                         },

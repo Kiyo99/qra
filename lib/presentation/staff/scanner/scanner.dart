@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qra/data/fb_model/fb_model.dart';
+import 'package:qra/data/fb_student_model/fb_student_model.dart';
 
 class QrScanner extends HookConsumerWidget {
   static const id = "scanner";
@@ -33,11 +33,12 @@ class QrScanner extends HookConsumerWidget {
             // final Map<String, dynamic> data = json.decode(code);
             // print("Dat is: $data");
 
-            final codd = FbModel.fromJson(json.decode(code));
+            final codd = FbStudentModel.fromJson(json.decode(code));
             debugPrint('Barcodeeee found! ${codd}');
             debugPrint('Nameee found! ${codd.name}');
             debugPrint('Idd found! ${codd.iD}');
             debugPrint('ELigible found! ${codd.eligible}');
+
 
             // final Map data = json.decode(json.encode(code));
             // debugPrint('Barddddddfffdddd! $data');
@@ -46,14 +47,14 @@ class QrScanner extends HookConsumerWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(title: Text("${codd.name} is Eligible to write this paper"));
+                    return AlertDialog(title: Text("${codd.name}is Eligible to write this paper"));
                   });
               //todo: Find a way to mark the attendance sheet from here
             } else {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(title: Text("${codd}"));
+                    return const AlertDialog(title: Text("Inavlid data coming to the examinationg hall"));
                   });
             }
           }
