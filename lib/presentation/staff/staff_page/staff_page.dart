@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:qra/presentation/staff/scanner/scanner_improved.dart';
 import 'package:qra/presentation/student/generate/generator_improved.dart';
 import 'package:qra/presentation/staff/teachers_page.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
@@ -70,22 +71,8 @@ class StaffPage extends HookWidget {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         const TeachersPage(),
-        const ImprovedQrGenerator(),
-        DefaultTabController(
-            length: 2,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const TabBar(
-                  tabs: [Tab(text: "Generate QR"), Tab(text: "Upload courses")],
-                ),
-                Expanded(
-                    child: TabBarView(children: [
-                  const ImprovedQrGenerator(),
-                  Container(color: Colors.blueAccent),
-                ]))
-              ],
-            ))
+        const ImprovedScanner(),
+        Container(),
       ],
     );
 
