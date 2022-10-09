@@ -16,6 +16,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
 
     var items = [
       'Update student information',
+      'About',
       'Log out',
     ];
     return Container(
