@@ -60,7 +60,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
                       final auth = FirebaseAuth.instance;
                       //
                       await auth.signOut();
-                      //todo: find a way to take the user back to the login page after this is done
+                      
                       // print(auth.currentUser);
                       Get.offAndToNamed(LoginPage.id);
                       // navigate(context);
@@ -74,6 +74,13 @@ class StudentOptionsScreen extends HookConsumerWidget {
                     items[index],
                     style: const TextStyle(fontSize: 14),
                   ),
+                  leading: items[index] == 'Update student information'
+                      ? const Icon(Icons.light_mode_outlined)
+                      : items[index] == 'Log out'
+                          ? const Icon(Icons.logout_outlined)
+                          : items[index] == 'About'
+                              ? const Icon(Icons.info_outline)
+                              : const Icon(Icons.title),
                 );
               },
             ),
