@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qra/data/fb_student_model/fb_student_model.dart';
+import 'package:qra/data/fb_student_model/student_model.dart';
+import 'package:qra/data/scanner/scanner_model.dart';
 
 class QrScanner extends HookConsumerWidget {
   static const id = "scanner";
@@ -33,7 +34,7 @@ class QrScanner extends HookConsumerWidget {
             // final Map<String, dynamic> data = json.decode(code);
             // print("Dat is: $data");
 
-            final codd = FbStudentModel.fromJson(json.decode(code));
+            final codd = ScannerModel.fromJson(json.decode(code));
             debugPrint('Barcodeeee found! ${codd}');
             debugPrint('Nameee found! ${codd.name}');
             debugPrint('Idd found! ${codd.iD}');

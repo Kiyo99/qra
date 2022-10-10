@@ -214,23 +214,23 @@ class RegisterPage extends HookConsumerWidget {
                             print("Registered");
 
                             Map<String, Object> db = {};
-                            db['First name'] = firstNameController.text;
-                            db['Last name'] = lastNameController.text;
-                            db['Full name'] =
+                            db['firstName'] = firstNameController.text;
+                            db['lastName'] = lastNameController.text;
+                            db['fullName'] =
                                 "${firstNameController.text} ${lastNameController.text}";
-                            db['Email'] = emailController.text;
-                            db['Gender'] = genderController.text;
-                            db['ID'] = iDController.text;
-                            db['Major'] = majorController.text;
+                            db['email'] = emailController.text;
+                            db['gender'] = genderController.text;
+                            db['iD'] = iDController.text;
+                            db['major'] = majorController.text;
                             db['isEligible'] = "false";
-                            db['Phone number'] = numberController.text;
-                            db['Status'] = "Student";
+                            db['phoneNumber'] = numberController.text;
+                            db['status'] = "Student";
                             //
                             print("Iddddddd: ${db['ID'].toString()}");
 
                             _firestore
                                 .collection("Users")
-                                .doc(db['ID'].toString())
+                                .doc(auth.currentUser!.email.toString())
                                 .set(db)
                                 .whenComplete(() {
                               _showToast(context, 'Successfully saved user');

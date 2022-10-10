@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
-import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
