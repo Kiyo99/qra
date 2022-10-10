@@ -224,6 +224,7 @@ class RegisterPage extends HookConsumerWidget {
                             db['Major'] = majorController.text;
                             db['isEligible'] = "false";
                             db['Phone number'] = numberController.text;
+                            db['Status'] =  "Student";
                             //
                             print("Iddddddd: ${db['ID'].toString()}");
 
