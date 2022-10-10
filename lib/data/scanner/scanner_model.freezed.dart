@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'fb_student_model.dart';
+part of 'scanner_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,59 +13,58 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-FbStudentModel _$FbStudentModelFromJson(Map<String, dynamic> json) {
-  return _FbStudentModel.fromJson(json);
+ScannerModel _$ScannerModelFromJson(Map<String, dynamic> json) {
+  return _ScannerModel.fromJson(json);
 }
 
 /// @nodoc
-class _$FbStudentModelTearOff {
-  const _$FbStudentModelTearOff();
+class _$ScannerModelTearOff {
+  const _$ScannerModelTearOff();
 
-  _FbStudentModel call(
+  _ScannerModel call(
       {required String name, required String iD, required String eligible}) {
-    return _FbStudentModel(
+    return _ScannerModel(
       name: name,
       iD: iD,
       eligible: eligible,
     );
   }
 
-  FbStudentModel fromJson(Map<String, Object> json) {
-    return FbStudentModel.fromJson(json);
+  ScannerModel fromJson(Map<String, Object> json) {
+    return ScannerModel.fromJson(json);
   }
 }
 
 /// @nodoc
-const $FbStudentModel = _$FbStudentModelTearOff();
+const $ScannerModel = _$ScannerModelTearOff();
 
 /// @nodoc
-mixin _$FbStudentModel {
+mixin _$ScannerModel {
   String get name => throw _privateConstructorUsedError;
   String get iD => throw _privateConstructorUsedError;
   String get eligible => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $FbStudentModelCopyWith<FbStudentModel> get copyWith =>
+  $ScannerModelCopyWith<ScannerModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FbStudentModelCopyWith<$Res> {
-  factory $FbStudentModelCopyWith(
-          FbStudentModel value, $Res Function(FbStudentModel) then) =
-      _$FbStudentModelCopyWithImpl<$Res>;
+abstract class $ScannerModelCopyWith<$Res> {
+  factory $ScannerModelCopyWith(
+          ScannerModel value, $Res Function(ScannerModel) then) =
+      _$ScannerModelCopyWithImpl<$Res>;
   $Res call({String name, String iD, String eligible});
 }
 
 /// @nodoc
-class _$FbStudentModelCopyWithImpl<$Res>
-    implements $FbStudentModelCopyWith<$Res> {
-  _$FbStudentModelCopyWithImpl(this._value, this._then);
+class _$ScannerModelCopyWithImpl<$Res> implements $ScannerModelCopyWith<$Res> {
+  _$ScannerModelCopyWithImpl(this._value, this._then);
 
-  final FbStudentModel _value;
+  final ScannerModel _value;
   // ignore: unused_field
-  final $Res Function(FbStudentModel) _then;
+  final $Res Function(ScannerModel) _then;
 
   @override
   $Res call({
@@ -91,25 +90,24 @@ class _$FbStudentModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$FbStudentModelCopyWith<$Res>
-    implements $FbStudentModelCopyWith<$Res> {
-  factory _$FbStudentModelCopyWith(
-          _FbStudentModel value, $Res Function(_FbStudentModel) then) =
-      __$FbStudentModelCopyWithImpl<$Res>;
+abstract class _$ScannerModelCopyWith<$Res>
+    implements $ScannerModelCopyWith<$Res> {
+  factory _$ScannerModelCopyWith(
+          _ScannerModel value, $Res Function(_ScannerModel) then) =
+      __$ScannerModelCopyWithImpl<$Res>;
   @override
   $Res call({String name, String iD, String eligible});
 }
 
 /// @nodoc
-class __$FbStudentModelCopyWithImpl<$Res>
-    extends _$FbStudentModelCopyWithImpl<$Res>
-    implements _$FbStudentModelCopyWith<$Res> {
-  __$FbStudentModelCopyWithImpl(
-      _FbStudentModel _value, $Res Function(_FbStudentModel) _then)
-      : super(_value, (v) => _then(v as _FbStudentModel));
+class __$ScannerModelCopyWithImpl<$Res> extends _$ScannerModelCopyWithImpl<$Res>
+    implements _$ScannerModelCopyWith<$Res> {
+  __$ScannerModelCopyWithImpl(
+      _ScannerModel _value, $Res Function(_ScannerModel) _then)
+      : super(_value, (v) => _then(v as _ScannerModel));
 
   @override
-  _FbStudentModel get _value => super._value as _FbStudentModel;
+  _ScannerModel get _value => super._value as _ScannerModel;
 
   @override
   $Res call({
@@ -117,7 +115,7 @@ class __$FbStudentModelCopyWithImpl<$Res>
     Object? iD = freezed,
     Object? eligible = freezed,
   }) {
-    return _then(_FbStudentModel(
+    return _then(_ScannerModel(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -136,13 +134,13 @@ class __$FbStudentModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_FbStudentModel extends _FbStudentModel {
-  _$_FbStudentModel(
+class _$_ScannerModel extends _ScannerModel {
+  _$_ScannerModel(
       {required this.name, required this.iD, required this.eligible})
       : super._();
 
-  factory _$_FbStudentModel.fromJson(Map<String, dynamic> json) =>
-      _$$_FbStudentModelFromJson(json);
+  factory _$_ScannerModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ScannerModelFromJson(json);
 
   @override
   final String name;
@@ -153,13 +151,13 @@ class _$_FbStudentModel extends _FbStudentModel {
 
   @override
   String toString() {
-    return 'FbStudentModel(name: $name, iD: $iD, eligible: $eligible)';
+    return 'ScannerModel(name: $name, iD: $iD, eligible: $eligible)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _FbStudentModel &&
+        (other is _ScannerModel &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.iD, iD) ||
@@ -178,24 +176,24 @@ class _$_FbStudentModel extends _FbStudentModel {
 
   @JsonKey(ignore: true)
   @override
-  _$FbStudentModelCopyWith<_FbStudentModel> get copyWith =>
-      __$FbStudentModelCopyWithImpl<_FbStudentModel>(this, _$identity);
+  _$ScannerModelCopyWith<_ScannerModel> get copyWith =>
+      __$ScannerModelCopyWithImpl<_ScannerModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FbStudentModelToJson(this);
+    return _$$_ScannerModelToJson(this);
   }
 }
 
-abstract class _FbStudentModel extends FbStudentModel {
-  factory _FbStudentModel(
+abstract class _ScannerModel extends ScannerModel {
+  factory _ScannerModel(
       {required String name,
       required String iD,
-      required String eligible}) = _$_FbStudentModel;
-  _FbStudentModel._() : super._();
+      required String eligible}) = _$_ScannerModel;
+  _ScannerModel._() : super._();
 
-  factory _FbStudentModel.fromJson(Map<String, dynamic> json) =
-      _$_FbStudentModel.fromJson;
+  factory _ScannerModel.fromJson(Map<String, dynamic> json) =
+      _$_ScannerModel.fromJson;
 
   @override
   String get name => throw _privateConstructorUsedError;
@@ -205,6 +203,6 @@ abstract class _FbStudentModel extends FbStudentModel {
   String get eligible => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$FbStudentModelCopyWith<_FbStudentModel> get copyWith =>
+  _$ScannerModelCopyWith<_ScannerModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

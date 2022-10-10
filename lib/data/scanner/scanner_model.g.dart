@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'fb_student_model.dart';
+part of 'scanner_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_FbStudentModel _$$_FbStudentModelFromJson(Map<String, dynamic> json) =>
-    _$_FbStudentModel(
+_$_ScannerModel _$$_ScannerModelFromJson(Map<String, dynamic> json) =>
+    _$_ScannerModel(
       name: json['name'] as String,
       iD: json['iD'] as String,
       eligible: json['eligible'] as String,
     );
 
-Map<String, dynamic> _$$_FbStudentModelToJson(_$_FbStudentModel instance) =>
+Map<String, dynamic> _$$_ScannerModelToJson(_$_ScannerModel instance) =>
     <String, dynamic>{
       'name': instance.name,
       'iD': instance.iD,

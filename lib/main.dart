@@ -7,8 +7,11 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
+import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
+import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
+import 'package:qra/presentation/student/courses/upload_course.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,22 +44,30 @@ class MyApp extends HookConsumerWidget {
     final auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
 
-    return GetMaterialApp(
-        // useInheritedMediaQuery: true,
-        // locale: DevicePreview.locale(context),
-        // builder: DevicePreview.appBuilder,
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
-        themeMode: ThemeMode.system,
-        title: 'QRA',
-        debugShowCheckedModeBanner: false,
-        routes: {
-          QrScanner.id: (context) => const QrScanner(),
-          LoginPage.id: (context) => LoginPage(),
-          RegisterPage.id: (context) => RegisterPage(),
-          ViewQr.id: (context) => ViewQr(),
-        },
-        home: user == null ? LoginPage() : const StaffPage(title: "QRA"));
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: GetMaterialApp(
+          // useInheritedMediaQuery: true,
+          // locale: DevicePreview.locale(context),
+          // builder: DevicePreview.appBuilder,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: ThemeMode.system,
+          title: 'QRA',
+          debugShowCheckedModeBanner: false,
+          routes: {
+            QrScanner.id: (context) => const QrScanner(),
+            LoginPage.id: (context) => LoginPage(),
+            UploadCourseScreen.id: (context) => UploadCourseScreen(),
+            ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
+            SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
+            RegisterPage.id: (context) => RegisterPage(),
+            ViewQr.id: (context) => ViewQr(),
+          },
+          home: user == null ? LoginPage() : const StaffPage(title: "QRA")),
+    );
   }
 }
 
@@ -73,3 +84,13 @@ class MyApp extends HookConsumerWidget {
 
 //todo: How you will automatically check the box is this. There wil be a stream that listens to this shit.
 // todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
+
+//todo live chat with vvu its
+//todo create a prompt when uploading a course similar to inventory
+
+//todo: Upload courses
+//todo: View courses
+//todo: Allow students add to courses
+//todo: View courses again
+//todo: From tomorrow: Populate the student screen. You've done a good job
+//todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}

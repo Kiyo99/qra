@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:qra/presentation/staff/courses/view_courses.dart';
+import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 
 class StudentOptionsScreen extends HookConsumerWidget {
   const StudentOptionsScreen({Key? key, required this.title}) : super(key: key);
@@ -53,6 +55,12 @@ class StudentOptionsScreen extends HookConsumerWidget {
                   onTap: () async {
                     if (items[index] == 'Update student information') {
                       print("We finna update");
+                      Get.toNamed(SubscribeToCourseScreen.id);
+                      return;
+                    }
+                    if (items[index] == 'About') {
+                      Get.toNamed(ViewCoursesScreen.id);
+                      print("We finna About");
                       return;
                     }
                     if (items[index] == 'Log out') {
@@ -60,7 +68,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
                       final auth = FirebaseAuth.instance;
                       //
                       await auth.signOut();
-                      
+
                       // print(auth.currentUser);
                       Get.offAndToNamed(LoginPage.id);
                       // navigate(context);
