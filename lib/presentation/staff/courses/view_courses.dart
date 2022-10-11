@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/course_delegate.dart';
 import 'package:qra/presentation/search_button.dart';
+import 'package:qra/presentation/view_course_details.dart';
 
 class ViewCoursesScreen extends HookWidget {
   static const id = "/view_course_screen";
@@ -20,25 +22,6 @@ class ViewCoursesScreen extends HookWidget {
         appBar: AppBar(
           title: const Text("View courses"),
           backgroundColor: Constants.coolBlue,
-          actions: [
-            SearchButton(
-              onPressed: () async {
-                final searchResult = await showSearch(
-                  context: context,
-                  delegate: CourseDelegate(),
-                );
-
-                // if (searchResult != null) {
-                //   final typedProduct = Product.fromJson(
-                //     searchResult,
-                //   );
-                //   createPostViewModel.setProduct(
-                //     typedProduct,
-                //   );
-                // }
-              },
-            ),
-          ],
           elevation: 0,
         ),
         body: StreamBuilder<QuerySnapshot>(
@@ -63,7 +46,7 @@ class ViewCoursesScreen extends HookWidget {
             }
 
             return Container(
-              margin: const EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 10),
               child: ListView(
                 children: snapshot.data!.docs
                     .map((DocumentSnapshot documentSnapshot) {
@@ -73,8 +56,10 @@ class ViewCoursesScreen extends HookWidget {
                   return GestureDetector(
                     onTap: () {
                       // Get.to(const MakeBody());
-                      print("The index that was tapped is: ${data}");
-                      print(course.students);
+                      // print("The index that was tapped is: ${course}");
+                      // print(course.students);
+
+                      Get.toNamed(ViewCourseDetails.id, arguments: course);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),

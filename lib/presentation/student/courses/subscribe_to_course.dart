@@ -24,25 +24,6 @@ class SubscribeToCourseScreen extends HookWidget {
         appBar: AppBar(
           title: const Text("Subscribe to a course"),
           backgroundColor: Constants.coolBlue,
-          actions: [
-            SearchButton(
-              onPressed: () async {
-                final searchResult = await showSearch(
-                  context: context,
-                  delegate: CourseDelegate(),
-                );
-
-                // if (searchResult != null) {
-                //   final typedProduct = Product.fromJson(
-                //     searchResult,
-                //   );
-                //   createPostViewModel.setProduct(
-                //     typedProduct,
-                //   );
-                // }
-              },
-            ),
-          ],
           elevation: 0,
         ),
         body: StreamBuilder<QuerySnapshot>(

@@ -7,12 +7,15 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
+import 'package:qra/presentation/detail.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/student/courses/upload_course.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
+import 'package:qra/presentation/student/student_page/student_page.dart';
+import 'package:qra/presentation/view_course_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider =
@@ -62,11 +65,13 @@ class MyApp extends HookConsumerWidget {
             LoginPage.id: (context) => LoginPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
             ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
+            ViewCourseDetails.id: (context) => const ViewCourseDetails(),
+            StudentDetailPage.id: (context) => StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: user == null ? LoginPage() : const StaffPage(title: "QRA")),
+          home: user == null ? LoginPage() : const StudentPage(title: "QRA")),
     );
   }
 }
@@ -95,6 +100,7 @@ class MyApp extends HookConsumerWidget {
 //todo: From tomorrow: Populate the student screen. You've done a good job
 //todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
 
-
 //todo: Have a search delegate to search courses
 //todo: Refactor the course screen
+
+//todo: save the user locally so we can use the datatype
