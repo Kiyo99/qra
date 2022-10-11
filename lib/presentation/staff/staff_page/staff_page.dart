@@ -8,8 +8,6 @@ import 'package:qra/presentation/search_button.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner_improved.dart';
 import 'package:qra/presentation/student/courses/upload_course.dart';
-import 'package:qra/presentation/student/generate/generator_improved.dart';
-import 'package:qra/presentation/staff/teachers_page.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
 
 class StaffPage extends HookWidget {
@@ -49,7 +47,7 @@ class StaffPage extends HookWidget {
         IconButton(
           icon: const Icon(Icons.list),
           onPressed: () {
-            Get.to(const StudentPage(title: "Student page"));
+            Get.to(StudentPage());
           },
         ),
         SearchButton(

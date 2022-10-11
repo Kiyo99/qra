@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
+import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 
 class StudentOptionsScreen extends HookConsumerWidget {
@@ -19,7 +20,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
     var items = [
       'Update student information',
       'About',
-      'Subscribe to course',
+      'Staff View',
       'View courses',
       'Log out',
     ];
@@ -55,8 +56,8 @@ class StudentOptionsScreen extends HookConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () async {
-                    if (items[index] == 'Subscribe to course') {
-                      Get.toNamed(SubscribeToCourseScreen.id);
+                    if (items[index] == 'Staff View') {
+                      Get.to(const StaffPage(title: "Hey there"));
                       return;
                     }
                     if (items[index] == 'View courses') {

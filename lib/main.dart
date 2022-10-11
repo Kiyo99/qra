@@ -71,7 +71,7 @@ class MyApp extends HookConsumerWidget {
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: user == null ? LoginPage() : const StudentPage(title: "QRA")),
+          home: user == null ? LoginPage() : StudentPage()),
     );
   }
 }
