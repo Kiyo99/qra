@@ -19,6 +19,8 @@ class StudentOptionsScreen extends HookConsumerWidget {
     var items = [
       'Update student information',
       'About',
+      'Subscribe to course',
+      'View courses',
       'Log out',
     ];
     return Container(
@@ -53,18 +55,15 @@ class StudentOptionsScreen extends HookConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () async {
-                    if (items[index] == 'Update student information') {
-                      print("We finna update");
+                    if (items[index] == 'Subscribe to course') {
                       Get.toNamed(SubscribeToCourseScreen.id);
                       return;
                     }
-                    if (items[index] == 'About') {
+                    if (items[index] == 'View courses') {
                       Get.toNamed(ViewCoursesScreen.id);
-                      print("We finna About");
                       return;
                     }
                     if (items[index] == 'Log out') {
-                      print("We finna log out");
                       final auth = FirebaseAuth.instance;
                       //
                       await auth.signOut();

@@ -94,3 +94,7 @@ class MyApp extends HookConsumerWidget {
 //todo: View courses again
 //todo: From tomorrow: Populate the student screen. You've done a good job
 //todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
+
+
+//todo: Have a search delegate to search courses
+//todo: Refactor the course screen
