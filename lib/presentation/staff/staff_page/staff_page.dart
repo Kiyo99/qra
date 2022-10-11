@@ -45,28 +45,29 @@ class StaffPage extends HookWidget {
       title: const Text("Qra"),
       actions: <Widget>[
         IconButton(
-          icon: const Icon(Icons.list),
+          icon: const Icon(Icons.menu_outlined),
           onPressed: () {
             Get.to(StudentPage());
           },
         ),
-        SearchButton(
-          onPressed: () async {
-            final searchResult = await showSearch(
-              context: context,
-              delegate: CourseDelegate(),
-            );
+        if (_selectedIndex.value == 0)
+          SearchButton(
+            onPressed: () async {
+              final searchResult = await showSearch(
+                context: context,
+                delegate: CourseDelegate(),
+              );
 
-            // if (searchResult != null) {
-            //   final typedProduct = Product.fromJson(
-            //     searchResult,
-            //   );
-            //   createPostViewModel.setProduct(
-            //     typedProduct,
-            //   );
-            // }
-          },
-        ),
+              // if (searchResult != null) {
+              //   final typedProduct = Product.fromJson(
+              //     searchResult,
+              //   );
+              //   createPostViewModel.setProduct(
+              //     typedProduct,
+              //   );
+              // }
+            },
+          ),
         IconButton(
           icon: const Icon(Icons.logout_outlined),
           onPressed: () async {

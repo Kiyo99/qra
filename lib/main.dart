@@ -33,7 +33,10 @@ Future<void> main() async {
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
-      child: const MyApp(),
+      child: DevicePreview(
+        enabled: false,
+        builder: (context) => const MyApp(),
+      ),
     ),
   );
 }
@@ -52,9 +55,9 @@ class MyApp extends HookConsumerWidget {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: GetMaterialApp(
-          // useInheritedMediaQuery: true,
-          // locale: DevicePreview.locale(context),
-          // builder: DevicePreview.appBuilder,
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           themeMode: ThemeMode.system,
@@ -80,7 +83,6 @@ class MyApp extends HookConsumerWidget {
 //todo: catch exception for login and registration, handle them
 //todo: lecturer is greeted with a list of available courses for that day (filter by date?, Use current date as query???,
 //todo so fetch all but filter by date, meaning the courses should have a date parameter) - tonight
-//todo: When lecturer selects a choice, then the app makes a call to firebase to fetch that document. As a list most likely (Or when he makes the call to go to the screen the method is fired, just like delivery app)
 
 //todo: create a screen for adding and deleting courses, (Only lecturers or admins or exam controller)
 //todo: there will be a dropdown of courses based on the day. That courses will have ID's as documents. Which will in turn be keys of other stuff
@@ -102,5 +104,7 @@ class MyApp extends HookConsumerWidget {
 
 //todo: Have a search delegate to search courses
 //todo: Refactor the course screen
+
+//todo: Make prompts for when the user wants to log out, subscribe, etc
 
 //todo: save the user locally so we can use the datatype
