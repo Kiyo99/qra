@@ -79,32 +79,23 @@ class MyApp extends HookConsumerWidget {
   }
 }
 
-//todo: icons, validation,
+//todo: icons, validation of student details at registration
 //todo: catch exception for login and registration, handle them
 //todo: lecturer is greeted with a list of available courses for that day (filter by date?, Use current date as query???,
 //todo so fetch all but filter by date, meaning the courses should have a date parameter) - tonight
 
-//todo: create a screen for adding and deleting courses, (Only lecturers or admins or exam controller)
+//todo: create a screen for deleting courses, (Only lecturers or admins or exam controller)
 //todo: there will be a dropdown of courses based on the day. That courses will have ID's as documents. Which will in turn be keys of other stuff
-//todo: The student has a screen where he or she adds a course to be taken that semester, then when the staff clicks on that link, it brings in all the student details
-//todo: I need to create a model for course as well as students
 
 //todo: How you will automatically check the box is this. There wil be a stream that listens to this shit.
 // todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
+//  todo (You could use a streambuilder again for the attendance sheet just like you are for the courses)
 
 //todo live chat with vvu its
-//todo create a prompt when uploading a course similar to inventory
-
-//todo: Upload courses
-//todo: View courses
-//todo: Allow students add to courses
-//todo: View courses again
-//todo: From tomorrow: Populate the student screen. You've done a good job
-//todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
-
-//todo: Have a search delegate to search courses
-//todo: Refactor the course screen
+// todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes} I dont understand
 
 //todo: Make prompts for when the user wants to log out, subscribe, etc
 
 //todo: save the user locally so we can use the datatype
+
+//todo create walkthrough
