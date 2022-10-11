@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/fb_student_model/student_model.dart';
 import 'package:qra/data/lesson.dart';
 
-class DetailPage extends StatelessWidget {
-  final Lesson lesson;
-  const DetailPage({required this.lesson});
+class StudentDetailPage extends HookWidget {
+  static const id = "/student_detail_page";
+
   @override
   Widget build(BuildContext context) {
-    final levelIndicator = LinearProgressIndicator(
-        backgroundColor: const Color.fromRGBO(209, 224, 224, 0.2),
-        value: lesson.indicatorValue,
-        valueColor: const AlwaysStoppedAnimation(Colors.green));
+    final studentModel = useState<StudentModel>(Get.arguments);
 
-    final coursePrice = Container(
-      padding: const EdgeInsets.all(7.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(5.0)),
-      child: Text(
-        "\$" + lesson.price.toString(),
-        style: const TextStyle(color: Colors.white),
-      ),
-    );
+    // final coursePrice = Container(
+    //   padding: const EdgeInsets.all(7.0),
+    //   decoration: BoxDecoration(
+    //       border: Border.all(color: Colors.white),
+    //       borderRadius: BorderRadius.circular(5.0)),
+    //   child: Text(
+    //     "\$" + lesson.price.toString(),
+    //     style: const TextStyle(color: Colors.white),
+    //   ),
+    // );
 
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const SizedBox(height: 10.0),
         const Icon(
-          Icons.directions_car,
+          Icons.account_circle_outlined,
           color: Colors.white,
           size: 40.0,
         ),
@@ -38,23 +38,21 @@ class DetailPage extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Text(
-          lesson.title,
+          studentModel.value.fullName,
           style: const TextStyle(color: Colors.white, fontSize: 45.0),
         ),
         const SizedBox(height: 30.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Expanded(flex: 1, child: levelIndicator),
             Expanded(
                 flex: 3,
                 child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      lesson.level,
+                      studentModel.value.iD,
                       style: const TextStyle(color: Colors.white),
                     ))),
-            Expanded(flex: 1, child: coursePrice)
           ],
         ),
       ],
@@ -95,7 +93,7 @@ class DetailPage extends StatelessWidget {
     );
 
     final bottomContentText = Text(
-      lesson.content,
+      studentModel.value.major,
       style: const TextStyle(fontSize: 18.0),
     );
     // final readButton = Container(
@@ -118,7 +116,7 @@ class DetailPage extends StatelessWidget {
       ),
       width: MediaQuery.of(context).size.width,
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           print("This was clicked");
         },
         child: Container(

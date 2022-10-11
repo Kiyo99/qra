@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
+import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 
 class StudentOptionsScreen extends HookConsumerWidget {
@@ -19,6 +20,8 @@ class StudentOptionsScreen extends HookConsumerWidget {
     var items = [
       'Update student information',
       'About',
+      'Staff View',
+      'View courses',
       'Log out',
     ];
     return Container(
@@ -53,18 +56,15 @@ class StudentOptionsScreen extends HookConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () async {
-                    if (items[index] == 'Update student information') {
-                      print("We finna update");
-                      Get.toNamed(SubscribeToCourseScreen.id);
+                    if (items[index] == 'Staff View') {
+                      Get.to(const StaffPage(title: "Hey there"));
                       return;
                     }
-                    if (items[index] == 'About') {
+                    if (items[index] == 'View courses') {
                       Get.toNamed(ViewCoursesScreen.id);
-                      print("We finna About");
                       return;
                     }
                     if (items[index] == 'Log out') {
-                      print("We finna log out");
                       final auth = FirebaseAuth.instance;
                       //
                       await auth.signOut();

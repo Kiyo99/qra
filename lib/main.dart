@@ -7,12 +7,15 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
+import 'package:qra/presentation/detail.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/student/courses/upload_course.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
+import 'package:qra/presentation/student/student_page/student_page.dart';
+import 'package:qra/presentation/view_course_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider =
@@ -30,7 +33,10 @@ Future<void> main() async {
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
-      child: const MyApp(),
+      child: DevicePreview(
+        enabled: false,
+        builder: (context) => const MyApp(),
+      ),
     ),
   );
 }
@@ -49,9 +55,9 @@ class MyApp extends HookConsumerWidget {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: GetMaterialApp(
-          // useInheritedMediaQuery: true,
-          // locale: DevicePreview.locale(context),
-          // builder: DevicePreview.appBuilder,
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           themeMode: ThemeMode.system,
@@ -62,11 +68,13 @@ class MyApp extends HookConsumerWidget {
             LoginPage.id: (context) => LoginPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
             ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
+            ViewCourseDetails.id: (context) => const ViewCourseDetails(),
+            StudentDetailPage.id: (context) => StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: user == null ? LoginPage() : const StaffPage(title: "QRA")),
+          home: user == null ? LoginPage() : StudentPage()),
     );
   }
 }
@@ -75,7 +83,6 @@ class MyApp extends HookConsumerWidget {
 //todo: catch exception for login and registration, handle them
 //todo: lecturer is greeted with a list of available courses for that day (filter by date?, Use current date as query???,
 //todo so fetch all but filter by date, meaning the courses should have a date parameter) - tonight
-//todo: When lecturer selects a choice, then the app makes a call to firebase to fetch that document. As a list most likely (Or when he makes the call to go to the screen the method is fired, just like delivery app)
 
 //todo: create a screen for adding and deleting courses, (Only lecturers or admins or exam controller)
 //todo: there will be a dropdown of courses based on the day. That courses will have ID's as documents. Which will in turn be keys of other stuff
@@ -94,3 +101,10 @@ class MyApp extends HookConsumerWidget {
 //todo: View courses again
 //todo: From tomorrow: Populate the student screen. You've done a good job
 //todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
+
+//todo: Have a search delegate to search courses
+//todo: Refactor the course screen
+
+//todo: Make prompts for when the user wants to log out, subscribe, etc
+
+//todo: save the user locally so we can use the datatype

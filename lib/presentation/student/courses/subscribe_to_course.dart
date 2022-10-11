@@ -5,6 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
+import 'package:qra/presentation/course_delegate.dart';
+import 'package:qra/presentation/search_button.dart';
 
 class SubscribeToCourseScreen extends HookWidget {
   static const id = "/subscribe_to_course_screen";
@@ -22,6 +24,7 @@ class SubscribeToCourseScreen extends HookWidget {
         appBar: AppBar(
           title: const Text("Subscribe to a course"),
           backgroundColor: Constants.coolBlue,
+          elevation: 0,
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: _courseStream,
@@ -100,19 +103,20 @@ class SubscribeToCourseScreen extends HookWidget {
                       subtitle: Text(course.courseCode),
                       onTap: () async {
                         // print("Entry: ${auth.currentUser}");
-                        final tiana = await _fireStore
+                        final studentsDoc = await _fireStore
                             .collection("Users")
                             .doc(auth.currentUser!.email.toString())
                             .get();
-                        final student = StudentModel.fromJson(tiana.data()!);
-                        print("Entry: ${student}");
+                        final student =
+                            StudentModel.fromJson(studentsDoc.data()!);
+                        print("Entry: ${student.isEligible}");
 
                         await _fireStore
                             .collection("Courses")
                             .doc(course.courseCode)
                             .update({
                           "students": FieldValue.arrayUnion([
-                            tiana.data()!,
+                            studentsDoc.data()!,
                           ])
                         });
 
@@ -122,7 +126,7 @@ class SubscribeToCourseScreen extends HookWidget {
                         //     .set({
                         //   'Students': [
                         //     {
-                        //       "Student": tiana.data()!,
+                        //       "Student": studentsDoc.data()!,
                         //     }
                         //   ]
                         // }, SetOptions(merge: true)).then((value) {

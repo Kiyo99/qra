@@ -3,18 +3,24 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/course/course_model.dart';
+import 'package:qra/data/fb_student_model/student_model.dart';
 import 'package:qra/presentation/detail.dart';
 import 'package:qra/data/lesson.dart';
 
-class MakeBody extends HookConsumerWidget {
-  static const id = "/MakeBody";
+class ViewCourseDetails extends HookConsumerWidget {
+  static const id = "/view_course_details";
 
-  const MakeBody({Key? key}) : super(key: key);
+  const ViewCourseDetails({Key? key}) : super(key: key);
 
   //todo: You will have to accept arguments here
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final course = useState<CourseModel>(Get.arguments);
+
+    print("Course: ${course.value}");
+
     List<Lesson> getLessons() {
       return [
         Lesson(
@@ -80,64 +86,7 @@ class MakeBody extends HookConsumerWidget {
 
     final checkItem = useState(lessons);
 
-    // ListTile makeListTile(Lesson lesson) {
-    //   checkItem.value = lesson.checked;
-    //
-    //   return ListTile(
-    //     contentPadding:
-    //         const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
-    //     leading: Container(
-    //         padding: const EdgeInsets.only(right: 5.0),
-    //         decoration: const BoxDecoration(
-    //             border: Border(
-    //                 right: BorderSide(width: 1.0, color: Colors.white24))),
-    //         child: Checkbox(
-    //           shape: RoundedRectangleBorder(
-    //             borderRadius: BorderRadius.circular(5),
-    //           ),
-    //           value: checkItem.value,
-    //           onChanged: (v) {
-    //             checkItem.value = v!;
-    //           },
-    //         )),
-    //     title: Text(
-    //       lesson.title,
-    //       style:
-    //           const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-    //     ),
-    //     // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-    //
-    //     subtitle: Row(
-    //       children: <Widget>[
-    //         Expanded(
-    //             flex: 1,
-    //             child: LinearProgressIndicator(
-    //                 backgroundColor: const Color.fromRGBO(209, 224, 224, 0.2),
-    //                 value: lesson.indicatorValue,
-    //                 valueColor: const AlwaysStoppedAnimation(Colors.green))),
-    //         Expanded(
-    //           flex: 4,
-    //           child: Padding(
-    //               padding: const EdgeInsets.only(left: 10.0),
-    //               child: Text(lesson.level,
-    //                   style: const TextStyle(color: Colors.white))),
-    //         )
-    //       ],
-    //     ),
-    //     trailing: const Icon(Icons.keyboard_arrow_right,
-    //         color: Colors.white, size: 30.0),
-    //     onTap: () {
-    //       Navigator.push(
-    //           context,
-    //           MaterialPageRoute(
-    //               builder: (context) => DetailPage(
-    //                     lesson: lesson,
-    //                   )));
-    //     },
-    //   );
-    // }
-
-    Card makeCard(Lesson lesson) => Card(
+    Card makeCard(StudentModel studentModel) => Card(
           elevation: 4.0,
           color: Constants.coolBlue,
           margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -147,12 +96,13 @@ class MakeBody extends HookConsumerWidget {
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             child: ListTile(
               contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
               leading: Container(
                   padding: const EdgeInsets.only(right: 5.0),
                   decoration: const BoxDecoration(
                       border: Border(
-                          right: BorderSide(width: 1.0, color: Colors.white24))),
+                          right:
+                              BorderSide(width: 1.0, color: Colors.white24))),
                   child: Checkbox(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
@@ -160,30 +110,22 @@ class MakeBody extends HookConsumerWidget {
                     value: checkItem.value[0].checked,
                     onChanged: (v) {
                       checkItem.value[0].checked = v!;
-                      print("Lesson is: ${lesson.title}");
+                      print("Lesson is: ${studentModel.fullName}");
                       // checkItem.value = v;
                     },
                   )),
               title: Text(
-                lesson.title,
-                style:
-                const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                studentModel.fullName,
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               ),
-              // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
               subtitle: Row(
-                children: <Widget>[
-                  Expanded(
-                      flex: 1,
-                      child: LinearProgressIndicator(
-                          backgroundColor: const Color.fromRGBO(209, 224, 224, 0.2),
-                          value: lesson.indicatorValue,
-                          valueColor: const AlwaysStoppedAnimation(Colors.green))),
+                children: [
                   Expanded(
                     flex: 4,
                     child: Padding(
                         padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(lesson.level,
+                        child: Text(studentModel.iD,
                             style: const TextStyle(color: Colors.white))),
                   )
                 ],
@@ -191,12 +133,9 @@ class MakeBody extends HookConsumerWidget {
               trailing: const Icon(Icons.keyboard_arrow_right,
                   color: Colors.white, size: 30.0),
               onTap: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => StudentDetailPage(
-                //           lesson: lesson,
-                //         )));
+                
+                Get.toNamed(StudentDetailPage.id, arguments: studentModel);
+
               },
             ),
           ),
@@ -219,9 +158,10 @@ class MakeBody extends HookConsumerWidget {
           padding: const EdgeInsets.all(8),
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: checkItem.value.length,
+          itemCount: course.value.students?.length ?? 0,
           itemBuilder: (BuildContext context, int index) {
-            return makeCard(checkItem.value[index]);
+            return makeCard(
+                StudentModel.fromJson(course.value.students![index]));
             // return CheckboxListTile(
             //   value: checkItem.value[index].checked,
             //   controlAffinity: ListTileControlAffinity.leading,
@@ -235,17 +175,9 @@ class MakeBody extends HookConsumerWidget {
             //   },
             //   title: Text(checkItem.value[index].title),
             // );
-
           },
         ),
       ),
     );
   }
 }
-
-// class Caleb extends HookWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-// }

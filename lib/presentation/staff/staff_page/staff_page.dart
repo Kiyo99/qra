@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:qra/presentation/course_delegate.dart';
+import 'package:qra/presentation/search_button.dart';
+import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner_improved.dart';
-import 'package:qra/presentation/student/generate/generator_improved.dart';
-import 'package:qra/presentation/staff/teachers_page.dart';
+import 'package:qra/presentation/student/courses/upload_course.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
 
 class StaffPage extends HookWidget {
@@ -23,7 +25,7 @@ class StaffPage extends HookWidget {
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         BottomNavigationBarItem(icon: Icon(Icons.blur_on), label: "QR"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.account_box), label: "Profile"),
+            icon: Icon(Icons.menu_book_outlined), label: "Upload course"),
       ],
       backgroundColor: const Color(0xff3A4256),
       currentIndex: _selectedIndex.value,
@@ -43,11 +45,29 @@ class StaffPage extends HookWidget {
       title: const Text("Qra"),
       actions: <Widget>[
         IconButton(
-          icon: const Icon(Icons.list),
+          icon: const Icon(Icons.menu_outlined),
           onPressed: () {
-            Get.to(const StudentPage(title: "Student page"));
+            Get.to(StudentPage());
           },
         ),
+        if (_selectedIndex.value == 0)
+          SearchButton(
+            onPressed: () async {
+              final searchResult = await showSearch(
+                context: context,
+                delegate: CourseDelegate(),
+              );
+
+              // if (searchResult != null) {
+              //   final typedProduct = Product.fromJson(
+              //     searchResult,
+              //   );
+              //   createPostViewModel.setProduct(
+              //     typedProduct,
+              //   );
+              // }
+            },
+          ),
         IconButton(
           icon: const Icon(Icons.logout_outlined),
           onPressed: () async {
@@ -70,9 +90,9 @@ class StaffPage extends HookWidget {
       },
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        const TeachersPage(),
+        ViewCoursesScreen(),
         const ImprovedScanner(),
-        Container(),
+        UploadCourseScreen(),
       ],
     );
 
