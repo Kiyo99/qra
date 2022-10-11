@@ -190,6 +190,29 @@ class RegisterPage extends HookConsumerWidget {
                       child: ElevatedButton(
                         child: const Text('Regsiter'),
                         onPressed: () async {
+                          if (emailController.text.isEmpty ||
+                              firstNameController.text.isEmpty ||
+                              lastNameController.text.isEmpty ||
+                              passwordController.text.isEmpty ||
+                              cPasswordController.text.isEmpty ||
+                              majorController.text.isEmpty ||
+                              genderController.text.isEmpty ||
+                              iDController.text.isEmpty ||
+                              numberController.text.isEmpty) {
+                            const AlertDialog(
+                              title: Text("Please enter all fields"),
+                            );
+                            return;
+                          }
+
+                          if (!(passwordController.text ==
+                              cPasswordController.text)) {
+                            const AlertDialog(
+                              title: Text("Passwords don't match"),
+                            );
+                            return;
+                          }
+
                           isLoading.value = true;
 
                           final user =

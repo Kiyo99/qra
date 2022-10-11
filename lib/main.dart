@@ -79,7 +79,6 @@ class MyApp extends HookConsumerWidget {
   }
 }
 
-//todo: icons, validation of student details at registration
 //todo: catch exception for login and registration, handle them
 //todo: lecturer is greeted with a list of available courses for that day (filter by date?, Use current date as query???,
 //todo so fetch all but filter by date, meaning the courses should have a date parameter) - tonight
@@ -89,7 +88,7 @@ class MyApp extends HookConsumerWidget {
 
 //todo: How you will automatically check the box is this. There wil be a stream that listens to this shit.
 // todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
-//  todo (You could use a streambuilder again for the attendance sheet just like you are for the courses)
+//  todo (You could use a stream-builder again for the attendance sheet just like you are for the courses)
 
 //todo live chat with vvu its
 // todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes} I dont understand

@@ -81,15 +81,21 @@ class LoginPage extends HookConsumerWidget {
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: ElevatedButton(
-                            child: Text('Login',
+                          child: Text('Login',
                               style: GoogleFonts.exo2(
                                   color: Colors.white, fontSize: 18)),
                           onPressed: () async {
                             //todo All of these should be done in the viewmodel.
                             //todo cache the user using shared preferences so that the user doesnt have to log in multiple times
 
-                            print(emailController.text);
-                            print(passwordController.text);
+                            if (emailController.text.isEmpty ||
+                                passwordController.text.isEmpty) {
+                              const AlertDialog(
+                                title: Text("Please enter all fields"),
+                              );
+                              return;
+                            }
+
                             isLoading.value = true;
 
                             final user = await auth.signInWithEmailAndPassword(
@@ -116,8 +122,6 @@ class LoginPage extends HookConsumerWidget {
                             // Map<String, dynamic> userDetail = {
                             //   "Full name": user.user.
                             // };
-
-
 
                             print("objectttttt: ${user.user}");
                           },
