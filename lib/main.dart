@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
-import 'package:qra/presentation/detail.dart';
+import 'package:qra/presentation/student/student_details.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
@@ -15,7 +15,7 @@ import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/staff/courses/upload_course.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
-import 'package:qra/presentation/view_course_details.dart';
+import 'package:qra/presentation/staff/courses/view_course_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider =
@@ -75,35 +75,38 @@ class MyApp extends HookConsumerWidget {
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: user == null ? LoginPage() : StaffPage()),
+          home: user == null ? LoginPage() : const StaffPage()),
     );
   }
 }
 
-//todo: catch exception for login and registration, handle them
 //todo: lecturer is greeted with a list of available courses for that day (filter by date?, Use current date as query???,
-//todo so fetch all but filter by date, meaning the courses should have a date parameter) - tonight
 
 //todo: create a screen for deleting courses, (Only lecturers or admins or exam controller)
-//todo: there will be a dropdown of courses based on the day. That courses will have ID's as documents. Which will in turn be keys of other stuff
 
 //todo: How you will automatically check the box is this. There wil be a stream that listens to this shit.
-// todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
-//  todo (You could use a stream-builder again for the attendance sheet just like you are for the courses)
+//todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
+//todo (You could use a stream-builder again for the attendance sheet just like you are for the courses)
 
-//todo live chat with vvu its
-// todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes} I dont understand
-
-//todo: Make prompts for when the user wants to log out, subscribe, etc
+//todo live chat with vvu its ADD LIVE CHAT OPTION TO TILES
+// todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
+//  todo: Should I dedicated courses field for students? Yes, that means I will update the student model with build runner
 
 //todo: save the user locally so we can use the datatype
 
 //todo create walkthrough
 
-//todo Draw inspiration from report seller on mobileapp
-
 //todo add lottie files for the delegate
-
-//todo: ADD LIVE CHAT OPTION TO TILES
 //todo: Go through lottie and delete some of them
 //todo: Look at dialogs again
+
+//todo: Create Prompt.
+//todo: Create dialogs - reference delivery app
+//todo: Add date function for input text date picker??
+//todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
+//todo: Look at either locally caching the person or having useState
+//todo: Check out checkbox issue
+
+//todo: Think about the attendance marking flow.
+
+//todo: Make the showToast widget

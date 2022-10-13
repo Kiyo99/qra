@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
-import 'package:qra/presentation/detail.dart';
+import 'package:qra/presentation/student/student_details.dart';
 import 'package:qra/data/lesson.dart';
 
 class MakeBody extends HookConsumerWidget {

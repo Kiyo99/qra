@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/staff/courses/filter_view.dart';
-import 'package:qra/presentation/view_course_details.dart';
+import 'package:qra/presentation/staff/courses/view_course_details.dart';
 
 class ViewCoursesScreen extends HookWidget {
   static const id = "/view_course_screen";

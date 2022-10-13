@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:qra/presentation/auth/login_page.dart';
-import 'package:qra/presentation/staff_delegate.dart';
-import 'package:qra/presentation/search_button.dart';
+import 'package:qra/presentation/widgets/staff_delegate.dart';
+import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner_improved.dart';
 import 'package:qra/presentation/staff/courses/upload_course.dart';
@@ -17,6 +17,8 @@ class StaffPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Current date = ${DateTime.now()}");
+
     final _selectedIndex = useState(0);
     PageController pageController = PageController();
 

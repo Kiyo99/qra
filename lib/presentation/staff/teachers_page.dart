@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
-import 'package:qra/presentation/make_body.dart';
+import 'package:qra/presentation/widgets/make_body.dart';
 
 class TeachersPage extends HookConsumerWidget {
   static const id = "/teachers";

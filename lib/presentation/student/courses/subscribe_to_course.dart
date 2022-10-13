@@ -5,8 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
-import 'package:qra/presentation/staff_delegate.dart';
-import 'package:qra/presentation/search_button.dart';
+import 'package:qra/presentation/widgets/staff_delegate.dart';
+import 'package:qra/presentation/widgets/search_button.dart';
 
 class SubscribeToCourseScreen extends HookWidget {
   static const id = "/subscribe_to_course_screen";
@@ -38,53 +38,52 @@ class SubscribeToCourseScreen extends HookWidget {
               return const Center(child: CircularProgressIndicator());
             }
             return ListView(
-              children: snapshot.data!.docs
-                  .map((DocumentSnapshot documentSnapshot) {
-                    Map<String, dynamic> data =
-                        documentSnapshot.data()! as Map<String, dynamic>;
-                    final course = CourseModel.fromJson(data);
+              children:
+                  snapshot.data!.docs.map((DocumentSnapshot documentSnapshot) {
+                Map<String, dynamic> data =
+                    documentSnapshot.data()! as Map<String, dynamic>;
+                final course = CourseModel.fromJson(data);
 
-                    return ListTile(
-                      title: Text(course.courseName),
-                      subtitle: Text(course.courseCode),
-                      onTap: () async {
-                        // print("Entry: ${auth.currentUser}");
-                        final studentsDoc = await _fireStore
-                            .collection("Users")
-                            .doc(auth.currentUser!.email.toString())
-                            .get();
-                        final student =
-                            StudentModel.fromJson(studentsDoc.data()!);
-                        print("Entry: ${student.isEligible}");
+                return ListTile(
+                  title: Text(course.courseName),
+                  subtitle: Text(course.courseCode),
+                  onTap: () async {
+                    // print("Entry: ${auth.currentUser}");
+                    final studentsDoc = await _fireStore
+                        .collection("Users")
+                        .doc(auth.currentUser!.email.toString())
+                        .get();
 
-                        await _fireStore
-                            .collection("Courses")
-                            .doc(course.courseCode)
-                            .update({
+                    await _fireStore
+                        .collection("Courses")
+                        .doc(course.courseCode)
+                        .update({
                           "students": FieldValue.arrayUnion([
                             studentsDoc.data()!,
                           ])
-                        });
-
-                        // await _fireStore
-                        //     .collection('Courses')
-                        //     .doc(course.courseCode)
-                        //     .set({
-                        //   'Students': [
-                        //     {
-                        //       "Student": studentsDoc.data()!,
-                        //     }
-                        //   ]
-                        // }, SetOptions(merge: true)).then((value) {
-                        //   //Do your stuff.
-                        // });
-                      },
-                    );
-                  })
-                  .toList()
-                  .cast(),
+                        })
+                        .whenComplete(
+                          () => _showToast(context,
+                              'Successfully subscribed to ${course.courseName}'),
+                        )
+                        .onError((error, stackTrace) => _showToast(context,
+                            'Failed to subscribe to ${course.courseName}'));
+                  },
+                );
+              }).toList(),
             );
           },
         ));
   }
+}
+
+void _showToast(BuildContext context, String message) {
+  final scaffold = ScaffoldMessenger.of(context);
+  scaffold.showSnackBar(
+    SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
+    ),
+  );
 }

@@ -223,26 +223,10 @@ class RegisterPage extends HookConsumerWidget {
 
                           isLoading.value = true;
 
-                          final user =
-                              await auth.createUserWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: cPasswordController.text);
-
-                          isLoading.value = false;
-                          print("objectttttt: $user");
-                          if (user.isBlank == true) {
-                            Get.dialog(const AlertDialog(
-                                title: Text(
-                                  "Registration failed 😪",
-                                  textAlign: TextAlign.center,
-                                ),
-                                content: Text(
-                                  "Please try again",
-                                  textAlign: TextAlign.center,
-                                ),
-                                contentPadding: EdgeInsets.all(10)));
-                          } else {
-                            print("Registered");
+                          try {
+                            await auth.createUserWithEmailAndPassword(
+                                email: emailController.text,
+                                password: cPasswordController.text);
 
                             Map<String, Object> db = {};
                             db['firstName'] = firstNameController.text;
@@ -256,8 +240,6 @@ class RegisterPage extends HookConsumerWidget {
                             db['isEligible'] = "false";
                             db['phoneNumber'] = numberController.text;
                             db['status'] = "Student";
-                            //
-                            print("Iddddddd: ${db['ID'].toString()}");
 
                             _firestore
                                 .collection("Users")
@@ -265,13 +247,27 @@ class RegisterPage extends HookConsumerWidget {
                                 .set(db)
                                 .whenComplete(() {
                               _showToast(context, 'Successfully saved user');
-                            }).onError((error, stackTrace) => () {
-                                      _showToast(context, 'Failed to save');
-                                      print('Faileddddddddd: $error');
+                              isLoading.value = false;
+                              Get.offAllNamed(StaffPage.id);
+                            }).catchError((error, stackTrace) => () {
+                                      _showToast(context, 'Failed to save 😪');
+                                      print('Failed: $error');
                                     });
-                            Get.offAndToNamed(StaffPage.id);
+                          } on FirebaseAuthException catch (e) {
+                            isLoading.value = false;
+                            Get.dialog(
+                              AlertDialog(
+                                  title: const Text(
+                                    "Registration failed 😪",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  content: Text(
+                                    "${e.message}",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  contentPadding: const EdgeInsets.all(10)),
+                            );
                           }
-                          print("objectsttttt: $user");
                         },
                       ),
                     ),

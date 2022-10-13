@@ -23,6 +23,7 @@ class LoginPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String g;
     final isLoading = useState(false);
     return Scaffold(
         backgroundColor: Constants.coolBlue,
@@ -100,32 +101,27 @@ class LoginPage extends HookConsumerWidget {
 
                             isLoading.value = true;
 
-                            final user = await auth.signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text);
-
-                            isLoading.value = false;
-                            print("objectttttt: $user");
-                            if (user == null) {
-                              Get.dialog(const AlertDialog(
-                                  title: Text(
-                                    "Login failed 😪",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  content: Text(
-                                    "Please try again",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  contentPadding: EdgeInsets.all(10)));
-                            } else {
-                              print("Singrdddd: ${user.user}");
-                              Get.toNamed(StaffPage.id);
+                            try {
+                              await auth.signInWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                              isLoading.value = false;
+                              Get.offAllNamed(StaffPage.id);
+                            } on FirebaseAuthException catch (e) {
+                              isLoading.value = false;
+                              Get.dialog(
+                                AlertDialog(
+                                    title: const Text(
+                                      "Login failed 😪",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    content: Text(
+                                      "${e.message}",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    contentPadding: const EdgeInsets.all(10)),
+                              );
                             }
-                            // Map<String, dynamic> userDetail = {
-                            //   "Full name": user.user.
-                            // };
-
-                            print("objectttttt: ${user.user}");
                           },
                         )),
                     Row(

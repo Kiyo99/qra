@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
-import 'package:qra/presentation/search_button.dart';
+import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/student/generate/generator_improved.dart';
 import 'package:qra/presentation/student/student_options_view.dart';
-import 'package:qra/presentation/student_delegate.dart';
+import 'package:qra/presentation/widgets/student_delegate.dart';
 
 class StudentPage extends HookWidget {
   StudentPage({Key? key}) : super(key: key);
