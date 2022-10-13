@@ -14,6 +14,7 @@ class UploadCourseScreen extends HookWidget {
   Widget build(BuildContext context) {
     final TextEditingController courseName = TextEditingController();
     final TextEditingController courseCode = TextEditingController();
+    final TextEditingController dueDate = TextEditingController();
     final TextEditingController teacher = TextEditingController();
     final isLoading = useState(false);
 
@@ -56,6 +57,20 @@ class UploadCourseScreen extends HookWidget {
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: TextField(
+                          controller: dueDate,
+                          decoration: InputDecoration(
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              border: const OutlineInputBorder(),
+                              labelText: 'Due date',
+                              labelStyle:
+                                  GoogleFonts.exo2(color: Colors.white)),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: TextField(
                           controller: teacher,
                           decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
@@ -79,6 +94,7 @@ class UploadCourseScreen extends HookWidget {
                               Map<String, Object> db = {};
                               db['courseName'] = courseName.text;
                               db['courseCode'] = courseCode.text;
+                              db['dueDate'] = dueDate.text;
                               db['teacher'] = teacher.text;
 
                               _firestore

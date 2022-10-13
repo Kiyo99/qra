@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:qra/presentation/auth/login_page.dart';
-import 'package:qra/presentation/course_delegate.dart';
+import 'package:qra/presentation/staff_delegate.dart';
 import 'package:qra/presentation/search_button.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner_improved.dart';
-import 'package:qra/presentation/student/courses/upload_course.dart';
+import 'package:qra/presentation/staff/courses/upload_course.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
 
 class StaffPage extends HookWidget {
-  const StaffPage({Key? key, required this.title}) : super(key: key);
+  static const id = 'staff_page';
 
-  final String title;
+  const StaffPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,19 +53,10 @@ class StaffPage extends HookWidget {
         if (_selectedIndex.value == 0)
           SearchButton(
             onPressed: () async {
-              final searchResult = await showSearch(
+              await showSearch(
                 context: context,
-                delegate: CourseDelegate(),
+                delegate: StaffDelegate(),
               );
-
-              // if (searchResult != null) {
-              //   final typedProduct = Product.fromJson(
-              //     searchResult,
-              //   );
-              //   createPostViewModel.setProduct(
-              //     typedProduct,
-              //   );
-              // }
             },
           ),
         IconButton(

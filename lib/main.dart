@@ -12,7 +12,7 @@ import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
-import 'package:qra/presentation/student/courses/upload_course.dart';
+import 'package:qra/presentation/staff/courses/upload_course.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
 import 'package:qra/presentation/view_course_details.dart';
@@ -58,14 +58,15 @@ class MyApp extends HookConsumerWidget {
           useInheritedMediaQuery: true,
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData.dark(),
+          // darkTheme: ThemeData.dark(),
           themeMode: ThemeMode.system,
           title: 'QRA',
           debugShowCheckedModeBanner: false,
           routes: {
             QrScanner.id: (context) => const QrScanner(),
             LoginPage.id: (context) => LoginPage(),
+            StaffPage.id: (context) => const StaffPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
             ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
             ViewCourseDetails.id: (context) => const ViewCourseDetails(),
@@ -74,7 +75,7 @@ class MyApp extends HookConsumerWidget {
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: user == null ? LoginPage() : StudentPage()),
+          home: user == null ? LoginPage() : StaffPage()),
     );
   }
 }
@@ -98,3 +99,11 @@ class MyApp extends HookConsumerWidget {
 //todo: save the user locally so we can use the datatype
 
 //todo create walkthrough
+
+//todo Draw inspiration from report seller on mobileapp
+
+//todo add lottie files for the delegate
+
+//todo: ADD LIVE CHAT OPTION TO TILES
+//todo: Go through lottie and delete some of them
+//todo: Look at dialogs again

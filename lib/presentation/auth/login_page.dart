@@ -90,9 +90,11 @@ class LoginPage extends HookConsumerWidget {
 
                             if (emailController.text.isEmpty ||
                                 passwordController.text.isEmpty) {
-                              const AlertDialog(
-                                title: Text("Please enter all fields"),
-                              );
+                              print("Please enter all fields");
+                              _showToast(context, 'Please enter all fields');
+                              // const AlertDialog(
+                              //   title: Text("Please enter all fields"),
+                              // );
                               return;
                             }
 
@@ -117,7 +119,7 @@ class LoginPage extends HookConsumerWidget {
                                   contentPadding: EdgeInsets.all(10)));
                             } else {
                               print("Singrdddd: ${user.user}");
-                              Get.to(const StaffPage(title: "Qra"));
+                              Get.toNamed(StaffPage.id);
                             }
                             // Map<String, dynamic> userDetail = {
                             //   "Full name": user.user.
@@ -151,4 +153,15 @@ class LoginPage extends HookConsumerWidget {
               )
             : const Center(child: CircularProgressIndicator()));
   }
+}
+
+void _showToast(BuildContext context, String message) {
+  final scaffold = ScaffoldMessenger.of(context);
+  scaffold.showSnackBar(
+    SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
+    ),
+  );
 }

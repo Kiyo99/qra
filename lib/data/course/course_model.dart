@@ -4,12 +4,13 @@ part 'course_model.freezed.dart';
 part 'course_model.g.dart';
 
 @freezed
-class CourseModel with _$CourseModel{
+class CourseModel with _$CourseModel {
   const CourseModel._();
 
   factory CourseModel({
     required String courseName,
     required String courseCode,
+    required String? dueDate,
     required String teacher,
     List? students,
   }) = _CourseModel;

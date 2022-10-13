@@ -199,17 +199,25 @@ class RegisterPage extends HookConsumerWidget {
                               genderController.text.isEmpty ||
                               iDController.text.isEmpty ||
                               numberController.text.isEmpty) {
-                            const AlertDialog(
-                              title: Text("Please enter all fields"),
-                            );
+                            _showToast(context, 'Please enter all fields');
+                            return;
+                          }
+
+                          if (numberController.text.length < 10) {
+                            _showToast(
+                                context, 'Please enter a valid phone number');
                             return;
                           }
 
                           if (!(passwordController.text ==
                               cPasswordController.text)) {
-                            const AlertDialog(
-                              title: Text("Passwords don't match"),
-                            );
+                            _showToast(context, 'Passwords don\'t match');
+                            return;
+                          }
+
+                          if (passwordController.text.length < 6) {
+                            _showToast(context,
+                                'Password should not be less than 6 characters');
                             return;
                           }
 
@@ -261,7 +269,7 @@ class RegisterPage extends HookConsumerWidget {
                                       _showToast(context, 'Failed to save');
                                       print('Faileddddddddd: $error');
                                     });
-                            Get.to(const StaffPage(title: "QRA"));
+                            Get.offAndToNamed(StaffPage.id);
                           }
                           print("objectsttttt: $user");
                         },

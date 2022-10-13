@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
-import 'package:qra/presentation/course_delegate.dart';
+import 'package:qra/presentation/staff_delegate.dart';
 import 'package:qra/presentation/search_button.dart';
 
 class SubscribeToCourseScreen extends HookWidget {
@@ -43,60 +43,6 @@ class SubscribeToCourseScreen extends HookWidget {
                     Map<String, dynamic> data =
                         documentSnapshot.data()! as Map<String, dynamic>;
                     final course = CourseModel.fromJson(data);
-                    // return GestureDetector(
-                    //   onTap: () {
-                    //     // Get.to(const MakeBody());
-                    //     print("The index that was tapped is: ${data}");
-                    //   },
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    //     child: Container(
-                    //       margin: const EdgeInsets.only(bottom: 10),
-                    //       decoration: BoxDecoration(
-                    //         color: const Color.fromRGBO(64, 75, 96, .9),
-                    //         borderRadius: BorderRadius.circular(30.0),
-                    //       ),
-                    //       padding: const EdgeInsets.all(20),
-                    //       child: Column(
-                    //         mainAxisSize: MainAxisSize.min,
-                    //         crossAxisAlignment: CrossAxisAlignment.start,
-                    //         children: [
-                    //           Row(
-                    //             mainAxisAlignment:
-                    //             MainAxisAlignment.spaceBetween,
-                    //             children: [
-                    //               Text(
-                    //                 data["Course Name"],
-                    //                 style: const TextStyle(
-                    //                     color: Colors.white,
-                    //                     fontWeight: FontWeight.bold,
-                    //                     fontSize: 18),
-                    //               ),
-                    //               IconButton(
-                    //                   onPressed: () {},
-                    //                   icon: const Icon(
-                    //                     Icons.more_vert_outlined,
-                    //                     color: Colors.white,
-                    //                   ))
-                    //             ],
-                    //           ),
-                    //           const SizedBox(height: 10),
-                    //           Text(
-                    //             data["Course Code"],
-                    //             style: const TextStyle(
-                    //                 color: Colors.white, fontSize: 14),
-                    //           ),
-                    //           const SizedBox(height: 20),
-                    //           Text(
-                    //             data["Teacher"] ?? "",
-                    //             style: const TextStyle(
-                    //                 color: Colors.grey, fontSize: 14),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // );
 
                     return ListTile(
                       title: Text(course.courseName),
