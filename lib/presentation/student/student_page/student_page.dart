@@ -18,16 +18,16 @@ class StudentPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final studentModel = useState<StudentModel>([]);
+    final greeting = useState("Welcome");
     useEffect(() {
       WidgetsBinding.instance?.addPostFrameCallback((_) async {
         final studentsDoc = await _fireStore
             .collection("Users")
             .doc(auth.currentUser!.email.toString())
             .get();
+
         final student = StudentModel.fromJson(studentsDoc.data()!);
-        print("Your name is: ${student.fullName}");
-        // studentModel.value = student;
+        greeting.value = "Welcome, ${student.firstName}";
       });
       return;
     }, const []);
@@ -39,8 +39,7 @@ class StudentPage extends HookWidget {
           appBar: AppBar(
             backgroundColor: Constants.coolBlue,
             elevation: 0,
-            title: Text(
-                "Welcome, Godsfavour"), //todo read this name from the local data source
+            title: Text(greeting.value),
             bottom: TabBar(
               onTap: (index) {
                 tabIndex.value = index;
