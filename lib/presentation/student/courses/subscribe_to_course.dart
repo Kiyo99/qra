@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
-import 'package:qra/data/fb_student_model/student_model.dart';
-import 'package:qra/presentation/widgets/staff_delegate.dart';
-import 'package:qra/presentation/widgets/search_button.dart';
 
 class SubscribeToCourseScreen extends HookWidget {
   static const id = "/subscribe_to_course_screen";

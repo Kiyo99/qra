@@ -8,7 +8,7 @@ import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/student/generate/generator_improved.dart';
 import 'package:qra/presentation/student/student_options_view.dart';
-import 'package:qra/presentation/widgets/student_delegate.dart';
+import 'package:qra/presentation/student/student_delegate.dart';
 
 class StudentPage extends HookWidget {
   StudentPage({Key? key}) : super(key: key);

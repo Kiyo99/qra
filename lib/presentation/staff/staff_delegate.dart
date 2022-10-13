@@ -1,13 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
-import 'package:qra/data/fb_student_model/student_model.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
 
-class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
+class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
   @override
   List<Widget>? buildActions(BuildContext context) =>
       [const SizedBox(width: 20)];
@@ -55,7 +53,7 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
           if (!snapshot.hasData) return const Text('Loading...');
 
           final results = snapshot.data!.docs.where((DocumentSnapshot a) {
-            return a['courseCode'].toString().contains(query);
+            return a['courseCode'].toString().contains(query.toUpperCase());
           });
 
           if (results.isEmpty) {
@@ -115,7 +113,7 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
           if (!snapshot.hasData) return const Text('Loading...');
 
           final results = snapshot.data!.docs.where((DocumentSnapshot a) =>
-              a['courseCode'].toString().contains(query));
+              a['courseCode'].toString().contains(query.toUpperCase()));
 
           if (results.isEmpty) {
             return const Center(
@@ -128,7 +126,7 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
               child: Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  "Remember course codes are case sensitive, happy searching!",
+                  "Remember to search by course codes ... happy searching!",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -139,40 +137,26 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
             margin: const EdgeInsets.only(top: 10),
             child: ListView(
               children: results.map((DocumentSnapshot documentSnapshot) {
-                final auth = FirebaseAuth.instance;
-                final _fireStore = FirebaseFirestore.instance;
                 Map<String, dynamic> data =
                     documentSnapshot.data()! as Map<String, dynamic>;
                 final course = CourseModel.fromJson(data);
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ListTile(
-                    title: Text(course.courseName),
-                    subtitle: Text(course.courseCode),
-                    onTap: () async {
-                      // print("Entry: ${auth.currentUser}");
-                      final studentsDoc = await _fireStore
-                          .collection("Users")
-                          .doc(auth.currentUser!.email.toString())
-                          .get();
-
-                      await _fireStore
-                          .collection("Courses")
-                          .doc(course.courseCode)
-                          .update({
-                            "students": FieldValue.arrayUnion([
-                              studentsDoc.data()!,
-                            ])
-                          })
-                          .whenComplete(
-                            () => _showToast(context,
-                                'Successfully subscribed to ${course.courseName}'),
-                          )
-                          .onError((error, stackTrace) => _showToast(context,
-                              'Failed to subscribe to ${course.courseName}'));
-                    },
-                  ),
+                  child: Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      decoration: BoxDecoration(
+                        // color: const Color.fromRGBO(64, 75, 96, .9),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: ListTile(
+                        title: Text(course.courseName),
+                        subtitle: Text(course.courseCode),
+                        onTap: () {
+                          Get.toNamed(ViewCourseDetails.id, arguments: course);
+                        },
+                      )),
                 );
               }).toList(),
             ),
@@ -181,15 +165,4 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
       ),
     );
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }
