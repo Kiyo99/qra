@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/constants.dart';
 
 class FilterView extends HookConsumerWidget {
   const FilterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var items = [
-      'All',
-      'Today\'s date',
-      'Custom date'
-    ];
+    var items = ['All', 'Today\'s date', 'Custom date'];
     return Container(
       padding: const EdgeInsets.all(8.0),
       height: 300,
       width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: Constants.coolBlue,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         ),
@@ -26,9 +24,9 @@ class FilterView extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
-            child: Text(
+            child: const Text(
               "Sort by",
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.left,
             ),
           ),
@@ -56,7 +54,10 @@ class FilterView extends HookConsumerWidget {
                     //   ref.read(AppOrderViewModel.provider.notifier).getOrdersByStatus('PENDING_DELIVERY');
                     // }
                   },
-                  title: Text(items[index], style: const TextStyle(fontSize: 14),),
+                  title: Text(
+                    items[index],
+                    style: const TextStyle(fontSize: 14),
+                  ),
                 );
               },
             ),

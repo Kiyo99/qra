@@ -74,37 +74,30 @@ class ViewCourseDetails extends HookConsumerWidget {
       appBar: AppBar(
         elevation: 0.1,
         backgroundColor: const Color(0xff3A4256),
-        title: const Text("Qra"),
+        title: Text(course.value.courseCode),
       ),
       backgroundColor: Constants.coolBlue,
-      body: RefreshIndicator(
-        onRefresh: () {
-          print("Refreshed!");
-          return Future.value(0);
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: course.value.students?.length ?? 0,
+        itemBuilder: (BuildContext context, int index) {
+          return makeCard(StudentModel.fromJson(course.value.students![index]));
+          // return CheckboxListTile(
+          //   value: checkItem.value[index].checked,
+          //   controlAffinity: ListTileControlAffinity.leading,
+          //   contentPadding: EdgeInsets.zero,
+          //   onChanged: (v) {
+          //     // for (var element in checkItem.value) {
+          //     //   element.checked = false;
+          //     // }
+          //     checkItem.value[index].checked = v!;
+          //     // reason.value = checkItem.value[index]["title"];
+          //   },
+          //   title: Text(checkItem.value[index].title),
+          // );
         },
-        child: ListView.builder(
-          padding: const EdgeInsets.all(8),
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: course.value.students?.length ?? 0,
-          itemBuilder: (BuildContext context, int index) {
-            return makeCard(
-                StudentModel.fromJson(course.value.students![index]));
-            // return CheckboxListTile(
-            //   value: checkItem.value[index].checked,
-            //   controlAffinity: ListTileControlAffinity.leading,
-            //   contentPadding: EdgeInsets.zero,
-            //   onChanged: (v) {
-            //     // for (var element in checkItem.value) {
-            //     //   element.checked = false;
-            //     // }
-            //     checkItem.value[index].checked = v!;
-            //     // reason.value = checkItem.value[index]["title"];
-            //   },
-            //   title: Text(checkItem.value[index].title),
-            // );
-          },
-        ),
       ),
     );
   }

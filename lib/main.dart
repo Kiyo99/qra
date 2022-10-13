@@ -110,3 +110,6 @@ class MyApp extends HookConsumerWidget {
 //todo: Think about the attendance marking flow.
 
 //todo: Make the showToast widget
+
+//todo: Change the value of isELigible to bool
+//todo: Fetch first name of student
