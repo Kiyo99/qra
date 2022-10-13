@@ -164,10 +164,16 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                           .collection("Courses")
                           .doc(course.courseCode)
                           .update({
-                        "students": FieldValue.arrayUnion([
-                          studentsDoc.data()!,
-                        ])
-                      });
+                            "students": FieldValue.arrayUnion([
+                              studentsDoc.data()!,
+                            ])
+                          })
+                          .whenComplete(
+                            () => _showToast(context,
+                                'Successfully subscribed to ${course.courseName}'),
+                          )
+                          .onError((error, stackTrace) => _showToast(context,
+                              'Failed to subscribe to ${course.courseName}'));
                     },
                   ),
                 );
@@ -178,4 +184,15 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
       ),
     );
   }
+}
+
+void _showToast(BuildContext context, String message) {
+  final scaffold = ScaffoldMessenger.of(context);
+  scaffold.showSnackBar(
+    SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
+    ),
+  );
 }
