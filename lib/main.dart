@@ -88,17 +88,14 @@ class MyApp extends HookConsumerWidget {
 //todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
 //todo (You could use a stream-builder again for the attendance sheet just like you are for the courses)
 
-//todo live chat with vvu its ADD LIVE CHAT OPTION TO TILES
+//todo live chat with vvu its
 // todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
-//  todo: Should I dedicated courses field for students? Yes, that means I will update the student model with build runner
+// todo: Should I dedicated courses field for students? Yes, that means I will update the student model with build runner
 
-//todo: save the user locally so we can use the datatype
-
-//todo create walkthrough
+// todo create walkthrough
 
 //todo add lottie files for the delegate
 //todo: Go through lottie and delete some of them
-//todo: Look at dialogs again
 
 //todo: Create Prompt.
 //todo: Create dialogs - reference delivery app
@@ -111,5 +108,4 @@ class MyApp extends HookConsumerWidget {
 
 //todo: Make the showToast widget
 
-//todo: Change the value of isELigible to bool
-//todo: Fetch first name of student
+//todo: Change the value of isEligible to bool
