@@ -8,6 +8,8 @@ import 'package:qra/data/lesson.dart';
 class StudentDetailPage extends HookWidget {
   static const id = "/student_detail_page";
 
+  const StudentDetailPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final studentModel = useState<StudentModel>(Get.arguments);

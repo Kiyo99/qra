@@ -23,6 +23,7 @@ class LoginPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String g;
     final isLoading = useState(false);
     return Scaffold(
         backgroundColor: Constants.coolBlue,

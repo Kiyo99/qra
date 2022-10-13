@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
-import 'package:qra/presentation/detail.dart';
+import 'package:qra/presentation/student/student_details.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
@@ -15,7 +15,7 @@ import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/staff/courses/upload_course.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
-import 'package:qra/presentation/view_course_details.dart';
+import 'package:qra/presentation/staff/courses/view_course_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider =
@@ -105,3 +105,8 @@ class MyApp extends HookConsumerWidget {
 //todo: Add date function for input text date picker??
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
+//todo: Check out checkbox issue
+
+//todo: Think about the attendance marking flow.
+
+//todo: Make the showToast widget

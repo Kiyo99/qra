@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
-import 'package:qra/presentation/view_course_details.dart';
+import 'package:qra/presentation/staff/courses/view_course_details.dart';
 
 class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
   @override
@@ -156,9 +156,6 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                           .collection("Users")
                           .doc(auth.currentUser!.email.toString())
                           .get();
-                      final student =
-                          StudentModel.fromJson(studentsDoc.data()!);
-                      print("Entry: ${student.fullName}");
 
                       await _fireStore
                           .collection("Courses")
