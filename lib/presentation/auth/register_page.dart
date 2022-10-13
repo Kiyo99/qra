@@ -190,6 +190,37 @@ class RegisterPage extends HookConsumerWidget {
                       child: ElevatedButton(
                         child: const Text('Regsiter'),
                         onPressed: () async {
+                          if (emailController.text.isEmpty ||
+                              firstNameController.text.isEmpty ||
+                              lastNameController.text.isEmpty ||
+                              passwordController.text.isEmpty ||
+                              cPasswordController.text.isEmpty ||
+                              majorController.text.isEmpty ||
+                              genderController.text.isEmpty ||
+                              iDController.text.isEmpty ||
+                              numberController.text.isEmpty) {
+                            _showToast(context, 'Please enter all fields');
+                            return;
+                          }
+
+                          if (numberController.text.length < 10) {
+                            _showToast(
+                                context, 'Please enter a valid phone number');
+                            return;
+                          }
+
+                          if (!(passwordController.text ==
+                              cPasswordController.text)) {
+                            _showToast(context, 'Passwords don\'t match');
+                            return;
+                          }
+
+                          if (passwordController.text.length < 6) {
+                            _showToast(context,
+                                'Password should not be less than 6 characters');
+                            return;
+                          }
+
                           isLoading.value = true;
 
                           final user =
@@ -238,7 +269,7 @@ class RegisterPage extends HookConsumerWidget {
                                       _showToast(context, 'Failed to save');
                                       print('Faileddddddddd: $error');
                                     });
-                            Get.to(const StaffPage(title: "QRA"));
+                            Get.offAndToNamed(StaffPage.id);
                           }
                           print("objectsttttt: $user");
                         },

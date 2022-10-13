@@ -57,10 +57,12 @@ class StudentOptionsScreen extends HookConsumerWidget {
                 return ListTile(
                   onTap: () async {
                     if (items[index] == 'Staff View') {
-                      Get.to(const StaffPage(title: "Hey there"));
+                      Get.back();
+                      Get.toNamed(StaffPage.id);
                       return;
                     }
                     if (items[index] == 'View courses') {
+                      Get.back();
                       Get.toNamed(ViewCoursesScreen.id);
                       return;
                     }

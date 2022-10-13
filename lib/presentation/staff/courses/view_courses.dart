@@ -4,8 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
-import 'package:qra/presentation/course_delegate.dart';
-import 'package:qra/presentation/search_button.dart';
+import 'package:qra/presentation/staff/courses/filter_view.dart';
 import 'package:qra/presentation/view_course_details.dart';
 
 class ViewCoursesScreen extends HookWidget {
@@ -23,6 +22,27 @@ class ViewCoursesScreen extends HookWidget {
           title: const Text("View courses"),
           backgroundColor: Constants.coolBlue,
           elevation: 0,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  // AppDialogs.wishCreated("You sure?", "Yea");
+
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25.0),
+                        topRight: Radius.circular(25.0),
+                      ),
+                    ),
+                    isScrollControlled: true,
+                    builder: (ctx) => const FilterView(),
+                  );
+                },
+                icon: const Icon(
+                  Icons.sort_outlined,
+                )),
+          ],
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: _courseStream,
@@ -109,14 +129,6 @@ class ViewCoursesScreen extends HookWidget {
                       ),
                     ),
                   );
-
-                  // return ListTile(
-                  //   title: Text(data['Course Name']),
-                  //   subtitle: Text(data["Course Code"]),
-                  //   onTap: () {
-                  //     print("Entry: ${data['Course Name']}");
-                  //   },
-                  // );
                 }).toList(),
               ),
             );

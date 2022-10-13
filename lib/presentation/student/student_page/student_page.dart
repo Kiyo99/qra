@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
-import 'package:qra/presentation/course_delegate.dart';
 import 'package:qra/presentation/search_button.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/student/generate/generator_improved.dart';
 import 'package:qra/presentation/student/student_options_view.dart';
+import 'package:qra/presentation/student_delegate.dart';
 
 class StudentPage extends HookWidget {
   StudentPage({Key? key}) : super(key: key);
@@ -39,7 +39,8 @@ class StudentPage extends HookWidget {
           appBar: AppBar(
             backgroundColor: Constants.coolBlue,
             elevation: 0,
-            title: Text("Welcome, Godsfavour"),//todo read this name from the local data source
+            title: Text(
+                "Welcome, Godsfavour"), //todo read this name from the local data source
             bottom: TabBar(
               onTap: (index) {
                 tabIndex.value = index;
@@ -53,20 +54,10 @@ class StudentPage extends HookWidget {
               if (tabIndex.value == 1)
                 SearchButton(
                   onPressed: () async {
-                    final searchResult = await showSearch(
+                    await showSearch(
                       context: context,
-                      delegate:
-                          CourseDelegate(), //todo this will be student delegate
+                      delegate: StudentDelegate(),
                     );
-
-                    // if (searchResult != null) {
-                    //   final typedProduct = Product.fromJson(
-                    //     searchResult,
-                    //   );
-                    //   createPostViewModel.setProduct(
-                    //     typedProduct,
-                    //   );
-                    // }
                   },
                 ),
               IconButton(

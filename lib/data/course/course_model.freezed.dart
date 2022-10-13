@@ -24,11 +24,13 @@ class _$CourseModelTearOff {
   _CourseModel call(
       {required String courseName,
       required String courseCode,
+      required String? dueDate,
       required String teacher,
       List<dynamic>? students}) {
     return _CourseModel(
       courseName: courseName,
       courseCode: courseCode,
+      dueDate: dueDate,
       teacher: teacher,
       students: students,
     );
@@ -46,6 +48,7 @@ const $CourseModel = _$CourseModelTearOff();
 mixin _$CourseModel {
   String get courseName => throw _privateConstructorUsedError;
   String get courseCode => throw _privateConstructorUsedError;
+  String? get dueDate => throw _privateConstructorUsedError;
   String get teacher => throw _privateConstructorUsedError;
   List<dynamic>? get students => throw _privateConstructorUsedError;
 
@@ -63,6 +66,7 @@ abstract class $CourseModelCopyWith<$Res> {
   $Res call(
       {String courseName,
       String courseCode,
+      String? dueDate,
       String teacher,
       List<dynamic>? students});
 }
@@ -79,6 +83,7 @@ class _$CourseModelCopyWithImpl<$Res> implements $CourseModelCopyWith<$Res> {
   $Res call({
     Object? courseName = freezed,
     Object? courseCode = freezed,
+    Object? dueDate = freezed,
     Object? teacher = freezed,
     Object? students = freezed,
   }) {
@@ -91,6 +96,10 @@ class _$CourseModelCopyWithImpl<$Res> implements $CourseModelCopyWith<$Res> {
           ? _value.courseCode
           : courseCode // ignore: cast_nullable_to_non_nullable
               as String,
+      dueDate: dueDate == freezed
+          ? _value.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as String?,
       teacher: teacher == freezed
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -113,6 +122,7 @@ abstract class _$CourseModelCopyWith<$Res>
   $Res call(
       {String courseName,
       String courseCode,
+      String? dueDate,
       String teacher,
       List<dynamic>? students});
 }
@@ -131,6 +141,7 @@ class __$CourseModelCopyWithImpl<$Res> extends _$CourseModelCopyWithImpl<$Res>
   $Res call({
     Object? courseName = freezed,
     Object? courseCode = freezed,
+    Object? dueDate = freezed,
     Object? teacher = freezed,
     Object? students = freezed,
   }) {
@@ -143,6 +154,10 @@ class __$CourseModelCopyWithImpl<$Res> extends _$CourseModelCopyWithImpl<$Res>
           ? _value.courseCode
           : courseCode // ignore: cast_nullable_to_non_nullable
               as String,
+      dueDate: dueDate == freezed
+          ? _value.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as String?,
       teacher: teacher == freezed
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -161,6 +176,7 @@ class _$_CourseModel extends _CourseModel {
   _$_CourseModel(
       {required this.courseName,
       required this.courseCode,
+      required this.dueDate,
       required this.teacher,
       this.students})
       : super._();
@@ -173,13 +189,15 @@ class _$_CourseModel extends _CourseModel {
   @override
   final String courseCode;
   @override
+  final String? dueDate;
+  @override
   final String teacher;
   @override
   final List<dynamic>? students;
 
   @override
   String toString() {
-    return 'CourseModel(courseName: $courseName, courseCode: $courseCode, teacher: $teacher, students: $students)';
+    return 'CourseModel(courseName: $courseName, courseCode: $courseCode, dueDate: $dueDate, teacher: $teacher, students: $students)';
   }
 
   @override
@@ -192,6 +210,9 @@ class _$_CourseModel extends _CourseModel {
             (identical(other.courseCode, courseCode) ||
                 const DeepCollectionEquality()
                     .equals(other.courseCode, courseCode)) &&
+            (identical(other.dueDate, dueDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.dueDate, dueDate)) &&
             (identical(other.teacher, teacher) ||
                 const DeepCollectionEquality()
                     .equals(other.teacher, teacher)) &&
@@ -205,6 +226,7 @@ class _$_CourseModel extends _CourseModel {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(courseName) ^
       const DeepCollectionEquality().hash(courseCode) ^
+      const DeepCollectionEquality().hash(dueDate) ^
       const DeepCollectionEquality().hash(teacher) ^
       const DeepCollectionEquality().hash(students);
 
@@ -223,6 +245,7 @@ abstract class _CourseModel extends CourseModel {
   factory _CourseModel(
       {required String courseName,
       required String courseCode,
+      required String? dueDate,
       required String teacher,
       List<dynamic>? students}) = _$_CourseModel;
   _CourseModel._() : super._();
@@ -234,6 +257,8 @@ abstract class _CourseModel extends CourseModel {
   String get courseName => throw _privateConstructorUsedError;
   @override
   String get courseCode => throw _privateConstructorUsedError;
+  @override
+  String? get dueDate => throw _privateConstructorUsedError;
   @override
   String get teacher => throw _privateConstructorUsedError;
   @override
