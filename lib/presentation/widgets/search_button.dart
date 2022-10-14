@@ -13,12 +13,12 @@ class SearchButton extends HookWidget {
       icon: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.white),
+          border: Border.all(color: Colors.yellow),
         ),
         height: 30,
         width: 30,
         padding: const EdgeInsets.all(3),
-        child: const Icon(Icons.search_outlined, size: 18),
+        child: const Icon(Icons.search_outlined, size: 18, color: Colors.yellow,),
       ),
     );
   }

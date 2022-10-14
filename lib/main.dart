@@ -70,7 +70,7 @@ class MyApp extends HookConsumerWidget {
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
             ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
             ViewCourseDetails.id: (context) => const ViewCourseDetails(),
-            StudentDetailPage.id: (context) => StudentDetailPage(),
+            StudentDetailPage.id: (context) => const StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
@@ -99,7 +99,6 @@ class MyApp extends HookConsumerWidget {
 
 //todo: Create Prompt.
 //todo: Create dialogs - reference delivery app
-//todo: Add date function for input text date picker??
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
 //todo: Check out checkbox issue
@@ -107,5 +106,7 @@ class MyApp extends HookConsumerWidget {
 //todo: Think about the attendance marking flow.
 
 //todo: Make the showToast widget
+//todo: Reconsider the use of yellow
+//todo work on the intro
 
 //todo: Change the value of isEligible to bool

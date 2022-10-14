@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
+import 'package:intl/intl.dart';
 
 class UploadCourseScreen extends HookWidget {
   static const id = "/upload_course_screen";
@@ -12,11 +13,41 @@ class UploadCourseScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime _selectedDate = DateTime.now();
     final TextEditingController courseName = TextEditingController();
     final TextEditingController courseCode = TextEditingController();
     final TextEditingController dueDate = TextEditingController();
     final TextEditingController teacher = TextEditingController();
     final isLoading = useState(false);
+
+    _selectDate(BuildContext context) async {
+      await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2022, 1),
+          lastDate: DateTime(2050, 12),
+          builder: (context, picker) {
+            return Theme(
+              //TODO: change colors
+              data: ThemeData.dark().copyWith(
+                colorScheme: const ColorScheme.dark(
+                  primary: Colors.green,
+                  onPrimary: Colors.white,
+                  surface: Colors.blueGrey,
+                  onSurface: Colors.yellow,
+                ),
+                dialogBackgroundColor: Constants.coolBlue,
+              ),
+              child: picker!,
+            );
+          }).then((selectedDate) {
+        //TODO: handle selected date
+        if (selectedDate != null) {
+          dueDate.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+          print("New date: ${dueDate.text}");
+        }
+      });
+    }
 
     return Scaffold(
         backgroundColor: Constants.coolBlue,
@@ -58,6 +89,10 @@ class UploadCourseScreen extends HookWidget {
                         padding: const EdgeInsets.all(10),
                         child: TextField(
                           controller: dueDate,
+                          focusNode: AlwaysDisabledFocusNode(),
+                          onTap: () {
+                            _selectDate(context);
+                          },
                           decoration: InputDecoration(
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -130,4 +165,9 @@ void _showToast(BuildContext context, String message) {
           label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
     ),
   );
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }
