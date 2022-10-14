@@ -2,8 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 
 class SubscribeToCourseScreen extends HookWidget {
   static const id = "/subscribe_to_course_screen";
@@ -45,26 +48,66 @@ class SubscribeToCourseScreen extends HookWidget {
                   title: Text(course.courseName),
                   subtitle: Text(course.courseCode),
                   onTap: () async {
-                    // print("Entry: ${auth.currentUser}");
-                    final studentsDoc = await _fireStore
-                        .collection("Users")
-                        .doc(auth.currentUser!.email.toString())
-                        .get();
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0),
+                        ),
+                      ),
+                      isScrollControlled: true,
+                      builder: (ctx) => AppPrompts(
+                        asset: 'assets/lottie/warning.json',
+                        primaryAction: () async {
+                          Get.back();
+                          AppDialogs.lottieLoader();
+                          // print("Entry: ${auth.currentUser}");
+                          final studentsDoc = await _fireStore
+                              .collection("Users")
+                              .doc(auth.currentUser!.email.toString())
+                              .get();
 
-                    await _fireStore
-                        .collection("Courses")
-                        .doc(course.courseCode)
-                        .update({
-                          "students": FieldValue.arrayUnion([
-                            studentsDoc.data()!,
-                          ])
-                        })
-                        .whenComplete(
-                          () => _showToast(context,
-                              'Successfully subscribed to ${course.courseName}'),
-                        )
-                        .onError((error, stackTrace) => _showToast(context,
-                            'Failed to subscribe to ${course.courseName}'));
+                          await _fireStore
+                              .collection("Courses")
+                              .doc(course.courseCode)
+                              .update({
+                            "students": FieldValue.arrayUnion([
+                              studentsDoc.data()!,
+                            ])
+                          }).whenComplete(() {
+                            Get.back();
+                            showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25.0),
+                                  topRight: Radius.circular(25.0),
+                                ),
+                              ),
+                              isScrollControlled: true,
+                              builder: (ctx) => AppPrompts(
+                                asset: 'assets/lottie/success.json',
+                                primaryAction: () {
+                                  Get.back();
+                                },
+                                message:
+                                    'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
+                                title: 'Success',
+                                showSecondary: false,
+                                buttonText: 'Okay',
+                              ),
+                            );
+                          }).onError((error, stackTrace) => _showToast(context,
+                                  'Failed to subscribe to ${course.courseName}'));
+                        },
+                        message:
+                            'Are you sure you want to subscribe to ${course.courseName}?',
+                        title: 'Subscribe?',
+                        showSecondary: true,
+                        buttonText: 'Yes, subscribe',
+                      ),
+                    );
                   },
                 );
               }).toList(),

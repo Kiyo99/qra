@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
@@ -58,16 +59,54 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
           });
 
           if (results.isEmpty) {
-            return const Center(
-              child: Text(
-                  "Well that didn't go as planned, please try again later"),
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    Transform.scale(
+                      scale: 0.60,
+                      child: Lottie.asset(
+                        "assets/lottie/search_not_found.json",
+                        frameRate: FrameRate(60),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Text(
+                        "Well that didn't go as planned, please try again later",
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             );
           }
 
           if (query.isEmpty) {
-            return const Center(
-              child: Text(
-                  "Yikes! Looks like you haven't searched for a course yet"),
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    Transform.scale(
+                      scale: 0.70,
+                      child: Lottie.asset(
+                        "assets/lottie/empty_box.json",
+                        frameRate: FrameRate(60),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Text(
+                        "Yikes! Looks like you haven't searched for a course yet",
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             );
           }
 
@@ -78,7 +117,7 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                 final auth = FirebaseAuth.instance;
                 final _fireStore = FirebaseFirestore.instance;
                 Map<String, dynamic> data =
-                documentSnapshot.data()! as Map<String, dynamic>;
+                    documentSnapshot.data()! as Map<String, dynamic>;
                 final course = CourseModel.fromJson(data);
 
                 return Padding(
@@ -97,16 +136,16 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                           .collection("Courses")
                           .doc(course.courseCode)
                           .update({
-                        "students": FieldValue.arrayUnion([
-                          studentsDoc.data()!,
-                        ])
-                      })
+                            "students": FieldValue.arrayUnion([
+                              studentsDoc.data()!,
+                            ])
+                          })
                           .whenComplete(
                             () => _showToast(context,
-                            'Successfully subscribed to ${course.courseName}'),
-                      )
+                                'Successfully subscribed to ${course.courseName}'),
+                          )
                           .onError((error, stackTrace) => _showToast(context,
-                          'Failed to subscribe to ${course.courseName}'));
+                              'Failed to subscribe to ${course.courseName}'));
                     },
                   ),
                 );
@@ -131,18 +170,52 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
               a['courseCode'].toString().contains(query.toUpperCase()));
 
           if (results.isEmpty) {
-            return const Center(
-              child: Text("Hmm, Can't seem to find that course"),
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    Transform.scale(
+                      scale: 0.70,
+                      child: Lottie.asset(
+                        "assets/lottie/search_error_demo.json",
+                        frameRate: FrameRate(60),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Text(
+                        "Hmm, can't seem find that course",
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             );
           }
 
           if (query.isEmpty) {
-            return const Center(
+            return Center(
               child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  "Remember to search by course codes ... happy searching!",
-                  textAlign: TextAlign.center,
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    Transform.scale(
+                      scale: 0.70,
+                      child: Lottie.asset(
+                        "assets/lottie/search.json",
+                        frameRate: FrameRate(60),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Text(
+                        "Remember to search by course codes ... happy searching!",
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

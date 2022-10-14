@@ -6,6 +6,8 @@ import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/staff/courses/filter_view.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 
 class ViewCoursesScreen extends HookWidget {
   static const id = "/view_course_screen";
@@ -25,8 +27,6 @@ class ViewCoursesScreen extends HookWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  // AppDialogs.wishCreated("You sure?", "Yea");
-
                   showModalBottomSheet(
                     context: context,
                     shape: const RoundedRectangleBorder(

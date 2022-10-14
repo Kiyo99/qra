@@ -336,23 +336,12 @@ class AppDialogs {
     );
   }
 
-  // static loader() {
-  //   Get.dialog(
-  //     PlatformAlertDialog(
-  //       content: Wrap(
-  //         children: const [PageLoader()],
-  //       ),
-  //     ),
-  //     barrierDismissible: false,
-  //   );
-  // }
-
   static lottieLoader() {
     Get.dialog(
       Transform.scale(
-        scale: .23,
+        scale: 1,
         child: Lottie.asset(
-          "assets/lottie/loading.json",
+          "assets/lottie/loading_yellow.json",
           frameRate: FrameRate(60),
         ),
       ),
@@ -372,7 +361,6 @@ class AppDialogs {
       barrierDismissible: false,
     );
   }
-
 }
 
 enum ConfirmAction { CONFIRM, CANCEL }

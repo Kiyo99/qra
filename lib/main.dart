@@ -97,8 +97,6 @@ class MyApp extends HookConsumerWidget {
 //todo add lottie files for the delegate
 //todo: Go through lottie and delete some of them
 
-//todo: Create Prompt.
-//todo: Create dialogs - reference delivery app
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
 //todo: Check out checkbox issue
