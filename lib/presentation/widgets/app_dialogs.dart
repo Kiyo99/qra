@@ -345,7 +345,20 @@ class AppDialogs {
           frameRate: FrameRate(60),
         ),
       ),
-      barrierDismissible: false,
+      barrierDismissible: true,
+    );
+  }
+
+  static customLottie(String lottie, double scale) {
+    Get.dialog(
+      Transform.scale(
+        scale: scale,
+        child: Lottie.asset(
+          lottie,
+          frameRate: FrameRate(60),
+        ),
+      ),
+      barrierDismissible: true,
     );
   }
 

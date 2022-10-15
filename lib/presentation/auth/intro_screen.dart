@@ -2,14 +2,6 @@
 // import 'package:flutter_hooks/flutter_hooks.dart';
 // import 'package:get/get.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:pamo/domain/entities/appstatus/user_status_model.dart';
-// import 'package:pamo/presentation/presentation.dart';
-// import 'package:pamo/presentation/screens/onboarding/common/intro_pager_item.dart';
-// import 'package:pamo/presentation/screens/onboarding/common/onboarding_wrapper.dart';
-// import 'package:pamo/presentation/viewmodel/auth/auth.dart';
-// import 'package:pamo/presentation/widget/form/form_widgets.dart';
-// import 'package:pamo/presentation/widget/slider_indicator.dart';
-// import 'package:shimmer/shimmer.dart';
 //
 // class IntroScreen extends HookConsumerWidget {
 //   static const id = "/intro";

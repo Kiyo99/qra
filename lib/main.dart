@@ -94,12 +94,11 @@ class MyApp extends HookConsumerWidget {
 
 // todo create walkthrough
 
-//todo add lottie files for the delegate
-//todo: Go through lottie and delete some of them
-
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
 //todo: Check out checkbox issue
+
+//todo put prompts everywhere
 
 //todo: Think about the attendance marking flow.
 
@@ -107,4 +106,8 @@ class MyApp extends HookConsumerWidget {
 //todo: Reconsider the use of yellow
 //todo work on the intro
 
+//todo: Remember functionality of due date all round ith filtering
+
 //todo: Change the value of isEligible to bool
+
+//todo: Code, madina, boxers and singlets, power bank, wash, clean, coflings?, usb cord
