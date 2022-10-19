@@ -106,8 +106,17 @@ class MyApp extends HookConsumerWidget {
 
 //todo: Make the showToast widget
 //todo: Reconsider the use of yellow
-//todo work on the intro
 
-//todo: Remember functionality of due date all round ith filtering
+//todo: Remember functionality of due date all round with filtering
 
 //todo: Change the value of isEligible to bool
+//todo: try to set light and dark theme
+//todo: try to make the attendance list a stream builder also
+//todo: refactor code to change all colors at once
+//todo: refactor code to have one text theme, google fonts
+//todo: or have like 2 or 3 global text themes in constants and call them from there
+
+
+//todo: refactor lottie for view normal courses maybe to no internet
+
+//todo: Refactor showBottomSheet to be a method

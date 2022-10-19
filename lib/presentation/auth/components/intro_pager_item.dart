@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class IntroPagerItem extends HookWidget {
@@ -18,7 +19,7 @@ class IntroPagerItem extends HookWidget {
         ),
         Text(
           slide.title,
-          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+          style: GoogleFonts.exo2(fontSize: 25, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
         Padding(
@@ -26,7 +27,7 @@ class IntroPagerItem extends HookWidget {
             child: Text(
               slide.description,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16),
+              style: GoogleFonts.exo2(fontSize: 16),
             )),
       ],
     );

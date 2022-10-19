@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/login_page.dart';
-import 'package:qra/presentation/staff/staff_delegate.dart';
+import 'package:qra/presentation/staff/staff_search_delegate/staff_delegate.dart';
 import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner_improved.dart';
 import 'package:qra/presentation/staff/courses/upload_course.dart';
-import 'package:qra/presentation/student/student_page/student_page.dart';
 
 class StaffPage extends HookWidget {
   static const id = 'staff_page';
@@ -29,7 +29,7 @@ class StaffPage extends HookWidget {
         BottomNavigationBarItem(
             icon: Icon(Icons.menu_book_outlined), label: "Upload course"),
       ],
-      backgroundColor: const Color(0xff3A4256),
+      backgroundColor: Constants.coolBlue,
       currentIndex: _selectedIndex.value,
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.grey,
@@ -43,7 +43,7 @@ class StaffPage extends HookWidget {
 
     final topAppBar = AppBar(
       elevation: 0.1,
-      backgroundColor: const Color(0xff3A4256),
+      backgroundColor: Constants.coolBlue,
       title: const Text("Qra"),
       actions: <Widget>[
         if (_selectedIndex.value == 0)

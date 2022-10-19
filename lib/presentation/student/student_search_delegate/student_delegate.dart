@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 
-class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
+class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
   @override
   List<Widget>? buildActions(BuildContext context) =>
       [const SizedBox(width: 20)];
@@ -33,6 +37,7 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
       ),
       appBarTheme: Theme.of(context).appBarTheme.copyWith(
           color: Constants.coolBlue,
+          titleTextStyle: GoogleFonts.exo2(),
           shadowColor: Constants.coolBlue,
           elevation: 0),
     );
@@ -70,10 +75,10 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
                         frameRate: FrameRate(60),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         "Well that didn't go as planned, please try again later",
-                        style: TextStyle(fontSize: 18),
+                        style: GoogleFonts.exo2(fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -96,10 +101,10 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
                         frameRate: FrameRate(60),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         "Yikes! Looks like you haven't searched for a course yet",
-                        style: TextStyle(fontSize: 18),
+                        style: GoogleFonts.exo2(fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -113,26 +118,41 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
             margin: const EdgeInsets.only(top: 10),
             child: ListView(
               children: results.map((DocumentSnapshot documentSnapshot) {
+                final auth = FirebaseAuth.instance;
+                final _fireStore = FirebaseFirestore.instance;
                 Map<String, dynamic> data =
                     documentSnapshot.data()! as Map<String, dynamic>;
                 final course = CourseModel.fromJson(data);
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        // color: const Color.fromRGBO(64, 75, 96, .9),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: ListTile(
-                        title: Text(course.courseName),
-                        subtitle: Text(course.courseCode),
-                        onTap: () {
-                          Get.toNamed(ViewCourseDetails.id, arguments: course);
-                        },
-                      )),
+                  child: ListTile(
+                    title: Text(course.courseName, style: GoogleFonts.exo2()),
+                    subtitle:
+                        Text(course.courseCode, style: GoogleFonts.exo2()),
+                    onTap: () async {
+                      // print("Entry: ${auth.currentUser}");
+                      final studentsDoc = await _fireStore
+                          .collection("Users")
+                          .doc(auth.currentUser!.email.toString())
+                          .get();
+
+                      await _fireStore
+                          .collection("Courses")
+                          .doc(course.courseCode)
+                          .update({
+                            "students": FieldValue.arrayUnion([
+                              studentsDoc.data()!,
+                            ])
+                          })
+                          .whenComplete(
+                            () => _showToast(context,
+                                'Successfully subscribed to ${course.courseName}'),
+                          )
+                          .onError((error, stackTrace) => _showToast(context,
+                              'Failed to subscribe to ${course.courseName}'));
+                    },
+                  ),
                 );
               }).toList(),
             ),
@@ -167,10 +187,10 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
                         frameRate: FrameRate(60),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         "Hmm, can't seem find that course",
-                        style: TextStyle(fontSize: 18),
+                        style: GoogleFonts.exo2(fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -193,9 +213,9 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
                         frameRate: FrameRate(60),
                       ),
                     ),
-                    const Text(
+                    Text(
                       "Remember to search by course codes ... happy searching!",
-                      style: TextStyle(fontSize: 18),
+                      style: GoogleFonts.exo2(fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -208,26 +228,84 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
             margin: const EdgeInsets.only(top: 10),
             child: ListView(
               children: results.map((DocumentSnapshot documentSnapshot) {
+                final auth = FirebaseAuth.instance;
+                final _fireStore = FirebaseFirestore.instance;
                 Map<String, dynamic> data =
                     documentSnapshot.data()! as Map<String, dynamic>;
                 final course = CourseModel.fromJson(data);
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        // color: const Color.fromRGBO(64, 75, 96, .9),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: ListTile(
-                        title: Text(course.courseName),
-                        subtitle: Text(course.courseCode),
-                        onTap: () {
-                          Get.toNamed(ViewCourseDetails.id, arguments: course);
-                        },
-                      )),
+                  child: ListTile(
+                    title: Text(course.courseName, style: GoogleFonts.exo2()),
+                    subtitle:
+                        Text(course.courseCode, style: GoogleFonts.exo2()),
+                    onTap: () async {
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
+                          ),
+                        ),
+                        isScrollControlled: true,
+                        builder: (ctx) => AppPrompts(
+                          asset: 'assets/lottie/warning.json',
+                          primaryAction: () async {
+                            Get.back();
+                            AppDialogs.lottieLoader();
+                            // print("Entry: ${auth.currentUser}");
+                            final studentsDoc = await _fireStore
+                                .collection("Users")
+                                .doc(auth.currentUser!.email.toString())
+                                .get();
+
+                            await _fireStore
+                                .collection("Courses")
+                                .doc(course.courseCode)
+                                .update({
+                              "students": FieldValue.arrayUnion([
+                                studentsDoc.data()!,
+                              ])
+                            }).whenComplete(() {
+                              Get.back();
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25.0),
+                                    topRight: Radius.circular(25.0),
+                                  ),
+                                ),
+                                isScrollControlled: true,
+                                builder: (ctx) => AppPrompts(
+                                  asset: 'assets/lottie/success.json',
+                                  primaryAction: () {
+                                    Get.back();
+                                  },
+                                  message:
+                                      'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
+                                  title: 'Success',
+                                  showSecondary: false,
+                                  buttonText: 'Okay',
+                                ),
+                              );
+                            }).onError((error, stackTrace) => () {
+                                      Get.back();
+                                      _showToast(context,
+                                          'Failed to subscribe to ${course.courseName}');
+                                    });
+                          },
+                          message:
+                              'Are you sure you want to subscribe to ${course.courseName}?',
+                          title: 'Subscribe?',
+                          showSecondary: true,
+                          buttonText: 'Yes, subscribe',
+                        ),
+                      );
+                    },
+                  ),
                 );
               }).toList(),
             ),
@@ -236,4 +314,15 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
       ),
     );
   }
+}
+
+void _showToast(BuildContext context, String message) {
+  final scaffold = ScaffoldMessenger.of(context);
+  scaffold.showSnackBar(
+    SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
+    ),
+  );
 }

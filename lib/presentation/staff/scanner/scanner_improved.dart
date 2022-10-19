@@ -86,16 +86,12 @@ class ImprovedScanner extends HookConsumerWidget {
                       ConfirmationSlider(
                         stickToEnd: false,
                         text: "Slide to scan",
-                        textStyle: TextStyle(
+                        textStyle: GoogleFonts.exo2(
                             color: Constants.coolBlue,
                             fontWeight: FontWeight.w700,
                             fontSize: 15),
                         onConfirmation: () {
                           Get.to(const QrScanner());
-                          // ref.read(AppOrderViewModel.provider).generateOTP(
-                          //     currentOrder['id'].toString(), 'true', 'Pick up');
-                          // ref.read(AppOrderViewModel.Provider).getTripStage('PICKUP_CONFIRMED');
-                          // ref.read(MapsViewModel.provider).updateMap('PICKUP_CONFIRMED');
                         },
                         height: 50,
                         foregroundColor: Colors.green,
@@ -106,46 +102,6 @@ class ImprovedScanner extends HookConsumerWidget {
                         sliderButtonContent: const Icon(Icons.chevron_right,
                             color: Colors.white, size: 30),
                       ),
-                      // const SizedBox(height: 30),
-                      // ConfirmationSlider(
-                      //   stickToEnd: false,
-                      //   text: "Slide to generate code",
-                      //   textStyle: TextStyle(
-                      //       color: Constants.coolBlue,
-                      //       fontWeight: FontWeight.w700,
-                      //       fontSize: 15),
-                      //   onConfirmation: () async {
-                      //     // var document = await Firestore.instance.collection('COLLECTION_NAME').document('TESTID1');
-                      //     // document.get() => then(function(document) {
-                      //     // print(document("name"));
-                      //     // });
-                      //     print("valueeeeee");
-                      //
-                      //     _fireStore
-                      //         .collection("Users")
-                      //         .doc(currentUser!.email)
-                      //         .get()
-                      //         .then((doc) {
-                      //       if (doc.exists) {
-                      //         data = doc.data();
-                      //         print("valueeeeegge: ${data}");
-                      //         Get.to(ViewQr(), arguments: data);
-                      //         //todo: Move the scanning widget into a new page
-                      //         //todo: Assign the Get argument to it when passing it. Vuala
-                      //       } else {
-                      //         print("Failed");
-                      //       }
-                      //     });
-                      //   },
-                      //   height: 50,
-                      //   foregroundColor: Colors.green,
-                      //   backgroundColor: Colors.greenAccent,
-                      //   backgroundColorEnd: Colors.blueGrey,
-                      //   shadow: const BoxShadow(color: Colors.transparent),
-                      //   backgroundShape: BorderRadius.circular(15.0),
-                      //   sliderButtonContent: const Icon(Icons.chevron_right,
-                      //       color: Colors.white, size: 30),
-                      // ),
                     ],
                   ),
                 ),

@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/login_page.dart';
-import 'package:qra/presentation/staff/courses/view_courses.dart';
-import 'package:qra/presentation/staff/staff_page/staff_page.dart';
-import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 
 class StudentOptionsScreen extends HookConsumerWidget {
   const StudentOptionsScreen({Key? key, required this.title}) : super(key: key);
@@ -16,8 +14,6 @@ class StudentOptionsScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // dynamic data = ref.watch(AppOrderViewModel.provider).currentTrip;
-
     var items = [
       'Update student information',
       'Subscribed courses',
@@ -43,7 +39,8 @@ class StudentOptionsScreen extends HookConsumerWidget {
             margin: const EdgeInsets.only(top: 30),
             child: Text(
               title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style:
+                  GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
           ),
@@ -74,7 +71,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
                   },
                   title: Text(
                     items[index],
-                    style: const TextStyle(fontSize: 14),
+                    style: GoogleFonts.exo2(fontSize: 14),
                   ),
                   leading: items[index] == 'Update student information'
                       ? const Icon(Icons.account_circle_outlined)

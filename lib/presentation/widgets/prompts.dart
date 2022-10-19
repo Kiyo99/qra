@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
@@ -63,20 +64,20 @@ class AppPrompts extends HookConsumerWidget {
                 title,
                 textAlign: TextAlign.center,
                 style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    GoogleFonts.exo2(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 15),
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
+                style: GoogleFonts.exo2(fontSize: 18),
               ),
               const SizedBox(height: 30),
               TextButton(
                 onPressed: primaryAction,
                 child: Text(
                   buttonText,
-                  style: TextStyle(color: Constants.coolBlue),
+                  style: GoogleFonts.exo2(color: Constants.coolBlue),
                 ),
                 style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -98,7 +99,7 @@ class AppPrompts extends HookConsumerWidget {
                   },
                   child: Text(
                     "Back",
-                    style: TextStyle(color: Constants.coolOrange),
+                    style: GoogleFonts.exo2(color: Constants.coolOrange),
                   ),
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(

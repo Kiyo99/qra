@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
@@ -23,6 +24,7 @@ class SubscribeToCourseScreen extends HookWidget {
         backgroundColor: Constants.coolBlue,
         appBar: AppBar(
           title: const Text("Subscribe to a course"),
+          titleTextStyle: GoogleFonts.exo2(fontSize: 20),
           backgroundColor: Constants.coolBlue,
           elevation: 0,
         ),
@@ -45,8 +47,8 @@ class SubscribeToCourseScreen extends HookWidget {
                 final course = CourseModel.fromJson(data);
 
                 return ListTile(
-                  title: Text(course.courseName),
-                  subtitle: Text(course.courseCode),
+                  title: Text(course.courseName, style: GoogleFonts.exo2()),
+                  subtitle: Text(course.courseCode, style: GoogleFonts.exo2()),
                   onTap: () async {
                     showModalBottomSheet(
                       context: context,

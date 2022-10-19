@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
 import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 import 'package:qra/presentation/student/generate/generator_improved.dart';
 import 'package:qra/presentation/student/student_options_view.dart';
-import 'package:qra/presentation/student/student_delegate.dart';
+import 'package:qra/presentation/student/student_search_delegate/student_delegate.dart';
 
 class StudentPage extends HookWidget {
   static const id = 'student_page';
@@ -41,14 +42,18 @@ class StudentPage extends HookWidget {
           appBar: AppBar(
             backgroundColor: Constants.coolBlue,
             elevation: 0,
-            title: Text(greeting.value),
+            title: Text(greeting.value, style: GoogleFonts.exo2()),
             bottom: TabBar(
               onTap: (index) {
                 tabIndex.value = index;
               },
-              tabs: const [
-                Tab(text: "Generate QR"),
-                Tab(text: "Subscribe to course"),
+              tabs: [
+                Tab(
+                  child: Text("Generate QR", style: GoogleFonts.exo2()),
+                ),
+                Tab(
+                    child:
+                        Text("Subscribe to course", style: GoogleFonts.exo2()))
               ],
             ),
             actions: [

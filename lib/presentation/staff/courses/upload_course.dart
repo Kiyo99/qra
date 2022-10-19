@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 
 class UploadCourseScreen extends HookWidget {
   static const id = "/upload_course_screen";
@@ -13,7 +16,6 @@ class UploadCourseScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime _selectedDate = DateTime.now();
     final TextEditingController courseName = TextEditingController();
     final TextEditingController courseCode = TextEditingController();
     final TextEditingController dueDate = TextEditingController();
@@ -56,6 +58,7 @@ class UploadCourseScreen extends HookWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Center(
                   child: ListView(
+                    shrinkWrap: true,
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10),
@@ -65,6 +68,9 @@ class UploadCourseScreen extends HookWidget {
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Constants.coolOrange)),
                               border: const OutlineInputBorder(),
                               labelText: 'Course Name',
                               labelStyle:
@@ -75,14 +81,18 @@ class UploadCourseScreen extends HookWidget {
                         padding: const EdgeInsets.all(10),
                         child: TextField(
                           controller: courseCode,
+                          cursorColor: Constants.coolOrange,
                           decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              border: const OutlineInputBorder(),
-                              labelText: 'Course Code',
-                              labelStyle:
-                                  GoogleFonts.exo2(color: Colors.white)),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Constants.coolOrange)),
+                            border: const OutlineInputBorder(),
+                            labelText: 'Course Code',
+                            labelStyle: GoogleFonts.exo2(color: Colors.white),
+                          ),
                         ),
                       ),
                       Container(
@@ -112,6 +122,9 @@ class UploadCourseScreen extends HookWidget {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                               border: const OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Constants.coolOrange)),
                               labelText: 'Teacher',
                               labelStyle:
                                   GoogleFonts.exo2(color: Colors.white)),
@@ -121,33 +134,95 @@ class UploadCourseScreen extends HookWidget {
                       Container(
                         height: 50,
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: ElevatedButton(
-                            child: const Text('Upload Course'),
-                            onPressed: () async {
-                              isLoading.value = true;
+                        child: TextButton(
+                          onPressed: () async {
+                            if (courseCode.text.isEmpty ||
+                                courseName.text.isEmpty ||
+                                teacher.text.isEmpty ||
+                                dueDate.text.isEmpty) {
+                              _showToast(context, 'Please enter all fields');
+                              return;
+                            }
 
-                              Map<String, Object> db = {};
-                              db['courseName'] = courseName.text;
-                              db['courseCode'] = courseCode.text;
-                              db['dueDate'] = dueDate.text;
-                              db['teacher'] = teacher.text;
+                            showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25.0),
+                                        topRight: Radius.circular(25.0))),
+                                builder: (ctx) => AppPrompts(
+                                    title: "Upload?",
+                                    message:
+                                        "Are you sure you want to upload ${courseName.text}?",
+                                    asset: "assets/lottie/warning.json",
+                                    primaryAction: () async {
+                                      Get.back();
+                                      AppDialogs.lottieLoader();
 
-                              _firestore
-                                  .collection("Courses")
-                                  .doc(db['courseCode'].toString())
-                                  .set(db)
-                                  .whenComplete(() {
-                                isLoading.value = false;
-                                _showToast(
-                                    context, 'Successfully uploaded course');
-                              }).onError((error, stackTrace) => () {
-                                        isLoading.value = false;
-                                        _showToast(context, 'Failed to save');
-                                        print('Faileddddddddd: $error');
-                                      });
-                              // Get.to(const StaffPage(title: "QRA"));
-                            }),
-                      ),
+                                      Map<String, Object> db = {};
+                                      db['courseName'] = courseName.text;
+                                      db['courseCode'] = courseCode.text;
+                                      db['dueDate'] = dueDate.text;
+                                      db['teacher'] = teacher.text;
+
+                                      _firestore
+                                          .collection("Courses")
+                                          .doc(db['courseCode'].toString())
+                                          .set(db)
+                                          .whenComplete(() {
+                                        courseName.clear();
+                                        courseCode.clear();
+                                        dueDate.clear();
+                                        teacher.clear();
+                                        Get.back();
+                                        showModalBottomSheet(
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(25.0),
+                                              topRight: Radius.circular(25.0),
+                                            ),
+                                          ),
+                                          isScrollControlled: true,
+                                          builder: (ctx) => AppPrompts(
+                                            asset: 'assets/lottie/success.json',
+                                            primaryAction: () {
+                                              Get.back();
+                                            },
+                                            message:
+                                                'You have successfully uploaded ${courseCode.text}.',
+                                            title: 'Success',
+                                            showSecondary: false,
+                                            buttonText: 'Okay',
+                                          ),
+                                        );
+                                      }).onError((error, stackTrace) => () {
+                                                Get.back();
+                                                _showToast(context,
+                                                    'Failed to upload ${courseCode.text}');
+                                                print('Faileddddddddd: $error');
+                                              });
+                                    },
+                                    buttonText: "Yes, upload",
+                                    showSecondary: true));
+                          },
+                          child: Text('Upload Course',
+                              style: GoogleFonts.exo2(
+                                  color: Constants.coolBlue,
+                                  fontWeight: FontWeight.w600)),
+                          style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  width: 1,
+                                  color: Constants.coolOrange,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              backgroundColor: Constants.coolOrange),
+                        ),
+                      )
                     ],
                   ),
                 ),

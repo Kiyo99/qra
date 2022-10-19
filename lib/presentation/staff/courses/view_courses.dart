@@ -86,7 +86,7 @@ class ViewCoursesScreen extends HookWidget {
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
-                          color: const Color.fromRGBO(64, 75, 96, .9),
+                          color: Constants.secondaryBlue,
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         padding: const EdgeInsets.all(20),

@@ -109,7 +109,7 @@ class ImprovedQrGenerator extends HookConsumerWidget {
                       ConfirmationSlider(
                         stickToEnd: false,
                         text: "Slide to generate code",
-                        textStyle: TextStyle(
+                        textStyle: GoogleFonts.exo2(
                             color: Constants.coolBlue,
                             fontWeight: FontWeight.w700,
                             fontSize: 15),
