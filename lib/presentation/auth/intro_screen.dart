@@ -68,7 +68,7 @@ class IntroScreen extends HookConsumerWidget {
                         )
                       : user == null
                           ? Get.offAllNamed(LoginPage.id)
-                          : Get.offAllNamed(StaffPage.id),
+                          : Get.offAllNamed(StudentPage.id),
                   child: Text(
                     currentSlide.value < 3 ? "Next" : "Done",
                     style: TextStyle(color: Constants.coolBlue),
@@ -100,7 +100,7 @@ class IntroScreen extends HookConsumerWidget {
                         print(user);
                         user == null
                             ? Get.offAllNamed(LoginPage.id)
-                            : Get.offAllNamed(StudentPage.id);
+                            : Get.offAllNamed(StaffPage.id);
                       },
                       child: Text(
                         "Skip",

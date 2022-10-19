@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 class ImprovedScanner extends HookConsumerWidget {
@@ -18,7 +21,15 @@ class ImprovedScanner extends HookConsumerWidget {
     final _fireStore = FirebaseFirestore.instance;
     final auth = FirebaseAuth.instance;
     User? currentUser = auth.currentUser;
-    dynamic data;
+    final data = [
+      "RHoda",
+      "Hu",
+    ];
+
+    // final items = ['One', 'Two', 'Three', 'Four'];
+    final items = useState(['Course code...']);
+    final selectedValue = useState(items.value[0]);
+
     return Scaffold(
       body: Stack(children: [
         Center(
@@ -84,6 +95,58 @@ class ImprovedScanner extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold)),
                       ),
                       const SizedBox(height: 50),
+                      StreamBuilder(
+                        stream: _fireStore.collection("Courses").snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Text("Loading");
+                          }
+                          final userDocument = snapshot.data!.docs;
+                          print("Doc: ${userDocument}");
+
+                          for (int i = 0; i < userDocument.length; i++) {
+                            items.value.addIf(
+                                !(items.value.contains(userDocument[i].id)),
+                                userDocument[i].id);
+                          }
+
+                          return Container(
+                            height: 50,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            margin: const EdgeInsets.symmetric(horizontal: 30),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: DropdownButtonFormField(
+                              items: items.value
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) =>
+                                          DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          ))
+                                  .toList(),
+                              value: selectedValue.value,
+                              hint: Text("Choose a course..."),
+                              focusColor: Colors.white,
+                              iconEnabledColor: Constants.coolOrange,
+                              // decoration: InputDecoration(
+                              //   filled: true,
+                              //   hintStyle: TextStyle(color: Colors.grey[800]),
+                              //   hintText: "Name",
+                              //   // fillColor: Colors.blue[200],
+                              // ),
+                              style: const TextStyle(color: Colors.black),
+                              dropdownColor: Colors.grey,
+                              onChanged: (val) {
+                                selectedValue.value = val.toString();
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 20),
                       ConfirmationSlider(
                         stickToEnd: false,
                         text: "Slide to scan",
@@ -92,12 +155,33 @@ class ImprovedScanner extends HookConsumerWidget {
                             fontWeight: FontWeight.w700,
                             fontSize: 15),
                         onConfirmation: () {
-                          Get.to(const QrScanner());
+                          if (selectedValue.value == "Course code...") {
+                            showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25.0),
+                                        topRight: Radius.circular(25.0))),
+                                builder: (ctx) => AppPrompts(
+                                    title: "Error",
+                                    message:
+                                        "Please select a course code to proceed",
+                                    asset: "assets/lottie/error.json",
+                                    primaryAction: () {
+                                      Get.back();
+                                    },
+                                    buttonText: "Okay",
+                                    showSecondary: false));
+                            return;
+                          }
+
+                          Get.to(QrScanner(),
+                              arguments: selectedValue.value);
                         },
                         height: 50,
-                        foregroundColor: Colors.green,
-                        backgroundColor: Colors.greenAccent,
-                        backgroundColorEnd: Colors.blueGrey,
+                        foregroundColor: Colors.black,
+                        backgroundColor: Constants.coolOrange,
+                        backgroundColorEnd: Constants.coolOrange,
                         shadow: const BoxShadow(color: Colors.transparent),
                         backgroundShape: BorderRadius.circular(15.0),
                         sliderButtonContent: const Icon(Icons.chevron_right,

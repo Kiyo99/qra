@@ -73,7 +73,6 @@ class ViewCoursesScreen extends HookWidget {
                     .map((DocumentSnapshot documentSnapshot) {
                   Map<String, dynamic> data =
                       documentSnapshot.data()! as Map<String, dynamic>;
-                  print("Dataaaaaa: ${data}");
                   final course = CourseModel.fromJson(data);
                   return GestureDetector(
                     onTap: () {

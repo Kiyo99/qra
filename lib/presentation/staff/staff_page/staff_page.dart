@@ -29,7 +29,7 @@ class StaffPage extends HookWidget {
       ],
       backgroundColor: Constants.coolBlue,
       currentIndex: _selectedIndex.value,
-      selectedItemColor: Colors.white,
+      selectedItemColor: Constants.coolOrange,
       unselectedItemColor: Colors.grey,
       showUnselectedLabels: false,
       onTap: (index) {

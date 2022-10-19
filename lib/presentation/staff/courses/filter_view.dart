@@ -43,21 +43,11 @@ class FilterView extends HookWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () async {
-                    if (items[index] == "All"){
+                    if (items[index] == "All") {
                       Get.toNamed(SubscribeToCourseScreen.id);
                     }
-                    // if (items[index] == context.resources.strings.all){
-                    //   await ref.read(AppOrderViewModel.provider.notifier).getOrders();
-                    //   Get.back();
-                    // }
-                    // else if (items[index] == context.resources.strings.pendingPickUp){
-                    //   ref.read(AppOrderViewModel.provider.notifier).getOrdersByStatus('PENDING_PICKUP');
-                    //   // ref.read(AppOrderViewModel.Provider).updateData();
-                    //   // Get.back();
-                    // }
-                    // else if (items[index] == context.resources.strings.pendingDelivery){
-                    //   ref.read(AppOrderViewModel.provider.notifier).getOrdersByStatus('PENDING_DELIVERY');
-                    // }
+                    if (items[index] == "Today") {}
+                    if (items[index] == "Tomorrow") {}
                   },
                   title: Text(
                     items[index],

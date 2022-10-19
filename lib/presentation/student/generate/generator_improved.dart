@@ -151,8 +151,8 @@ class ImprovedQrGenerator extends HookConsumerWidget {
                           });
                         },
                         height: 50,
-                        foregroundColor: Colors.green,
-                        backgroundColor: Colors.greenAccent,
+                        foregroundColor: Colors.black,
+                        backgroundColor: Constants.coolOrange,
                         backgroundColorEnd: Constants.coolOrange,
                         shadow: const BoxShadow(color: Colors.transparent),
                         backgroundShape: BorderRadius.circular(15.0),

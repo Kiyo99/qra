@@ -65,7 +65,7 @@ class MyApp extends HookConsumerWidget {
           title: 'QRA',
           debugShowCheckedModeBanner: false,
           routes: {
-            QrScanner.id: (context) => const QrScanner(),
+            QrScanner.id: (context) => QrScanner(),
             LoginPage.id: (context) => LoginPage(),
             StaffPage.id: (context) => const StaffPage(),
             StudentPage.id: (context) => StudentPage(),
@@ -86,29 +86,16 @@ class MyApp extends HookConsumerWidget {
 
 //todo: create a screen for deleting courses, (Only lecturers or admins or exam controller)
 
-//todo: How you will automatically check the box is this. There wil be a stream that listens to this shit.
-//todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
-//todo (You could use a stream-builder again for the attendance sheet just like you are for the courses)
-
 //todo live chat with vvu its
-// todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
-// todo: Should I dedicated courses field for students? Yes, that means I will update the student model with build runner
-
-// todo create walkthrough
 
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
-//todo: Check out checkbox issue
-
-//todo: Think about the attendance marking flow.
 
 //todo: Make the showToast a widget
 
 //todo: Remember functionality of due date all round with filtering
 
-//todo: Change the value of isEligible to bool, why me???
 //todo: try to set light and dark theme
-//todo: try to make the attendance list a stream builder also
 //todo: refactor code to change all colors at once
 //todo: refactor code to have one text theme, google fonts
 //todo: or have like 2 or 3 global text themes in constants and call them from there
@@ -121,3 +108,5 @@ class MyApp extends HookConsumerWidget {
 
 //todo: Sort the attendance sheet by alphabetical order. Include a search feature
 //todo: Handle errors on view course details
+
+//todo: Add realtime chat integration
