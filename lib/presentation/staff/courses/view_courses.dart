@@ -27,20 +27,17 @@ class ViewCoursesScreen extends HookWidget {
           actions: [
             IconButton(
                 onPressed: () {
-
-                  AppDialogs.lottieLoader();
-
-                  // showModalBottomSheet(
-                  //   context: context,
-                  //   shape: const RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.only(
-                  //       topLeft: Radius.circular(25.0),
-                  //       topRight: Radius.circular(25.0),
-                  //     ),
-                  //   ),
-                  //   isScrollControlled: true,
-                  //   builder: (ctx) => const FilterView(),
-                  // );
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25.0),
+                        topRight: Radius.circular(25.0),
+                      ),
+                    ),
+                    isScrollControlled: true,
+                    builder: (ctx) => const FilterView(),
+                  );
                 },
                 icon: const Icon(
                   Icons.sort_outlined,

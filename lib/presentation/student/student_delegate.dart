@@ -199,7 +199,7 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Column(
+                child: ListView(
                   children: [
                     Transform.scale(
                       scale: 0.70,
@@ -208,12 +208,10 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                         frameRate: FrameRate(60),
                       ),
                     ),
-                    const Expanded(
-                      child: Text(
-                        "Remember to search by course codes ... happy searching!",
-                        style: TextStyle(fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
+                    const Text(
+                      "Remember to search by course codes ... happy searching!",
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

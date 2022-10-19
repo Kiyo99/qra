@@ -46,12 +46,6 @@ class StaffPage extends HookWidget {
       backgroundColor: const Color(0xff3A4256),
       title: const Text("Qra"),
       actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.menu_outlined),
-          onPressed: () {
-            Get.to(StudentPage());
-          },
-        ),
         if (_selectedIndex.value == 0)
           SearchButton(
             onPressed: () async {

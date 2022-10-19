@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qra/constants.dart';
 
-class FilterView extends HookConsumerWidget {
+class FilterView extends HookWidget {
   const FilterView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var items = ['All', 'Today\'s date', 'Custom date'];
+  Widget build(BuildContext context) {
+    var items = ['All', 'Today', 'Tomorrow'];
     return Container(
       padding: const EdgeInsets.all(8.0),
       height: 300,

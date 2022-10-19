@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
-import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 class ImprovedScanner extends HookConsumerWidget {
@@ -53,7 +52,7 @@ class ImprovedScanner extends HookConsumerWidget {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 90, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(0, 90, 0, 10),
                   child: Text(
                     "Ready for exams?",
                     style: GoogleFonts.exo2(
@@ -68,7 +67,8 @@ class ImprovedScanner extends HookConsumerWidget {
                 height: MediaQuery.of(context).size.height / 2,
                 decoration: BoxDecoration(
                   color: Constants.coolBlue,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
+                  borderRadius:
+                      const BorderRadius.only(topLeft: Radius.circular(70)),
                 ),
                 child: Center(
                   child: Column(

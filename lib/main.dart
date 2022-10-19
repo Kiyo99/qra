@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/student/student_details.dart';
@@ -67,6 +68,7 @@ class MyApp extends HookConsumerWidget {
             QrScanner.id: (context) => const QrScanner(),
             LoginPage.id: (context) => LoginPage(),
             StaffPage.id: (context) => const StaffPage(),
+            StudentPage.id: (context) => StudentPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
             ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
             ViewCourseDetails.id: (context) => const ViewCourseDetails(),
@@ -75,7 +77,7 @@ class MyApp extends HookConsumerWidget {
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: user == null ? LoginPage() : const StaffPage()),
+          home: IntroScreen()),
     );
   }
 }
@@ -109,5 +111,3 @@ class MyApp extends HookConsumerWidget {
 //todo: Remember functionality of due date all round ith filtering
 
 //todo: Change the value of isEligible to bool
-
-//todo: Code, madina, boxers and singlets, power bank, wash, clean, coflings?, usb cord

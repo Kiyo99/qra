@@ -11,6 +11,8 @@ import 'package:qra/presentation/student/student_options_view.dart';
 import 'package:qra/presentation/student/student_delegate.dart';
 
 class StudentPage extends HookWidget {
+  static const id = 'student_page';
+
   StudentPage({Key? key}) : super(key: key);
 
   final auth = FirebaseAuth.instance;

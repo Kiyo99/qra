@@ -181,27 +181,25 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
           }
 
           if (query.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Transform.scale(
-                    scale: 0.70,
-                    child: Lottie.asset(
-                      "assets/lottie/search.json",
-                      frameRate: FrameRate(60),
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ListView(
+                  children: [
+                    Transform.scale(
+                      scale: 0.70,
+                      child: Lottie.asset(
+                        "assets/lottie/search.json",
+                        frameRate: FrameRate(60),
+                      ),
                     ),
-                  ),
-                  const Expanded(
-                    child: Text(
+                    const Text(
                       "Remember to search by course codes ... happy searching!",
                       style: TextStyle(fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }
