@@ -52,11 +52,12 @@ class ImprovedScanner extends HookConsumerWidget {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(0, 90, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(0, 90, 20, 10),
                   child: Text(
                     "Ready for exams?",
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.exo2(
-                        fontSize: 40, color: Constants.coolBlue),
+                        fontSize: 30, color: Constants.coolBlue),
                   ),
                 ),
               ),

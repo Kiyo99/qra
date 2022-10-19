@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 
 class FilterView extends HookWidget {
   const FilterView({Key? key}) : super(key: key);
@@ -41,6 +43,9 @@ class FilterView extends HookWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () async {
+                    if (items[index] == "All"){
+                      Get.toNamed(SubscribeToCourseScreen.id);
+                    }
                     // if (items[index] == context.resources.strings.all){
                     //   await ref.read(AppOrderViewModel.provider.notifier).getOrders();
                     //   Get.back();

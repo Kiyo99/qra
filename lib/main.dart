@@ -71,7 +71,7 @@ class MyApp extends HookConsumerWidget {
             StudentPage.id: (context) => StudentPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
             ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
-            ViewCourseDetails.id: (context) => const ViewCourseDetails(),
+            ViewCourseDetails.id: (context) => ViewCourseDetails(),
             StudentDetailPage.id: (context) => const StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
             RegisterPage.id: (context) => RegisterPage(),
@@ -100,23 +100,24 @@ class MyApp extends HookConsumerWidget {
 //todo: Look at either locally caching the person or having useState
 //todo: Check out checkbox issue
 
-//todo put prompts everywhere
-
 //todo: Think about the attendance marking flow.
 
-//todo: Make the showToast widget
-//todo: Reconsider the use of yellow
+//todo: Make the showToast a widget
 
 //todo: Remember functionality of due date all round with filtering
 
-//todo: Change the value of isEligible to bool
+//todo: Change the value of isEligible to bool, why me???
 //todo: try to set light and dark theme
 //todo: try to make the attendance list a stream builder also
 //todo: refactor code to change all colors at once
 //todo: refactor code to have one text theme, google fonts
 //todo: or have like 2 or 3 global text themes in constants and call them from there
 
-
 //todo: refactor lottie for view normal courses maybe to no internet
 
 //todo: Refactor showBottomSheet to be a method
+
+//todo: Should the lecturer be able to download pdf of the attendance sheet?
+
+//todo: Sort the attendance sheet by alphabetical order. Include a search feature
+//todo: Handle errors on view course details

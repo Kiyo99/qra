@@ -17,8 +17,6 @@ class StaffPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Current date = ${DateTime.now()}");
-
     final _selectedIndex = useState(0);
     PageController pageController = PageController();
 

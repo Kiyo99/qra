@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qra/data/fb_student_model/student_model.dart';
 import 'package:qra/data/scanner/scanner_model.dart';
 
 class QrScanner extends HookConsumerWidget {
@@ -14,13 +13,6 @@ class QrScanner extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // String stringifiedJson =
-    //     "{\n \"name\" : \"Godsfavour Kio \",\n  \"iD\" : \"218cs01004885 \",\n \"eligible\" : \"false\"}";
-    //
-    // final dynamic dataa = jsonDecode(stringifiedJson);
-    // // final dd = Map<String, dynamic>.from(data);
-    // final data = FbModel.fromJson(dataa);
-    // debugPrint('Bardddddddddd! ${data.name}');
 
     return MobileScanner(
         allowDuplicates: false,
@@ -31,9 +23,6 @@ class QrScanner extends HookConsumerWidget {
             final String code = barcode.rawValue!;
             debugPrint('Barcode found! $code');
 
-            // final Map<String, dynamic> data = json.decode(code);
-            // print("Dat is: $data");
-
             final codd = ScannerModel.fromJson(json.decode(code));
             debugPrint('Barcodeeee found! ${codd}');
             debugPrint('Nameee found! ${codd.name}');
@@ -41,8 +30,6 @@ class QrScanner extends HookConsumerWidget {
             debugPrint('ELigible found! ${codd.eligible}');
 
 
-            // final Map data = json.decode(json.encode(code));
-            // debugPrint('Barddddddfffdddd! $data');
             if (codd.eligible == "false") {
               Get.back();
               showDialog(

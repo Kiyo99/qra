@@ -6,8 +6,6 @@ import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/staff/courses/filter_view.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
-import 'package:qra/presentation/widgets/app_dialogs.dart';
-import 'package:qra/presentation/widgets/prompts.dart';
 
 class ViewCoursesScreen extends HookWidget {
   static const id = "/view_course_screen";
@@ -53,7 +51,10 @@ class ViewCoursesScreen extends HookWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Constants.coolOrange,
+              ));
             }
 
             if (snapshot.data?.size == 0) {
@@ -72,6 +73,7 @@ class ViewCoursesScreen extends HookWidget {
                     .map((DocumentSnapshot documentSnapshot) {
                   Map<String, dynamic> data =
                       documentSnapshot.data()! as Map<String, dynamic>;
+                  print("Dataaaaaa: ${data}");
                   final course = CourseModel.fromJson(data);
                   return GestureDetector(
                     onTap: () {
@@ -97,18 +99,20 @@ class ViewCoursesScreen extends HookWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  course.courseName,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                                Expanded(
+                                  child: Text(
+                                    course.courseName,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
                                 ),
                                 IconButton(
                                     onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.more_vert_outlined,
-                                      color: Colors.white,
+                                    icon: Icon(
+                                      Icons.chevron_right_outlined,
+                                      color: Constants.coolOrange,
                                     ))
                               ],
                             ),
