@@ -6,6 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
+import 'package:qra/presentation/widgets/app_text_field.dart';
+import 'package:qra/presentation/widgets/primary_app_button.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
 
 class UploadCourseScreen extends HookWidget {
@@ -60,41 +63,11 @@ class UploadCourseScreen extends HookWidget {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: TextField(
-                          controller: courseName,
-                          decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Constants.coolOrange)),
-                              border: const OutlineInputBorder(),
-                              labelText: 'Course Name',
-                              labelStyle:
-                                  GoogleFonts.exo2(color: Colors.white)),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: TextField(
-                          controller: courseCode,
-                          cursorColor: Constants.coolOrange,
-                          decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Constants.coolOrange)),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Course Code',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      AppTextField(
+                          controller: courseName, title: "Course Name"),
+                      AppTextField(
+                          controller: courseCode, title: "Course Code"),
+                      AppTextField(controller: teacher, title: "Teacher"),
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: TextField(
@@ -113,114 +86,78 @@ class UploadCourseScreen extends HookWidget {
                                   GoogleFonts.exo2(color: Colors.white)),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: TextField(
-                          controller: teacher,
-                          decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Constants.coolOrange)),
-                              labelText: 'Teacher',
-                              labelStyle:
-                                  GoogleFonts.exo2(color: Colors.white)),
-                        ),
-                      ),
                       const SizedBox(height: 30),
                       Container(
-                        height: 50,
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: TextButton(
+                        child: PrimaryAppButton(
+                          title: "Upload Course",
                           onPressed: () async {
                             if (courseCode.text.isEmpty ||
                                 courseName.text.isEmpty ||
                                 teacher.text.isEmpty ||
                                 dueDate.text.isEmpty) {
-                              _showToast(context, 'Please enter all fields');
+                              AppModal.showToast(
+                                  context, 'Please enter all fields');
                               return;
                             }
 
-                            showModalBottomSheet(
+                            AppModal.showModal(
                                 context: context,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(25.0),
-                                        topRight: Radius.circular(25.0))),
-                                builder: (ctx) => AppPrompts(
-                                    title: "Upload?",
-                                    message:
-                                        "Are you sure you want to upload ${courseName.text}?",
-                                    asset: "assets/lottie/warning.json",
-                                    primaryAction: () async {
-                                      Get.back();
-                                      AppDialogs.lottieLoader();
+                                title: "Upload?",
+                                message:
+                                    "Are you sure you want to upload ${courseName.text}?",
+                                asset: "assets/lottie/warning.json",
+                                primaryAction: () async {
+                                  Get.back();
+                                  AppDialogs.lottieLoader();
 
-                                      Map<String, Object> db = {};
-                                      db['courseName'] = courseName.text;
-                                      db['courseCode'] = courseCode.text;
-                                      db['dueDate'] = dueDate.text;
-                                      db['teacher'] = teacher.text;
+                                  Map<String, Object> db = {};
+                                  db['courseName'] = courseName.text;
+                                  db['courseCode'] = courseCode.text;
+                                  db['dueDate'] = dueDate.text;
+                                  db['teacher'] = teacher.text;
 
-                                      _firestore
-                                          .collection("Courses")
-                                          .doc(db['courseCode'].toString())
-                                          .set(db)
-                                          .whenComplete(() {
-                                        courseName.clear();
-                                        courseCode.clear();
-                                        dueDate.clear();
-                                        teacher.clear();
+                                  _firestore
+                                      .collection("Courses")
+                                      .doc(db['courseCode'].toString())
+                                      .set(db)
+                                      .whenComplete(() {
+                                    Get.back();
+
+                                    AppModal.showModal(
+                                      context: context,
+                                      title: 'Success',
+                                      message:
+                                          'You have successfully uploaded ${courseCode.text}.',
+                                      asset: 'assets/lottie/success.json',
+                                      primaryAction: () {
                                         Get.back();
-                                        showModalBottomSheet(
-                                          context: context,
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25.0),
-                                              topRight: Radius.circular(25.0),
-                                            ),
-                                          ),
-                                          isScrollControlled: true,
-                                          builder: (ctx) => AppPrompts(
-                                            asset: 'assets/lottie/success.json',
-                                            primaryAction: () {
-                                              Get.back();
-                                            },
-                                            message:
-                                                'You have successfully uploaded ${courseCode.text}.',
-                                            title: 'Success',
-                                            showSecondary: false,
-                                            buttonText: 'Okay',
-                                          ),
-                                        );
-                                      }).onError((error, stackTrace) => () {
+                                      },
+                                      buttonText: 'Okay',
+                                    );
+
+                                    courseName.clear();
+                                    courseCode.clear();
+                                    dueDate.clear();
+                                    teacher.clear();
+                                  }).onError((error, stackTrace) => () {
+                                            Get.back();
+                                            AppModal.showModal(
+                                              context: context,
+                                              title: 'Error',
+                                              message:
+                                                  'Failed to upload ${courseCode.text}.',
+                                              asset: 'assets/lottie/error.json',
+                                              primaryAction: () {
                                                 Get.back();
-                                                _showToast(context,
-                                                    'Failed to upload ${courseCode.text}');
-                                                print('Faileddddddddd: $error');
-                                              });
-                                    },
-                                    buttonText: "Yes, upload",
-                                    showSecondary: true));
+                                              },
+                                              buttonText: 'Okay',
+                                            );
+                                          });
+                                },
+                                buttonText: "Yes, upload",
+                                showSecondary: true);
                           },
-                          child: Text('Upload Course',
-                              style: GoogleFonts.exo2(
-                                  color: Constants.coolBlue,
-                                  fontWeight: FontWeight.w600)),
-                          style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 15),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  width: 1,
-                                  color: Constants.coolOrange,
-                                ),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              backgroundColor: Constants.coolOrange),
                         ),
                       )
                     ],
@@ -229,17 +166,6 @@ class UploadCourseScreen extends HookWidget {
               )
             : const Center(child: CircularProgressIndicator()));
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {

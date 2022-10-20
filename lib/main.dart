@@ -91,8 +91,6 @@ class MyApp extends HookConsumerWidget {
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
 
-//todo: Make the showToast a widget
-
 //todo: Remember functionality of due date all round with filtering
 
 //todo: try to set light and dark theme
@@ -102,11 +100,13 @@ class MyApp extends HookConsumerWidget {
 
 //todo: refactor lottie for view normal courses maybe to no internet
 
-//todo: Refactor showBottomSheet to be a method
-
 //todo: Should the lecturer be able to download pdf of the attendance sheet?
 
 //todo: Sort the attendance sheet by alphabetical order. Include a search feature
 //todo: Handle errors on view course details
 
 //todo: Add realtime chat integration
+
+//todo: After a student subscribes to a course, add that course to an array there
+
+//todo: Refactor rest of the codebase with AppModal, AppTextField, PrimaryAppButton and SecondaryAppButton

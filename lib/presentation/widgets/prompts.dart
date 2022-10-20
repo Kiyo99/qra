@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/presentation/widgets/primary_app_button.dart';
+import 'package:qra/presentation/widgets/secondary_app_button.dart';
 
 class AppPrompts extends HookConsumerWidget {
   const AppPrompts(
@@ -73,46 +75,14 @@ class AppPrompts extends HookConsumerWidget {
                 style: GoogleFonts.exo2(fontSize: 18),
               ),
               const SizedBox(height: 30),
-              TextButton(
-                onPressed: primaryAction,
-                child: Text(
-                  buttonText,
-                  style: GoogleFonts.exo2(color: Constants.coolBlue),
-                ),
-                style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 15),
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 1,
-                        color: Constants.coolOrange,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    backgroundColor: Constants.coolOrange),
-              ),
+              PrimaryAppButton(title: buttonText, onPressed: primaryAction),
               const SizedBox(height: 10),
               if (showSecondary == true)
-                TextButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: Text(
-                    "Back",
-                    style: GoogleFonts.exo2(color: Constants.coolOrange),
-                  ),
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 1,
-                        color: Constants.coolOrange,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 15),
-                  ),
-                ),
+                SecondaryAppButton(
+                    title: "Back",
+                    onPressed: () {
+                      Get.back();
+                    })
             ],
           ),
         )

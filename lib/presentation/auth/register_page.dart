@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
+import 'package:qra/presentation/widgets/primary_app_button.dart';
 
 class RegisterPage extends HookConsumerWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -185,92 +186,92 @@ class RegisterPage extends HookConsumerWidget {
                       ),
                     ),
                     Container(
-                      height: 50,
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: ElevatedButton(
-                        child: const Text('Regsiter'),
-                        onPressed: () async {
-                          if (emailController.text.isEmpty ||
-                              firstNameController.text.isEmpty ||
-                              lastNameController.text.isEmpty ||
-                              passwordController.text.isEmpty ||
-                              cPasswordController.text.isEmpty ||
-                              majorController.text.isEmpty ||
-                              genderController.text.isEmpty ||
-                              iDController.text.isEmpty ||
-                              numberController.text.isEmpty) {
-                            _showToast(context, 'Please enter all fields');
-                            return;
-                          }
+                        height: 50,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: PrimaryAppButton(
+                          title: "Register",
+                          onPressed: () async {
+                            if (emailController.text.isEmpty ||
+                                firstNameController.text.isEmpty ||
+                                lastNameController.text.isEmpty ||
+                                passwordController.text.isEmpty ||
+                                cPasswordController.text.isEmpty ||
+                                majorController.text.isEmpty ||
+                                genderController.text.isEmpty ||
+                                iDController.text.isEmpty ||
+                                numberController.text.isEmpty) {
+                              _showToast(context, 'Please enter all fields');
+                              return;
+                            }
 
-                          if (numberController.text.length < 10) {
-                            _showToast(
-                                context, 'Please enter a valid phone number');
-                            return;
-                          }
+                            if (numberController.text.length < 10) {
+                              _showToast(
+                                  context, 'Please enter a valid phone number');
+                              return;
+                            }
 
-                          if (!(passwordController.text ==
-                              cPasswordController.text)) {
-                            _showToast(context, 'Passwords don\'t match');
-                            return;
-                          }
+                            if (!(passwordController.text ==
+                                cPasswordController.text)) {
+                              _showToast(context, 'Passwords don\'t match');
+                              return;
+                            }
 
-                          if (passwordController.text.length < 6) {
-                            _showToast(context,
-                                'Password should not be less than 6 characters');
-                            return;
-                          }
+                            if (passwordController.text.length < 6) {
+                              _showToast(context,
+                                  'Password should not be less than 6 characters');
+                              return;
+                            }
 
-                          isLoading.value = true;
+                            isLoading.value = true;
 
-                          try {
-                            await auth.createUserWithEmailAndPassword(
-                                email: emailController.text,
-                                password: cPasswordController.text);
+                            try {
+                              await auth.createUserWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: cPasswordController.text);
 
-                            Map<String, Object> db = {};
-                            db['firstName'] = firstNameController.text;
-                            db['lastName'] = lastNameController.text;
-                            db['fullName'] =
-                                "${firstNameController.text} ${lastNameController.text}";
-                            db['email'] = emailController.text;
-                            db['gender'] = genderController.text;
-                            db['iD'] = iDController.text;
-                            db['major'] = majorController.text;
-                            db['isEligible'] = "false";
-                            db['phoneNumber'] = numberController.text;
-                            db['status'] = "Student";
+                              Map<String, Object> db = {};
+                              db['firstName'] = firstNameController.text;
+                              db['lastName'] = lastNameController.text;
+                              db['fullName'] =
+                                  "${firstNameController.text} ${lastNameController.text}";
+                              db['email'] = emailController.text;
+                              db['gender'] = genderController.text;
+                              db['iD'] = iDController.text;
+                              db['major'] = majorController.text;
+                              db['isEligible'] = "false";
+                              db['phoneNumber'] = numberController.text;
+                              db['status'] = "Student";
 
-                            _firestore
-                                .collection("Users")
-                                .doc(auth.currentUser!.email.toString())
-                                .set(db)
-                                .whenComplete(() {
-                              _showToast(context, 'Successfully saved user');
+                              _firestore
+                                  .collection("Users")
+                                  .doc(auth.currentUser!.email.toString())
+                                  .set(db)
+                                  .whenComplete(() {
+                                _showToast(context, 'Successfully saved user');
+                                isLoading.value = false;
+                                Get.offAllNamed(StaffPage.id);
+                              }).catchError((error, stackTrace) => () {
+                                        _showToast(
+                                            context, 'Failed to save 😪');
+                                        print('Failed: $error');
+                                      });
+                            } on FirebaseAuthException catch (e) {
                               isLoading.value = false;
-                              Get.offAllNamed(StaffPage.id);
-                            }).catchError((error, stackTrace) => () {
-                                      _showToast(context, 'Failed to save 😪');
-                                      print('Failed: $error');
-                                    });
-                          } on FirebaseAuthException catch (e) {
-                            isLoading.value = false;
-                            Get.dialog(
-                              AlertDialog(
-                                  title: const Text(
-                                    "Registration failed 😪",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  content: Text(
-                                    "${e.message}",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  contentPadding: const EdgeInsets.all(10)),
-                            );
-                          }
-                        },
-                      ),
-                    ),
+                              Get.dialog(
+                                AlertDialog(
+                                    title: const Text(
+                                      "Registration failed 😪",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    content: Text(
+                                      "${e.message}",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    contentPadding: const EdgeInsets.all(10)),
+                              );
+                            }
+                          },
+                        )),
                     Row(
                       children: <Widget>[
                         const Text('Does not have account?'),
