@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
+import 'package:qra/constants.dart';
+import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 
-class FilterView extends HookConsumerWidget {
+class FilterView extends HookWidget {
   const FilterView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var items = [
-      'All',
-      'Today\'s date',
-      'Custom date'
-    ];
+  Widget build(BuildContext context) {
+    var items = ['All', 'Today', 'Tomorrow'];
     return Container(
       padding: const EdgeInsets.all(8.0),
       height: 300,
       width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: Constants.coolBlue,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         ),
@@ -26,9 +26,9 @@ class FilterView extends HookConsumerWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
-            child: Text(
+            child: const Text(
               "Sort by",
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.left,
             ),
           ),
@@ -43,20 +43,16 @@ class FilterView extends HookConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () async {
-                    // if (items[index] == context.resources.strings.all){
-                    //   await ref.read(AppOrderViewModel.provider.notifier).getOrders();
-                    //   Get.back();
-                    // }
-                    // else if (items[index] == context.resources.strings.pendingPickUp){
-                    //   ref.read(AppOrderViewModel.provider.notifier).getOrdersByStatus('PENDING_PICKUP');
-                    //   // ref.read(AppOrderViewModel.Provider).updateData();
-                    //   // Get.back();
-                    // }
-                    // else if (items[index] == context.resources.strings.pendingDelivery){
-                    //   ref.read(AppOrderViewModel.provider.notifier).getOrdersByStatus('PENDING_DELIVERY');
-                    // }
+                    if (items[index] == "All") {
+                      Get.toNamed(SubscribeToCourseScreen.id);
+                    }
+                    if (items[index] == "Today") {}
+                    if (items[index] == "Tomorrow") {}
                   },
-                  title: Text(items[index], style: const TextStyle(fontSize: 14),),
+                  title: Text(
+                    items[index],
+                    style: const TextStyle(fontSize: 14),
+                  ),
                 );
               },
             ),

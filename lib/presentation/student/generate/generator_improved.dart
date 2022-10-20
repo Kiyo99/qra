@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 class ImprovedQrGenerator extends HookConsumerWidget {
@@ -109,37 +111,49 @@ class ImprovedQrGenerator extends HookConsumerWidget {
                       ConfirmationSlider(
                         stickToEnd: false,
                         text: "Slide to generate code",
-                        textStyle: TextStyle(
+                        textStyle: GoogleFonts.exo2(
                             color: Constants.coolBlue,
                             fontWeight: FontWeight.w700,
                             fontSize: 15),
                         onConfirmation: () async {
-                          // var document = await Firestore.instance.collection('COLLECTION_NAME').document('TESTID1');
-                          // document.get() => then(function(document) {
-                          // print(document("name"));
-                          // });
-                          print("valueeeeee");
-
+                          AppDialogs.lottieLoader();
                           _fireStore
                               .collection("Users")
                               .doc(currentUser!.email)
                               .get()
                               .then((doc) {
                             if (doc.exists) {
+                              Get.back();
                               data = doc.data();
-                              print("valueeeeegge: ${data}");
                               Get.to(ViewQr(), arguments: data);
-                              //todo: Move the scanning widget into a new page
-                              //todo: Assign the Get argument to it when passing it. Vuala
                             } else {
-                              print("Failed");
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25.0),
+                                    topRight: Radius.circular(25.0),
+                                  ),
+                                ),
+                                isScrollControlled: true,
+                                builder: (ctx) => AppPrompts(
+                                  asset: 'assets/lottie/error.json',
+                                  primaryAction: () {
+                                    Get.back();
+                                  },
+                                  message: 'Failed to fetch details',
+                                  title: 'Error',
+                                  showSecondary: false,
+                                  buttonText: 'Okay',
+                                ),
+                              );
                             }
                           });
                         },
                         height: 50,
-                        foregroundColor: Colors.green,
-                        backgroundColor: Colors.greenAccent,
-                        backgroundColorEnd: Colors.blueGrey,
+                        foregroundColor: Colors.black,
+                        backgroundColor: Constants.coolOrange,
+                        backgroundColorEnd: Constants.coolOrange,
                         shadow: const BoxShadow(color: Colors.transparent),
                         backgroundShape: BorderRadius.circular(15.0),
                         sliderButtonContent: const Icon(Icons.chevron_right,

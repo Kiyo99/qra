@@ -1,38 +1,34 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qra/data/fb_student_model/student_model.dart';
+import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/scanner/scanner_model.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 
 class QrScanner extends HookConsumerWidget {
   static const id = "scanner";
 
-  const QrScanner({Key? key}) : super(key: key);
+  final _fireStore = FirebaseFirestore.instance;
+
+  QrScanner({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // String stringifiedJson =
-    //     "{\n \"name\" : \"Godsfavour Kio \",\n  \"iD\" : \"218cs01004885 \",\n \"eligible\" : \"false\"}";
-    //
-    // final dynamic dataa = jsonDecode(stringifiedJson);
-    // // final dd = Map<String, dynamic>.from(data);
-    // final data = FbModel.fromJson(dataa);
-    // debugPrint('Bardddddddddd! ${data.name}');
+    final courseCode = Get.arguments;
+    print("GGGGGGGGG: $courseCode");
 
     return MobileScanner(
         allowDuplicates: false,
-        onDetect: (barcode, args) {
+        onDetect: (barcode, args) async {
           if (barcode.rawValue == null) {
             debugPrint('Failed to scan Barcode');
           } else {
             final String code = barcode.rawValue!;
             debugPrint('Barcode found! $code');
-
-            // final Map<String, dynamic> data = json.decode(code);
-            // print("Dat is: $data");
 
             final codd = ScannerModel.fromJson(json.decode(code));
             debugPrint('Barcodeeee found! ${codd}');
@@ -40,23 +36,67 @@ class QrScanner extends HookConsumerWidget {
             debugPrint('Idd found! ${codd.iD}');
             debugPrint('ELigible found! ${codd.eligible}');
 
-
-            // final Map data = json.decode(json.encode(code));
-            // debugPrint('Barddddddfffdddd! $data');
+            //todo do not forget to change the codd.is == true
             if (codd.eligible == "false") {
               Get.back();
-              showDialog(
+
+              showModalBottomSheet(
                   context: context,
-                  builder: (context) {
-                    return AlertDialog(title: Text("${codd.name}is Eligible to write this paper"));
-                  });
-              //todo: Find a way to mark the attendance sheet from here
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0))),
+                  builder: (ctx) => AppPrompts(
+                      title: "Success",
+                      message: "${codd.name} is eligible to take this exam",
+                      asset: "assets/lottie/success.json",
+                      primaryAction: () {
+                        Get.back();
+                      },
+                      buttonText: "Okay",
+                      showSecondary: false));
+
+              final courseDoc =
+                  await _fireStore.collection("Courses").doc(courseCode).get();
+              final courseModel = CourseModel.fromJson(
+                  courseDoc.data() as Map<String, dynamic>);
+              final studentDoc = courseModel.students;
+
+              final studentToUpdate =
+                  studentDoc?.firstWhere((student) => student['iD'] == codd.iD);
+
+              studentToUpdate['isEligible'] =
+                  studentToUpdate['isEligible'] == "true" ? "false" : "true";
+
+              studentDoc?.removeWhere((student) => student['iD'] == codd.iD);
+              studentDoc?.add(studentToUpdate);
+
+              await _fireStore
+                  .collection("Courses")
+                  .doc(courseCode)
+                  .update({"students": FieldValue.delete()});
+
+              //todo: Handle errors with loaders
+
+              await _fireStore.collection("Courses").doc(courseCode).update({
+                "students": FieldValue.arrayUnion(studentDoc!),
+              });
             } else {
-              showDialog(
+              showModalBottomSheet(
                   context: context,
-                  builder: (context) {
-                    return const AlertDialog(title: Text("Inavlid data coming to the examinationg hall"));
-                  });
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0))),
+                  builder: (ctx) => AppPrompts(
+                      title: "Failure",
+                      message: "${codd.name} is not eligible to take this exam",
+                      asset: "assets/lottie/error.json",
+                      primaryAction: () {
+                        Get.back();
+                      },
+                      buttonText: "Okay",
+                      showSecondary: false));
             }
           }
         });

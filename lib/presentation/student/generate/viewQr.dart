@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qra/constants.dart';
+import 'package:qra/data/fb_student_model/student_model.dart';
 
 class ViewQr extends HookConsumerWidget {
   static const id = "generatee";
@@ -13,9 +15,10 @@ class ViewQr extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final args = useState(Get.arguments);
     final data = Map<String, dynamic>.from(args.value);
-    print("Incoming data: ${data}");
+    final studentData = StudentModel.fromJson(data);
+    print("STudey: ${studentData}");
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade900,
+      backgroundColor: Constants.coolBlue,
       body: SafeArea(
         child: Center(
           child: Container(
@@ -30,7 +33,7 @@ class ViewQr extends HookConsumerWidget {
               child: QrImage(
                 foregroundColor: Colors.blue.shade900,
                 data:
-                "{\n \"name\" : \"${data['Full name']}\",\n  \"iD\" : \"${data['ID']}\",\n \"eligible\" : \"${data['isEligible']}\"}",
+                    "{\n \"name\" : \"${studentData.fullName}\",\n  \"iD\" : \"${studentData.iD}\",\n \"eligible\" : \"${studentData.isEligible}\"}",
               ),
             ),
           ),

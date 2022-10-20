@@ -23,7 +23,6 @@ class LoginPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String g;
     final isLoading = useState(false);
     return Scaffold(
         backgroundColor: Constants.coolBlue,
@@ -44,11 +43,15 @@ class LoginPage extends HookConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
+                        cursorColor: Constants.coolOrange,
                         controller: emailController,
                         decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Constants.coolOrange)),
                             border: const OutlineInputBorder(),
                             labelText: 'Email',
                             labelStyle: GoogleFonts.exo2(color: Colors.white)),
@@ -59,10 +62,14 @@ class LoginPage extends HookConsumerWidget {
                       child: TextField(
                         controller: passwordController,
                         obscureText: true,
+                        cursorColor: Constants.coolOrange,
                         decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.white),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Constants.coolOrange)),
                             border: const OutlineInputBorder(),
                             labelText: 'Password',
                             labelStyle: GoogleFonts.exo2(color: Colors.white)),
@@ -74,56 +81,69 @@ class LoginPage extends HookConsumerWidget {
                       },
                       child: Text(
                         'Forgot Password?',
-                        style: GoogleFonts.exo2(color: Colors.blue),
+                        style: GoogleFonts.exo2(color: Constants.coolOrange),
                       ),
                     ),
                     Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: ElevatedButton(
-                          child: Text('Login',
-                              style: GoogleFonts.exo2(
-                                  color: Colors.white, fontSize: 18)),
-                          onPressed: () async {
-                            //todo All of these should be done in the viewmodel.
-                            //todo cache the user using shared preferences so that the user doesnt have to log in multiple times
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: TextButton(
+                        onPressed: () async {
+                          //todo All of these should be done in the viewmodel.
+                          //todo cache the user using shared preferences so that the user doesnt have to log in multiple times
 
-                            if (emailController.text.isEmpty ||
-                                passwordController.text.isEmpty) {
-                              print("Please enter all fields");
-                              _showToast(context, 'Please enter all fields');
-                              // const AlertDialog(
-                              //   title: Text("Please enter all fields"),
-                              // );
-                              return;
-                            }
+                          if (emailController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            print("Please enter all fields");
+                            _showToast(context, 'Please enter all fields');
+                            // const AlertDialog(
+                            //   title: Text("Please enter all fields"),
+                            // );
+                            return;
+                          }
 
-                            isLoading.value = true;
+                          isLoading.value = true;
 
-                            try {
-                              await auth.signInWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: passwordController.text);
-                              isLoading.value = false;
-                              Get.offAllNamed(StaffPage.id);
-                            } on FirebaseAuthException catch (e) {
-                              isLoading.value = false;
-                              Get.dialog(
-                                AlertDialog(
-                                    title: const Text(
-                                      "Login failed 😪",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    content: Text(
-                                      "${e.message}",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    contentPadding: const EdgeInsets.all(10)),
-                              );
-                            }
-                          },
-                        )),
+                          try {
+                            await auth.signInWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text);
+                            isLoading.value = false;
+                            Get.offAllNamed(StaffPage.id);
+                          } on FirebaseAuthException catch (e) {
+                            isLoading.value = false;
+                            Get.dialog(
+                              AlertDialog(
+                                  title: const Text(
+                                    "Login failed 😪",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  content: Text(
+                                    "${e.message}",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  contentPadding: const EdgeInsets.all(10)),
+                            );
+                          }
+                        },
+                        child: Text('Login',
+                            style: GoogleFonts.exo2(
+                                color: Constants.blueish,
+                                fontWeight: FontWeight.w600)),
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                color: Constants.coolOrange,
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            backgroundColor: Constants.coolOrange),
+                      ),
+                    ),
                     Row(
                       children: <Widget>[
                         Text(
@@ -134,7 +154,7 @@ class LoginPage extends HookConsumerWidget {
                           child: Text(
                             'Sign up',
                             style: GoogleFonts.exo2(
-                                color: Colors.blue, fontSize: 20),
+                                color: Constants.coolOrange, fontSize: 20),
                           ),
                           onPressed: () {
                             Get.to(RegisterPage());
@@ -147,7 +167,8 @@ class LoginPage extends HookConsumerWidget {
                   ],
                 ),
               )
-            : const Center(child: CircularProgressIndicator()));
+            : Center(
+                child: CircularProgressIndicator(color: Constants.coolOrange)));
   }
 }
 

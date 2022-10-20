@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/student/student_details.dart';
@@ -64,18 +65,19 @@ class MyApp extends HookConsumerWidget {
           title: 'QRA',
           debugShowCheckedModeBanner: false,
           routes: {
-            QrScanner.id: (context) => const QrScanner(),
+            QrScanner.id: (context) => QrScanner(),
             LoginPage.id: (context) => LoginPage(),
             StaffPage.id: (context) => const StaffPage(),
+            StudentPage.id: (context) => StudentPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
             ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
-            ViewCourseDetails.id: (context) => const ViewCourseDetails(),
-            StudentDetailPage.id: (context) => StudentDetailPage(),
+            ViewCourseDetails.id: (context) => ViewCourseDetails(),
+            StudentDetailPage.id: (context) => const StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: user == null ? LoginPage() : const StaffPage()),
+          home: IntroScreen()),
     );
   }
 }
@@ -84,29 +86,27 @@ class MyApp extends HookConsumerWidget {
 
 //todo: create a screen for deleting courses, (Only lecturers or admins or exam controller)
 
-//todo: How you will automatically check the box is this. There wil be a stream that listens to this shit.
-//todo It will update the user data based on the ID. Then the attendance sheet will know that something has changed and rebuild itself
-//todo (You could use a stream-builder again for the attendance sheet just like you are for the courses)
+//todo live chat with vvu its
 
-//todo live chat with vvu its ADD LIVE CHAT OPTION TO TILES
-// todo: From tomorrow: Find a way for student to get list of subscribed courses {Use course codes}
-//  todo: Should I dedicated courses field for students? Yes, that means I will update the student model with build runner
-
-//todo: save the user locally so we can use the datatype
-
-//todo create walkthrough
-
-//todo add lottie files for the delegate
-//todo: Go through lottie and delete some of them
-//todo: Look at dialogs again
-
-//todo: Create Prompt.
-//todo: Create dialogs - reference delivery app
-//todo: Add date function for input text date picker??
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
-//todo: Check out checkbox issue
 
-//todo: Think about the attendance marking flow.
+//todo: Remember functionality of due date all round with filtering
 
-//todo: Make the showToast widget
+//todo: try to set light and dark theme
+//todo: refactor code to change all colors at once
+//todo: refactor code to have one text theme, google fonts
+//todo: or have like 2 or 3 global text themes in constants and call them from there
+
+//todo: refactor lottie for view normal courses maybe to no internet
+
+//todo: Should the lecturer be able to download pdf of the attendance sheet?
+
+//todo: Sort the attendance sheet by alphabetical order. Include a search feature
+//todo: Handle errors on view course details
+
+//todo: Add realtime chat integration
+
+//todo: After a student subscribes to a course, add that course to an array there
+
+//todo: Refactor rest of the codebase with AppModal, AppTextField, PrimaryAppButton and SecondaryAppButton

@@ -25,8 +25,6 @@ class ViewCoursesScreen extends HookWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  // AppDialogs.wishCreated("You sure?", "Yea");
-
                   showModalBottomSheet(
                     context: context,
                     shape: const RoundedRectangleBorder(
@@ -53,7 +51,10 @@ class ViewCoursesScreen extends HookWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Constants.coolOrange,
+              ));
             }
 
             if (snapshot.data?.size == 0) {
@@ -86,7 +87,7 @@ class ViewCoursesScreen extends HookWidget {
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
-                          color: const Color.fromRGBO(64, 75, 96, .9),
+                          color: Constants.secondaryBlue,
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         padding: const EdgeInsets.all(20),
@@ -97,18 +98,20 @@ class ViewCoursesScreen extends HookWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  course.courseName,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                                Expanded(
+                                  child: Text(
+                                    course.courseName,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
                                 ),
                                 IconButton(
                                     onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.more_vert_outlined,
-                                      color: Colors.white,
+                                    icon: Icon(
+                                      Icons.chevron_right_outlined,
+                                      color: Constants.coolOrange,
                                     ))
                               ],
                             ),

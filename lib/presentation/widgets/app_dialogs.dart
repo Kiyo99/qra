@@ -336,27 +336,29 @@ class AppDialogs {
     );
   }
 
-  // static loader() {
-  //   Get.dialog(
-  //     PlatformAlertDialog(
-  //       content: Wrap(
-  //         children: const [PageLoader()],
-  //       ),
-  //     ),
-  //     barrierDismissible: false,
-  //   );
-  // }
-
   static lottieLoader() {
     Get.dialog(
       Transform.scale(
-        scale: .23,
+        scale: 1,
         child: Lottie.asset(
-          "assets/lottie/loading.json",
+          "assets/lottie/loading_yellow.json",
           frameRate: FrameRate(60),
         ),
       ),
-      barrierDismissible: false,
+      barrierDismissible: true,
+    );
+  }
+
+  static customLottie(String lottie, double scale) {
+    Get.dialog(
+      Transform.scale(
+        scale: scale,
+        child: Lottie.asset(
+          lottie,
+          frameRate: FrameRate(60),
+        ),
+      ),
+      barrierDismissible: true,
     );
   }
 
@@ -372,7 +374,6 @@ class AppDialogs {
       barrierDismissible: false,
     );
   }
-
 }
 
 enum ConfirmAction { CONFIRM, CANCEL }
