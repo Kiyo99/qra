@@ -11,11 +11,14 @@ class ViewCoursesScreen extends HookWidget {
   static const id = "/view_course_screen";
 
   ViewCoursesScreen({Key? key}) : super(key: key);
-  final Stream<QuerySnapshot> _courseStream =
-      FirebaseFirestore.instance.collection("Courses").snapshots();
 
   @override
   Widget build(BuildContext context) {
+    final filter = useState("courseName");
+    final Stream<QuerySnapshot> _courseStream = FirebaseFirestore.instance
+        .collection("Courses")
+        .orderBy(filter.value)
+        .snapshots();
     return Scaffold(
         backgroundColor: Constants.coolBlue,
         appBar: AppBar(
@@ -108,7 +111,9 @@ class ViewCoursesScreen extends HookWidget {
                                   ),
                                 ),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      filter.value = "courseCode";
+                                    },
                                     icon: Icon(
                                       Icons.chevron_right_outlined,
                                       color: Constants.coolOrange,

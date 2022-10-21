@@ -110,3 +110,5 @@ class MyApp extends HookConsumerWidget {
 //todo: After a student subscribes to a course, add that course to an array there
 
 //todo: Refactor rest of the codebase with AppModal, AppTextField, PrimaryAppButton and SecondaryAppButton
+
+//todo: You know how to filter now with firebase. Now do it. Try useState with the instance
