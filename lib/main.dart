@@ -96,10 +96,7 @@ class MyApp extends HookConsumerWidget {
 //todo: Should the lecturer be able to download pdf of the attendance sheet?
 //todo: Handle errors on view course details
 
-//todo: Add realtime chat integration
-
-//todo: After a student subscribes to a course, add that course to an array there
-
-//todo: Refactor rest of the codebase with AppModal, AppTextField, PrimaryAppButton and SecondaryAppButton
-
-//todo: You know how to filter now with firebase. Now do it. Try useState with the instance
+//todo: Locally save user
+//todo: When registering, 2 options: registering as a student or examiner
+//todo: Save that field as status. Now create the userJson model from there and supply the information there
+//todo: When logging in, show a loader that shows "Wait amin, setting up workspace" during that time we fetch the doc and determine the user
