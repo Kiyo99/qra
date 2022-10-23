@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
+import 'package:qra/presentation/widgets/app_text_field.dart';
+import 'package:qra/presentation/widgets/primary_app_button.dart';
 
 class LoginPage extends HookConsumerWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -40,40 +40,14 @@ class LoginPage extends HookConsumerWidget {
                           style: GoogleFonts.exo2(
                               color: Colors.white, fontSize: 25),
                         )),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        cursorColor: Constants.coolOrange,
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Constants.coolOrange)),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Email',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: emailController,
+                      title: "Email",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        cursorColor: Constants.coolOrange,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Constants.coolOrange)),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Password',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: passwordController,
+                      title: "Password",
+                      obscureText: true,
                     ),
                     TextButton(
                       onPressed: () {
@@ -84,65 +58,46 @@ class LoginPage extends HookConsumerWidget {
                         style: GoogleFonts.exo2(color: Constants.coolOrange),
                       ),
                     ),
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: TextButton(
-                        onPressed: () async {
-                          //todo All of these should be done in the viewmodel.
-                          //todo cache the user using shared preferences so that the user doesnt have to log in multiple times
+                    PrimaryAppButton(
+                      title: "Login",
+                      onPressed: () async {
+                        //todo All of these should be done in the viewmodel.
+                        //todo cache the user using shared preferences so that the user doesnt have to log in multiple times
 
-                          if (emailController.text.isEmpty ||
-                              passwordController.text.isEmpty) {
-                            print("Please enter all fields");
-                            _showToast(context, 'Please enter all fields');
-                            // const AlertDialog(
-                            //   title: Text("Please enter all fields"),
-                            // );
-                            return;
-                          }
+                        if (emailController.text.isEmpty ||
+                            passwordController.text.isEmpty) {
+                          print("Please enter all fields");
+                          _showToast(context, 'Please enter all fields');
+                          // const AlertDialog(
+                          //   title: Text("Please enter all fields"),
+                          // );
+                          return;
+                        }
 
-                          isLoading.value = true;
+                        isLoading.value = true;
 
-                          try {
-                            await auth.signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text);
-                            isLoading.value = false;
-                            Get.offAllNamed(StaffPage.id);
-                          } on FirebaseAuthException catch (e) {
-                            isLoading.value = false;
-                            Get.dialog(
-                              AlertDialog(
-                                  title: const Text(
-                                    "Login failed 😪",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  content: Text(
-                                    "${e.message}",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  contentPadding: const EdgeInsets.all(10)),
-                            );
-                          }
-                        },
-                        child: Text('Login',
-                            style: GoogleFonts.exo2(
-                                color: Constants.blueish,
-                                fontWeight: FontWeight.w600)),
-                        style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 1,
-                                color: Constants.coolOrange,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            backgroundColor: Constants.coolOrange),
-                      ),
+                        try {
+                          await auth.signInWithEmailAndPassword(
+                              email: emailController.text,
+                              password: passwordController.text);
+                          isLoading.value = false;
+                          Get.offAllNamed(StaffPage.id);
+                        } on FirebaseAuthException catch (e) {
+                          isLoading.value = false;
+                          Get.dialog(
+                            AlertDialog(
+                                title: const Text(
+                                  "Login failed 😪",
+                                  textAlign: TextAlign.center,
+                                ),
+                                content: Text(
+                                  "${e.message}",
+                                  textAlign: TextAlign.center,
+                                ),
+                                contentPadding: const EdgeInsets.all(10)),
+                          );
+                        }
+                      },
                     ),
                     Row(
                       children: <Widget>[

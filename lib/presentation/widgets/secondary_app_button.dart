@@ -13,21 +13,23 @@ class SecondaryAppButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Text(
-        title,
-        style: GoogleFonts.exo2(color: Constants.coolOrange),
-      ),
-      style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            width: 1,
-            color: Constants.coolOrange,
-          ),
-          borderRadius: BorderRadius.circular(20),
+    return Container(
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          title,
+          style: GoogleFonts.exo2(color: Constants.coolOrange),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1,
+              color: Constants.coolOrange,
+            ),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+        ),
       ),
     );
   }

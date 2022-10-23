@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/get.dart';
 import 'package:qra/constants.dart';
-import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
 
 class FilterView extends HookWidget {
-  const FilterView({Key? key}) : super(key: key);
-
+  const FilterView(
+      {Key? key,
+      required this.allFunction,
+      required this.todayFunction,
+      required this.tomorrowFunction})
+      : super(key: key);
+  final VoidCallback allFunction;
+  final VoidCallback todayFunction;
+  final VoidCallback tomorrowFunction;
   @override
   Widget build(BuildContext context) {
+    //todo: Use The static access when you choose the all, tomorrow amd today with dateTime
     var items = ['All', 'Today', 'Tomorrow'];
     return Container(
       padding: const EdgeInsets.all(8.0),
@@ -42,13 +48,11 @@ class FilterView extends HookWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  onTap: () async {
-                    if (items[index] == "All") {
-                      Get.toNamed(SubscribeToCourseScreen.id);
-                    }
-                    if (items[index] == "Today") {}
-                    if (items[index] == "Tomorrow") {}
-                  },
+                  onTap: items[index] == "All"
+                      ? allFunction
+                      : items[index] == "Today"
+                          ? todayFunction
+                          : tomorrowFunction,
                   title: Text(
                     items[index],
                     style: const TextStyle(fontSize: 14),

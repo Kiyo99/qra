@@ -6,13 +6,15 @@ import 'package:qra/constants.dart';
 class AppTextField extends HookWidget {
   final TextEditingController controller;
   final String title;
+  final bool? obscureText;
 
-  AppTextField({required this.controller, required this.title});
+  AppTextField({required this.controller, required this.title, this.obscureText});
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextField(
+        obscureText: obscureText??false,
         cursorColor: Constants.coolOrange,
         controller: controller,
         decoration: InputDecoration(
