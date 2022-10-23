@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StudentOptionsScreen extends HookConsumerWidget {
   const StudentOptionsScreen({Key? key, required this.title}) : super(key: key);
@@ -63,6 +64,12 @@ class StudentOptionsScreen extends HookConsumerWidget {
                       // print(auth.currentUser);
                       Get.offAndToNamed(LoginPage.id);
                       // navigate(context);
+                      return;
+                    }
+
+                    if (items[index] == 'Live chat') {
+                      var url = "https://wa.me/${Constants.WHATSAPP}";
+                      await launch(url);
                       return;
                     } else {
                       return;

@@ -82,27 +82,18 @@ class MyApp extends HookConsumerWidget {
   }
 }
 
-//todo: lecturer is greeted with a list of available courses for that day (filter by date?, Use current date as query???,
-
-//todo: create a screen for deleting courses, (Only lecturers or admins or exam controller)
-
-//todo live chat with vvu its
-
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
 
-//todo: Remember functionality of due date all round with filtering
+//todo: Implement a My courses section?
 
 //todo: try to set light and dark theme
-//todo: refactor code to change all colors at once
 //todo: refactor code to have one text theme, google fonts
 //todo: or have like 2 or 3 global text themes in constants and call them from there
 
 //todo: refactor lottie for view normal courses maybe to no internet
 
 //todo: Should the lecturer be able to download pdf of the attendance sheet?
-
-//todo: Sort the attendance sheet by alphabetical order. Include a search feature
 //todo: Handle errors on view course details
 
 //todo: Add realtime chat integration
