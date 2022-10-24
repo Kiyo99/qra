@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/app_user/app_user.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
@@ -163,6 +165,9 @@ class RegisterPage extends HookConsumerWidget {
                               .set(db)
                               .whenComplete(() {
                             _showToast(context, 'Successfully saved user');
+
+                            final user = AppUser.fromJson(db);
+                            ref.read(AuthLocalDataSource.provider).cacheUser(user);
                             isLoading.value = false;
                             Get.offAllNamed(StaffPage.id);
                           }).catchError((error, stackTrace) => () {

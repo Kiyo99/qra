@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/data/app_user/app_user.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
@@ -49,7 +51,9 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     final auth = FirebaseAuth.instance;
-    User? user = auth.currentUser;
+    final user = ref.read(AuthLocalDataSource.provider).getCachedUser();
+
+    print("User is ${user?.iD}");
 
     return GestureDetector(
       onTap: () {
@@ -81,6 +85,8 @@ class MyApp extends HookConsumerWidget {
     );
   }
 }
+
+//todo it is home
 
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState

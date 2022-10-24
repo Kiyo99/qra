@@ -22,16 +22,16 @@ class _$AppUserTearOff {
   const _$AppUserTearOff();
 
   _AppUser call(
-      {required String fullName,
-      required String iD,
+      {dynamic fullName,
+      dynamic iD,
       dynamic isEligible,
       dynamic major,
-      required String email,
-      required String phoneNumber,
-      required String firstName,
-      required String lastName,
-      required String gender,
-      required String status}) {
+      dynamic email,
+      dynamic phoneNumber,
+      dynamic firstName,
+      dynamic lastName,
+      dynamic gender,
+      dynamic status}) {
     return _AppUser(
       fullName: fullName,
       iD: iD,
@@ -56,16 +56,16 @@ const $AppUser = _$AppUserTearOff();
 
 /// @nodoc
 mixin _$AppUser {
-  String get fullName => throw _privateConstructorUsedError;
-  String get iD => throw _privateConstructorUsedError;
+  dynamic get fullName => throw _privateConstructorUsedError;
+  dynamic get iD => throw _privateConstructorUsedError;
   dynamic get isEligible => throw _privateConstructorUsedError;
   dynamic get major => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get phoneNumber => throw _privateConstructorUsedError;
-  String get firstName => throw _privateConstructorUsedError;
-  String get lastName => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
+  dynamic get email => throw _privateConstructorUsedError;
+  dynamic get phoneNumber => throw _privateConstructorUsedError;
+  dynamic get firstName => throw _privateConstructorUsedError;
+  dynamic get lastName => throw _privateConstructorUsedError;
+  dynamic get gender => throw _privateConstructorUsedError;
+  dynamic get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -77,16 +77,16 @@ abstract class $AppUserCopyWith<$Res> {
   factory $AppUserCopyWith(AppUser value, $Res Function(AppUser) then) =
       _$AppUserCopyWithImpl<$Res>;
   $Res call(
-      {String fullName,
-      String iD,
+      {dynamic fullName,
+      dynamic iD,
       dynamic isEligible,
       dynamic major,
-      String email,
-      String phoneNumber,
-      String firstName,
-      String lastName,
-      String gender,
-      String status});
+      dynamic email,
+      dynamic phoneNumber,
+      dynamic firstName,
+      dynamic lastName,
+      dynamic gender,
+      dynamic status});
 }
 
 /// @nodoc
@@ -114,11 +114,11 @@ class _$AppUserCopyWithImpl<$Res> implements $AppUserCopyWith<$Res> {
       fullName: fullName == freezed
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       iD: iD == freezed
           ? _value.iD
           : iD // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       isEligible: isEligible == freezed
           ? _value.isEligible
           : isEligible // ignore: cast_nullable_to_non_nullable
@@ -130,27 +130,27 @@ class _$AppUserCopyWithImpl<$Res> implements $AppUserCopyWith<$Res> {
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       lastName: lastName == freezed
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       gender: gender == freezed
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
     ));
   }
 }
@@ -161,16 +161,16 @@ abstract class _$AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
       __$AppUserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String fullName,
-      String iD,
+      {dynamic fullName,
+      dynamic iD,
       dynamic isEligible,
       dynamic major,
-      String email,
-      String phoneNumber,
-      String firstName,
-      String lastName,
-      String gender,
-      String status});
+      dynamic email,
+      dynamic phoneNumber,
+      dynamic firstName,
+      dynamic lastName,
+      dynamic gender,
+      dynamic status});
 }
 
 /// @nodoc
@@ -199,11 +199,11 @@ class __$AppUserCopyWithImpl<$Res> extends _$AppUserCopyWithImpl<$Res>
       fullName: fullName == freezed
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       iD: iD == freezed
           ? _value.iD
           : iD // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       isEligible: isEligible == freezed
           ? _value.isEligible
           : isEligible // ignore: cast_nullable_to_non_nullable
@@ -215,27 +215,27 @@ class __$AppUserCopyWithImpl<$Res> extends _$AppUserCopyWithImpl<$Res>
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       lastName: lastName == freezed
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       gender: gender == freezed
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
     ));
   }
 }
@@ -244,41 +244,41 @@ class __$AppUserCopyWithImpl<$Res> extends _$AppUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AppUser extends _AppUser {
   _$_AppUser(
-      {required this.fullName,
-      required this.iD,
+      {this.fullName,
+      this.iD,
       this.isEligible,
       this.major,
-      required this.email,
-      required this.phoneNumber,
-      required this.firstName,
-      required this.lastName,
-      required this.gender,
-      required this.status})
+      this.email,
+      this.phoneNumber,
+      this.firstName,
+      this.lastName,
+      this.gender,
+      this.status})
       : super._();
 
   factory _$_AppUser.fromJson(Map<String, dynamic> json) =>
       _$$_AppUserFromJson(json);
 
   @override
-  final String fullName;
+  final dynamic fullName;
   @override
-  final String iD;
+  final dynamic iD;
   @override
   final dynamic isEligible;
   @override
   final dynamic major;
   @override
-  final String email;
+  final dynamic email;
   @override
-  final String phoneNumber;
+  final dynamic phoneNumber;
   @override
-  final String firstName;
+  final dynamic firstName;
   @override
-  final String lastName;
+  final dynamic lastName;
   @override
-  final String gender;
+  final dynamic gender;
   @override
-  final String status;
+  final dynamic status;
 
   @override
   String toString() {
@@ -343,40 +343,40 @@ class _$_AppUser extends _AppUser {
 
 abstract class _AppUser extends AppUser {
   factory _AppUser(
-      {required String fullName,
-      required String iD,
+      {dynamic fullName,
+      dynamic iD,
       dynamic isEligible,
       dynamic major,
-      required String email,
-      required String phoneNumber,
-      required String firstName,
-      required String lastName,
-      required String gender,
-      required String status}) = _$_AppUser;
+      dynamic email,
+      dynamic phoneNumber,
+      dynamic firstName,
+      dynamic lastName,
+      dynamic gender,
+      dynamic status}) = _$_AppUser;
   _AppUser._() : super._();
 
   factory _AppUser.fromJson(Map<String, dynamic> json) = _$_AppUser.fromJson;
 
   @override
-  String get fullName => throw _privateConstructorUsedError;
+  dynamic get fullName => throw _privateConstructorUsedError;
   @override
-  String get iD => throw _privateConstructorUsedError;
+  dynamic get iD => throw _privateConstructorUsedError;
   @override
   dynamic get isEligible => throw _privateConstructorUsedError;
   @override
   dynamic get major => throw _privateConstructorUsedError;
   @override
-  String get email => throw _privateConstructorUsedError;
+  dynamic get email => throw _privateConstructorUsedError;
   @override
-  String get phoneNumber => throw _privateConstructorUsedError;
+  dynamic get phoneNumber => throw _privateConstructorUsedError;
   @override
-  String get firstName => throw _privateConstructorUsedError;
+  dynamic get firstName => throw _privateConstructorUsedError;
   @override
-  String get lastName => throw _privateConstructorUsedError;
+  dynamic get lastName => throw _privateConstructorUsedError;
   @override
-  String get gender => throw _privateConstructorUsedError;
+  dynamic get gender => throw _privateConstructorUsedError;
   @override
-  String get status => throw _privateConstructorUsedError;
+  dynamic get status => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AppUserCopyWith<_AppUser> get copyWith =>

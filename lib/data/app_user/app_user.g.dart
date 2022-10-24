@@ -7,16 +7,16 @@ part of 'app_user.dart';
 // **************************************************************************
 
 _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
-      fullName: json['fullName'] as String,
-      iD: json['iD'] as String,
+      fullName: json['fullName'],
+      iD: json['iD'],
       isEligible: json['isEligible'],
       major: json['major'],
-      email: json['email'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      gender: json['gender'] as String,
-      status: json['status'] as String,
+      email: json['email'],
+      phoneNumber: json['phoneNumber'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      gender: json['gender'],
+      status: json['status'],
     );
 
 Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
