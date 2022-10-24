@@ -133,6 +133,7 @@ class ViewCourseDetails extends HookConsumerWidget {
               padding: const EdgeInsets.all(8),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
               itemCount: courseDetails.students?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 return makeCard(

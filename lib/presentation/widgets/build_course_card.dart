@@ -15,6 +15,7 @@ class BuildCourseCard extends HookWidget {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
           itemCount: courses.length,
           itemBuilder: (context, index) {
             return Dismissible(

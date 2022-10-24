@@ -19,4 +19,5 @@ class Constants {
 
   // Pref keys
   static const prefsUserKey = 'PREFS_USER_KEY';
+  static const prefsViewedKey = 'PREFS_VIEWED_KEY';
 }

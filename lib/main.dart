@@ -10,6 +10,7 @@ import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
+import 'package:qra/presentation/auth/splash_screen.dart';
 import 'package:qra/presentation/student/student_details.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
@@ -52,8 +53,10 @@ class MyApp extends HookConsumerWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     final auth = FirebaseAuth.instance;
     final user = ref.read(AuthLocalDataSource.provider).getCachedUser();
+    final userr = ref.read(AuthLocalDataSource.provider).viewedIntro();
 
     print("User is ${user?.iD}");
+    print("Usgger is ${userr}");
 
     return GestureDetector(
       onTap: () {
@@ -71,6 +74,7 @@ class MyApp extends HookConsumerWidget {
           routes: {
             QrScanner.id: (context) => QrScanner(),
             LoginPage.id: (context) => LoginPage(),
+            IntroScreen.id: (context) => IntroScreen(),
             StaffPage.id: (context) => const StaffPage(),
             StudentPage.id: (context) => StudentPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
@@ -81,12 +85,13 @@ class MyApp extends HookConsumerWidget {
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: IntroScreen()),
+          home: const SplashScreen()),
     );
   }
 }
 
-//todo it is home
+//todo: Create a splash screen, and in that splash screen you determine the user destination cos omo
+//todo: Take inspiration from pamo and then use the same approach to do the checks
 
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState

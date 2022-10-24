@@ -15,6 +15,22 @@ class AuthLocalDataSource {
     _preferenceManager.saveJsonMap(Constants.prefsUserKey, user.toJson());
   }
 
+  bool? viewedIntro() {
+    return _preferenceManager.prefs.getBool(Constants.prefsViewedKey);
+  }
+
+  void setViewedIntro() {
+    _preferenceManager.prefs.setBool(Constants.prefsViewedKey, true);
+  }
+
+  bool? appInstalled() {
+    return _preferenceManager.prefs.getBool(Constants.prefsViewedKey);
+  }
+
+  void setAppInstalled() {
+    _preferenceManager.prefs.setBool(Constants.prefsViewedKey, true);
+  }
+
   AppUser? getCachedUser() {
     final user = _preferenceManager.getJsonMap(Constants.prefsUserKey);
     return AppUser.fromJson(user);
