@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/data/app_user/app_user.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
+import 'package:qra/presentation/auth/splash_screen.dart';
 import 'package:qra/presentation/student/student_details.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
@@ -49,7 +52,11 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     final auth = FirebaseAuth.instance;
-    User? user = auth.currentUser;
+    final user = ref.read(AuthLocalDataSource.provider).getCachedUser();
+    final userr = ref.read(AuthLocalDataSource.provider).viewedIntro();
+
+    print("User is ${user?.iD}");
+    print("Usgger is ${userr}");
 
     return GestureDetector(
       onTap: () {
@@ -67,6 +74,7 @@ class MyApp extends HookConsumerWidget {
           routes: {
             QrScanner.id: (context) => QrScanner(),
             LoginPage.id: (context) => LoginPage(),
+            IntroScreen.id: (context) => IntroScreen(),
             StaffPage.id: (context) => const StaffPage(),
             StudentPage.id: (context) => StudentPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
@@ -77,36 +85,29 @@ class MyApp extends HookConsumerWidget {
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
-          home: IntroScreen()),
+          home: const SplashScreen()),
     );
   }
 }
 
-//todo: lecturer is greeted with a list of available courses for that day (filter by date?, Use current date as query???,
-
-//todo: create a screen for deleting courses, (Only lecturers or admins or exam controller)
-
-//todo live chat with vvu its
+//todo: Create a splash screen, and in that splash screen you determine the user destination cos omo
+//todo: Take inspiration from pamo and then use the same approach to do the checks
 
 //todo: Add subscribed courses to menu and then fetch the list. Add courses to students model
 //todo: Look at either locally caching the person or having useState
 
-//todo: Remember functionality of due date all round with filtering
+//todo: Implement a My courses section?
 
 //todo: try to set light and dark theme
-//todo: refactor code to change all colors at once
 //todo: refactor code to have one text theme, google fonts
 //todo: or have like 2 or 3 global text themes in constants and call them from there
 
 //todo: refactor lottie for view normal courses maybe to no internet
 
 //todo: Should the lecturer be able to download pdf of the attendance sheet?
-
-//todo: Sort the attendance sheet by alphabetical order. Include a search feature
 //todo: Handle errors on view course details
 
-//todo: Add realtime chat integration
-
-//todo: After a student subscribes to a course, add that course to an array there
-
-//todo: Refactor rest of the codebase with AppModal, AppTextField, PrimaryAppButton and SecondaryAppButton
+//todo: Locally save user
+//todo: When registering, 2 options: registering as a student or examiner
+//todo: Save that field as status. Now create the userJson model from there and supply the information there
+//todo: When logging in, show a loader that shows "Wait amin, setting up workspace" during that time we fetch the doc and determine the user

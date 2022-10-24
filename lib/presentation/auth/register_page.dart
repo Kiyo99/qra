@@ -6,8 +6,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/app_user/app_user.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
+import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
 
 class RegisterPage extends HookConsumerWidget {
@@ -40,10 +43,10 @@ class RegisterPage extends HookConsumerWidget {
                     Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
-                        child: const Text(
+                        child: Text(
                           'QRA',
                           style: TextStyle(
-                              color: Colors.blue,
+                              color: Constants.coolOrange,
                               fontWeight: FontWeight.w500,
                               fontSize: 30),
                         )),
@@ -56,229 +59,146 @@ class RegisterPage extends HookConsumerWidget {
                               fontSize: 28, color: Colors.white),
                         )),
                     const SizedBox(height: 50),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Email',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: emailController,
+                      title: "Email",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: firstNameController,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'First Name',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: firstNameController,
+                      title: "First Name",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: lastNameController,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Last Name',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: lastNameController,
+                      title: "Last Name",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: iDController,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Student ID',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: iDController,
+                      title: "Student ID",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: majorController,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Major',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: majorController,
+                      title: "Major",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: genderController,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Gender',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: genderController,
+                      title: "Gender",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: numberController,
-                        keyboardType: TextInputType.phone,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Phone number',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
+                    AppTextField(
+                      controller: numberController,
+                      title: "Phone number",
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
+                    AppTextField(
                         controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Password',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
+                        title: "Password",
+                        obscureText: true),
+                    AppTextField(
                         controller: cPasswordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: 'Confirm Password',
-                            labelStyle: GoogleFonts.exo2(color: Colors.white)),
-                      ),
-                    ),
+                        title: "Confirm Password",
+                        obscureText: true),
                     const SizedBox(height: 50),
                     TextButton(
                       onPressed: () {
                         //forgot password screen
                       },
-                      child: const Text(
-                        'Forgot Password',
+                      child: Text(
+                        'Forgot Password?',
+                        style: GoogleFonts.exo2(color: Constants.coolOrange),
                       ),
                     ),
-                    Container(
-                        height: 50,
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: PrimaryAppButton(
-                          title: "Register",
-                          onPressed: () async {
-                            if (emailController.text.isEmpty ||
-                                firstNameController.text.isEmpty ||
-                                lastNameController.text.isEmpty ||
-                                passwordController.text.isEmpty ||
-                                cPasswordController.text.isEmpty ||
-                                majorController.text.isEmpty ||
-                                genderController.text.isEmpty ||
-                                iDController.text.isEmpty ||
-                                numberController.text.isEmpty) {
-                              _showToast(context, 'Please enter all fields');
-                              return;
-                            }
+                    PrimaryAppButton(
+                      title: "Register",
+                      onPressed: () async {
+                        if (emailController.text.isEmpty ||
+                            firstNameController.text.isEmpty ||
+                            lastNameController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            cPasswordController.text.isEmpty ||
+                            majorController.text.isEmpty ||
+                            genderController.text.isEmpty ||
+                            iDController.text.isEmpty ||
+                            numberController.text.isEmpty) {
+                          _showToast(context, 'Please enter all fields');
+                          return;
+                        }
 
-                            if (numberController.text.length < 10) {
-                              _showToast(
-                                  context, 'Please enter a valid phone number');
-                              return;
-                            }
+                        if (numberController.text.length < 10) {
+                          _showToast(
+                              context, 'Please enter a valid phone number');
+                          return;
+                        }
 
-                            if (!(passwordController.text ==
-                                cPasswordController.text)) {
-                              _showToast(context, 'Passwords don\'t match');
-                              return;
-                            }
+                        if (!(passwordController.text ==
+                            cPasswordController.text)) {
+                          _showToast(context, 'Passwords don\'t match');
+                          return;
+                        }
 
-                            if (passwordController.text.length < 6) {
-                              _showToast(context,
-                                  'Password should not be less than 6 characters');
-                              return;
-                            }
+                        if (passwordController.text.length < 6) {
+                          _showToast(context,
+                              'Password should not be less than 6 characters');
+                          return;
+                        }
 
-                            isLoading.value = true;
+                        isLoading.value = true;
 
-                            try {
-                              await auth.createUserWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: cPasswordController.text);
+                        try {
+                          await auth.createUserWithEmailAndPassword(
+                              email: emailController.text,
+                              password: cPasswordController.text);
 
-                              Map<String, Object> db = {};
-                              db['firstName'] = firstNameController.text;
-                              db['lastName'] = lastNameController.text;
-                              db['fullName'] =
-                                  "${firstNameController.text} ${lastNameController.text}";
-                              db['email'] = emailController.text;
-                              db['gender'] = genderController.text;
-                              db['iD'] = iDController.text;
-                              db['major'] = majorController.text;
-                              db['isEligible'] = "false";
-                              db['phoneNumber'] = numberController.text;
-                              db['status'] = "Student";
+                          Map<String, Object> db = {};
+                          db['firstName'] = firstNameController.text;
+                          db['lastName'] = lastNameController.text;
+                          db['fullName'] =
+                              "${firstNameController.text} ${lastNameController.text}";
+                          db['email'] = emailController.text;
+                          db['gender'] = genderController.text;
+                          db['iD'] = iDController.text;
+                          db['major'] = majorController.text;
+                          db['isEligible'] = "false";
+                          db['phoneNumber'] = numberController.text;
+                          db['status'] = "Student";
 
-                              _firestore
-                                  .collection("Users")
-                                  .doc(auth.currentUser!.email.toString())
-                                  .set(db)
-                                  .whenComplete(() {
-                                _showToast(context, 'Successfully saved user');
-                                isLoading.value = false;
-                                Get.offAllNamed(StaffPage.id);
-                              }).catchError((error, stackTrace) => () {
-                                        _showToast(
-                                            context, 'Failed to save 😪');
-                                        print('Failed: $error');
-                                      });
-                            } on FirebaseAuthException catch (e) {
-                              isLoading.value = false;
-                              Get.dialog(
-                                AlertDialog(
-                                    title: const Text(
-                                      "Registration failed 😪",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    content: Text(
-                                      "${e.message}",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    contentPadding: const EdgeInsets.all(10)),
-                              );
-                            }
-                          },
-                        )),
+                          _firestore
+                              .collection("Users")
+                              .doc(auth.currentUser!.email.toString())
+                              .set(db)
+                              .whenComplete(() {
+                            _showToast(context, 'Successfully saved user');
+
+                            final user = AppUser.fromJson(db);
+                            ref.read(AuthLocalDataSource.provider).cacheUser(user);
+                            isLoading.value = false;
+                            Get.offAllNamed(StaffPage.id);
+                          }).catchError((error, stackTrace) => () {
+                                    _showToast(context, 'Failed to save 😪');
+                                    print('Failed: $error');
+                                  });
+                        } on FirebaseAuthException catch (e) {
+                          isLoading.value = false;
+                          Get.dialog(
+                            AlertDialog(
+                                title: const Text(
+                                  "Registration failed 😪",
+                                  textAlign: TextAlign.center,
+                                ),
+                                content: Text(
+                                  "${e.message}",
+                                  textAlign: TextAlign.center,
+                                ),
+                                contentPadding: const EdgeInsets.all(10)),
+                          );
+                        }
+                      },
+                    ),
                     Row(
                       children: <Widget>[
-                        const Text('Does not have account?'),
+                        const Text('Have an account?'),
                         TextButton(
-                          child: const Text(
+                          child: Text(
                             'Sign in',
-                            style: TextStyle(fontSize: 20),
+                            style: GoogleFonts.exo2(
+                                color: Constants.coolOrange, fontSize: 20),
                           ),
                           onPressed: () {
                             Get.to(LoginPage());

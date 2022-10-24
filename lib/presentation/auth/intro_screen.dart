@@ -8,6 +8,8 @@ import 'package:qra/presentation/auth/components/intro_pager_item.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
+import 'package:qra/presentation/widgets/primary_app_button.dart';
+import 'package:qra/presentation/widgets/secondary_app_button.dart';
 import 'package:qra/presentation/widgets/slider_indicator.dart';
 
 class IntroScreen extends HookConsumerWidget {
@@ -49,7 +51,7 @@ class IntroScreen extends HookConsumerWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -60,7 +62,9 @@ class IntroScreen extends HookConsumerWidget {
                     currentSlide: currentSlide.value,
                   ),
                 ),
-                TextButton(
+                PrimaryAppButton(
+                  padding: const EdgeInsets.all(0),
+                  title: currentSlide.value < 3 ? "Next" : "Done",
                   onPressed: () => currentSlide.value < 3
                       ? pageController.nextPage(
                           duration: const Duration(milliseconds: 300),
@@ -69,21 +73,6 @@ class IntroScreen extends HookConsumerWidget {
                       : user == null
                           ? Get.offAllNamed(LoginPage.id)
                           : Get.offAllNamed(StudentPage.id),
-                  child: Text(
-                    currentSlide.value < 3 ? "Next" : "Done",
-                    style: TextStyle(color: Constants.coolBlue),
-                  ),
-                  style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 15),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 1,
-                          color: Constants.coolOrange,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: Constants.coolOrange),
                 ),
                 const SizedBox(height: 10),
                 AnimatedContainer(
@@ -95,28 +84,14 @@ class IntroScreen extends HookConsumerWidget {
                       height: 30,
                     ),
                     visible: currentSlide.value < 3,
-                    child: TextButton(
+                    child: SecondaryAppButton(
+                      title: "Skip",
                       onPressed: () {
                         print(user);
                         user == null
                             ? Get.offAllNamed(LoginPage.id)
                             : Get.offAllNamed(StaffPage.id);
                       },
-                      child: Text(
-                        "Skip",
-                        style: TextStyle(color: Constants.coolOrange),
-                      ),
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Constants.coolOrange,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 15),
-                      ),
                     ),
                   ),
                 ),

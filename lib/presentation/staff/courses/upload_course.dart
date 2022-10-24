@@ -25,6 +25,12 @@ class UploadCourseScreen extends HookWidget {
     final TextEditingController teacher = TextEditingController();
     final isLoading = useState(false);
 
+
+    DateTime currentDate = DateTime.now();
+    DateTime expiry = DateTime.parse("2022-10-24");
+    print("Expiry is: ${expiry}");
+
+
     _selectDate(BuildContext context) async {
       await showDatePicker(
           context: context,
@@ -87,78 +93,75 @@ class UploadCourseScreen extends HookWidget {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: PrimaryAppButton(
-                          title: "Upload Course",
-                          onPressed: () async {
-                            if (courseCode.text.isEmpty ||
-                                courseName.text.isEmpty ||
-                                teacher.text.isEmpty ||
-                                dueDate.text.isEmpty) {
-                              AppModal.showToast(
-                                  context, 'Please enter all fields');
-                              return;
-                            }
+                      PrimaryAppButton(
+                        title: "Upload Course",
+                        onPressed: () async {
+                          if (courseCode.text.isEmpty ||
+                              courseName.text.isEmpty ||
+                              teacher.text.isEmpty ||
+                              dueDate.text.isEmpty) {
+                            AppModal.showToast(
+                                context, 'Please enter all fields');
+                            return;
+                          }
 
-                            AppModal.showModal(
-                                context: context,
-                                title: "Upload?",
-                                message:
-                                    "Are you sure you want to upload ${courseName.text}?",
-                                asset: "assets/lottie/warning.json",
-                                primaryAction: () async {
+                          AppModal.showModal(
+                              context: context,
+                              title: "Upload?",
+                              message:
+                                  "Are you sure you want to upload ${courseName.text}?",
+                              asset: "assets/lottie/warning.json",
+                              primaryAction: () async {
+                                Get.back();
+                                AppDialogs.lottieLoader();
+
+                                Map<String, Object> db = {};
+                                db['courseName'] = courseName.text;
+                                db['courseCode'] = courseCode.text;
+                                db['dueDate'] = dueDate.text;
+                                db['teacher'] = teacher.text;
+
+                                _firestore
+                                    .collection("Courses")
+                                    .doc(db['courseCode'].toString())
+                                    .set(db)
+                                    .whenComplete(() {
                                   Get.back();
-                                  AppDialogs.lottieLoader();
 
-                                  Map<String, Object> db = {};
-                                  db['courseName'] = courseName.text;
-                                  db['courseCode'] = courseCode.text;
-                                  db['dueDate'] = dueDate.text;
-                                  db['teacher'] = teacher.text;
+                                  AppModal.showModal(
+                                    context: context,
+                                    title: 'Success',
+                                    message:
+                                        'You have successfully uploaded ${courseCode.text}.',
+                                    asset: 'assets/lottie/success.json',
+                                    primaryAction: () {
+                                      Get.back();
+                                    },
+                                    buttonText: 'Okay',
+                                  );
 
-                                  _firestore
-                                      .collection("Courses")
-                                      .doc(db['courseCode'].toString())
-                                      .set(db)
-                                      .whenComplete(() {
-                                    Get.back();
-
-                                    AppModal.showModal(
-                                      context: context,
-                                      title: 'Success',
-                                      message:
-                                          'You have successfully uploaded ${courseCode.text}.',
-                                      asset: 'assets/lottie/success.json',
-                                      primaryAction: () {
-                                        Get.back();
-                                      },
-                                      buttonText: 'Okay',
-                                    );
-
-                                    courseName.clear();
-                                    courseCode.clear();
-                                    dueDate.clear();
-                                    teacher.clear();
-                                  }).onError((error, stackTrace) => () {
-                                            Get.back();
-                                            AppModal.showModal(
-                                              context: context,
-                                              title: 'Error',
-                                              message:
-                                                  'Failed to upload ${courseCode.text}.',
-                                              asset: 'assets/lottie/error.json',
-                                              primaryAction: () {
-                                                Get.back();
-                                              },
-                                              buttonText: 'Okay',
-                                            );
-                                          });
-                                },
-                                buttonText: "Yes, upload",
-                                showSecondary: true);
-                          },
-                        ),
+                                  courseName.clear();
+                                  courseCode.clear();
+                                  dueDate.clear();
+                                  teacher.clear();
+                                }).onError((error, stackTrace) => () {
+                                          Get.back();
+                                          AppModal.showModal(
+                                            context: context,
+                                            title: 'Error',
+                                            message:
+                                                'Failed to upload ${courseCode.text}.',
+                                            asset: 'assets/lottie/error.json',
+                                            primaryAction: () {
+                                              Get.back();
+                                            },
+                                            buttonText: 'Okay',
+                                          );
+                                        });
+                              },
+                              buttonText: "Yes, upload",
+                              showSecondary: true);
+                        },
                       )
                     ],
                   ),

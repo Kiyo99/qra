@@ -12,9 +12,12 @@ class Constants {
   // static Color coolBlue = Colors.deepPurpleAccent;
   static Color coolOrange = const Color(0xffff9933);
   static Color coolRed = const Color(0xff742525);
+  static const WHATSAPP = '+233247726432';
+
 
   //todo redo color combinations
 
   // Pref keys
   static const prefsUserKey = 'PREFS_USER_KEY';
+  static const prefsViewedKey = 'PREFS_VIEWED_KEY';
 }

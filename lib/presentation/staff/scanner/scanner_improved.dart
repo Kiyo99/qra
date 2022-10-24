@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
-import 'package:qra/presentation/widgets/prompts.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 class ImprovedScanner extends HookConsumerWidget {
@@ -21,12 +20,7 @@ class ImprovedScanner extends HookConsumerWidget {
     final _fireStore = FirebaseFirestore.instance;
     final auth = FirebaseAuth.instance;
     User? currentUser = auth.currentUser;
-    final data = [
-      "RHoda",
-      "Hu",
-    ];
 
-    // final items = ['One', 'Two', 'Three', 'Four'];
     final items = useState(['Course code...']);
     final selectedValue = useState(items.value[0]);
 
@@ -96,7 +90,10 @@ class ImprovedScanner extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 50),
                       StreamBuilder(
-                        stream: _fireStore.collection("Courses").snapshots(),
+                        stream: _fireStore
+                            .collection("Courses")
+                            .orderBy("courseCode")
+                            .snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
@@ -156,30 +153,23 @@ class ImprovedScanner extends HookConsumerWidget {
                             fontSize: 15),
                         onConfirmation: () {
                           if (selectedValue.value == "Course code...") {
-                            showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(25.0),
-                                        topRight: Radius.circular(25.0))),
-                                builder: (ctx) => AppPrompts(
-                                    title: "Error",
-                                    message:
-                                        "Please select a course code to proceed",
-                                    asset: "assets/lottie/error.json",
-                                    primaryAction: () {
-                                      Get.back();
-                                    },
-                                    buttonText: "Okay",
-                                    showSecondary: false));
+                            AppModal.showModal(
+                              context: context,
+                              title: "Error",
+                              message: "Please select a course code to proceed",
+                              asset: "assets/lottie/error.json",
+                              primaryAction: () {
+                                Get.back();
+                              },
+                              buttonText: "Okay",
+                            );
                             return;
                           }
 
-                          Get.to(QrScanner(),
-                              arguments: selectedValue.value);
+                          Get.to(QrScanner(), arguments: selectedValue.value);
                         },
                         height: 50,
-                        foregroundColor: Colors.black,
+                        foregroundColor: Constants.blueish,
                         backgroundColor: Constants.coolOrange,
                         backgroundColorEnd: Constants.coolOrange,
                         shadow: const BoxShadow(color: Colors.transparent),
@@ -198,16 +188,3 @@ class ImprovedScanner extends HookConsumerWidget {
     );
   }
 }
-
-// Widget build(BuildContext context) {
-//   return new StreamBuilder(
-//       stream: Firestore.instance.collection('COLLECTION_NAME').document('TESTID1').snapshots(),
-//       builder: (context, snapshot) {
-//         if (!snapshot.hasData) {
-//           return new Text("Loading");
-//         }
-//         var userDocument = snapshot.data;
-//         return new Text(userDocument["name"]);
-//       }
-//   );
-// }

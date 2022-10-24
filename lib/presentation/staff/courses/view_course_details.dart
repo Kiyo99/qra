@@ -15,8 +15,6 @@ class ViewCourseDetails extends HookConsumerWidget {
 
   final _fireStore = FirebaseFirestore.instance;
 
-  //todo: You will have to accept arguments here
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final course = useState<CourseModel>(Get.arguments);
@@ -46,8 +44,6 @@ class ViewCourseDetails extends HookConsumerWidget {
                   activeColor: Constants.coolOrange,
                   value: studentModel.isEligible == "true" ? true : false,
                   onChanged: (v) async {
-                    //todo: Get the entire student course list, edit array and resend
-
                     final courseDoc = await _fireStore
                         .collection("Courses")
                         .doc(course.value.courseCode)
@@ -137,6 +133,7 @@ class ViewCourseDetails extends HookConsumerWidget {
               padding: const EdgeInsets.all(8),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
               itemCount: courseDetails.students?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 return makeCard(

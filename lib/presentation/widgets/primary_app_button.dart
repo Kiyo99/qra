@@ -5,22 +5,29 @@ import 'package:qra/constants.dart';
 
 class PrimaryAppButton extends HookWidget {
   const PrimaryAppButton(
-      {Key? key, required this.title, required this.onPressed})
+      {Key? key, required this.title, required this.onPressed, this.padding})
       : super(key: key);
   final VoidCallback onPressed;
   final String title;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Text(
-        title,
-        style: GoogleFonts.exo2(
-            color: Constants.blueish, fontWeight: FontWeight.w600),
-      ),
-      style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+    return Container(
+      height: 50,
+      width: MediaQuery.of(context).size.width,
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 10),
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          title,
+          style: GoogleFonts.exo2(
+            color: Constants.blueish,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           shape: RoundedRectangleBorder(
             side: BorderSide(
               width: 1,
@@ -28,7 +35,9 @@ class PrimaryAppButton extends HookWidget {
             ),
             borderRadius: BorderRadius.circular(15),
           ),
-          backgroundColor: Constants.coolOrange),
+          backgroundColor: Constants.coolOrange,
+        ),
+      ),
     );
   }
 }
