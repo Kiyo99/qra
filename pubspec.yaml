@@ -58,6 +58,7 @@ dev_dependencies:
   flutter_native_splash: ^2.1.1
   json_serializable: ^6.1.4
   http:
+
   #generating icons
   flutter_launcher_icons: "^0.10.0"
 
