@@ -92,6 +92,7 @@ class IntroScreen extends HookConsumerWidget {
                             ? Get.offAllNamed(LoginPage.id)
                             : Get.offAllNamed(StaffPage.id);
                       },
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                 ),

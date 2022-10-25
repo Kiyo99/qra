@@ -15,6 +15,7 @@ class SecondaryAppButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 50,
       width: MediaQuery.of(context).size.width,
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 10),
       child: TextButton(
@@ -29,9 +30,9 @@ class SecondaryAppButton extends HookWidget {
               width: 1,
               color: Constants.coolOrange,
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(15),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
         ),
       ),
     );
