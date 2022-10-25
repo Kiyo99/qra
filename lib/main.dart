@@ -111,3 +111,7 @@ class MyApp extends HookConsumerWidget {
 //todo: When registering, 2 options: registering as a student or examiner
 //todo: Save that field as status. Now create the userJson model from there and supply the information there
 //todo: When logging in, show a loader that shows "Wait amin, setting up workspace" during that time we fetch the doc and determine the user
+
+//todo: Refactor Primary and Secondary button
+//todo: Padding should rather be 0 by default
+//todo: check height of buttons very well
