@@ -75,14 +75,18 @@ class AppPrompts extends HookConsumerWidget {
                 style: GoogleFonts.exo2(fontSize: 18),
               ),
               const SizedBox(height: 30),
-              PrimaryAppButton(title: buttonText, onPressed: primaryAction),
+              PrimaryAppButton(
+                  title: buttonText,
+                  onPressed: primaryAction,
+                  padding: EdgeInsets.zero),
               const SizedBox(height: 10),
               if (showSecondary == true)
                 SecondaryAppButton(
                     title: "Back",
                     onPressed: () {
                       Get.back();
-                    })
+                    },
+                    padding: EdgeInsets.zero)
             ],
           ),
         )

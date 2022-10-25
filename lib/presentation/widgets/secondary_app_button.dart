@@ -6,14 +6,17 @@ import 'package:qra/constants.dart';
 
 class SecondaryAppButton extends HookWidget {
   const SecondaryAppButton(
-      {Key? key, required this.title, required this.onPressed})
+      {Key? key, required this.title, required this.onPressed, this.padding})
       : super(key: key);
   final VoidCallback onPressed;
   final String title;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 10),
       child: TextButton(
         onPressed: onPressed,
         child: Text(

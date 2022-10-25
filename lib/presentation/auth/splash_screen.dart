@@ -16,8 +16,7 @@ class SplashScreen extends HookConsumerWidget {
     dynamic user = ref.read(AuthLocalDataSource.provider).getCachedUser();
 
     Future.delayed(const Duration(seconds: 5), () {
-      print("Moving");
-      Get.toNamed(IntroScreen.id);
+      Get.offNamed(IntroScreen.id);
 
       //TODO: All destination checks would happen here.
       //TODO: 1. New user = intro screen
