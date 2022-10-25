@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -60,6 +61,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
                       final auth = FirebaseAuth.instance;
                       //
                       await auth.signOut();
+                      ref.read(AuthLocalDataSource.provider).clearUserData();
 
                       // print(auth.currentUser);
                       Get.offAndToNamed(LoginPage.id);

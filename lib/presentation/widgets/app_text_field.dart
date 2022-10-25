@@ -8,20 +8,27 @@ class AppTextField extends HookWidget {
   final String title;
   final bool? obscureText;
 
-  AppTextField({required this.controller, required this.title, this.obscureText});
+  AppTextField(
+      {required this.controller, required this.title, this.obscureText});
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextField(
-        obscureText: obscureText??false,
+        obscureText: obscureText ?? false,
         cursorColor: Constants.coolOrange,
         controller: controller,
         decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(
+                15.0,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  15.0,
+                ),
                 borderSide: BorderSide(color: Constants.coolOrange)),
             border: const OutlineInputBorder(),
             labelText: title,

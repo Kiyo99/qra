@@ -52,11 +52,6 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     final auth = FirebaseAuth.instance;
-    final user = ref.read(AuthLocalDataSource.provider).getCachedUser();
-    final userr = ref.read(AuthLocalDataSource.provider).viewedIntro();
-
-    print("User is ${user?.iD}");
-    print("Usgger is ${userr}");
 
     return GestureDetector(
       onTap: () {
@@ -115,3 +110,5 @@ class MyApp extends HookConsumerWidget {
 //todo: Refactor Primary and Secondary button
 //todo: Padding should rather be 0 by default
 //todo: check height of buttons very well
+
+//todo: When registering as a staff, make some things null according to the model

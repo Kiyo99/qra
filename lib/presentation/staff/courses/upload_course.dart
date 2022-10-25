@@ -25,11 +25,9 @@ class UploadCourseScreen extends HookWidget {
     final TextEditingController teacher = TextEditingController();
     final isLoading = useState(false);
 
-
     DateTime currentDate = DateTime.now();
     DateTime expiry = DateTime.parse("2022-10-24");
     print("Expiry is: ${expiry}");
-
 
     _selectDate(BuildContext context) async {
       await showDatePicker(
@@ -162,6 +160,7 @@ class UploadCourseScreen extends HookWidget {
                               buttonText: "Yes, upload",
                               showSecondary: true);
                         },
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                       )
                     ],
                   ),
