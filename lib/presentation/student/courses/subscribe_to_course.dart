@@ -46,9 +46,7 @@ class SubscribeToCourseScreen extends HookWidget {
                     documentSnapshot.data()! as Map<String, dynamic>;
                 final course = CourseModel.fromJson(data);
 
-                return ListTile(
-                  title: Text(course.courseName, style: GoogleFonts.exo2()),
-                  subtitle: Text(course.courseCode, style: GoogleFonts.exo2()),
+                return GestureDetector(
                   onTap: () async {
                     showModalBottomSheet(
                       context: context,
@@ -111,6 +109,31 @@ class SubscribeToCourseScreen extends HookWidget {
                       ),
                     );
                   },
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(course.courseName,
+                                  style: GoogleFonts.exo2()),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Text(course.courseCode, style: GoogleFonts.exo2()),
+                      ],
+                    ),
+                  ),
                 );
               }).toList(),
             );
