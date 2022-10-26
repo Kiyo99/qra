@@ -42,7 +42,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
             child: Text(
               title,
               style:
-                  GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
+              GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
           ),
@@ -85,14 +85,14 @@ class StudentOptionsScreen extends HookConsumerWidget {
                   leading: items[index] == 'Update student information'
                       ? const Icon(Icons.account_circle_outlined)
                       : items[index] == 'Log out'
-                          ? const Icon(Icons.logout_outlined)
-                          : items[index] == 'Live chat'
-                              ? const Icon(Icons.chat_bubble_outline_outlined)
-                              : items[index] == 'Subscribed courses'
-                                  ? const Icon(Icons.menu_book_outlined)
-                                  : items[index] == 'About Qra'
-                                      ? const Icon(Icons.info_outline)
-                                      : const Icon(Icons.title),
+                      ? const Icon(Icons.logout_outlined)
+                      : items[index] == 'Live chat'
+                      ? const Icon(Icons.chat_bubble_outline_outlined)
+                      : items[index] == 'Subscribed courses'
+                      ? const Icon(Icons.menu_book_outlined)
+                      : items[index] == 'About Qra'
+                      ? const Icon(Icons.info_outline)
+                      : const Icon(Icons.title),
                 );
               },
             ),

@@ -6,8 +6,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/app_user/app_user.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
+import 'package:qra/presentation/student/student_page/student_page.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
 
@@ -80,8 +83,25 @@ class LoginPage extends HookConsumerWidget {
                           await auth.signInWithEmailAndPassword(
                               email: emailController.text,
                               password: passwordController.text);
+
+                          //todo: Add something here like setting user destination
+
+                          final studentsDoc = await store
+                              .collection("Users")
+                              .doc(emailController.text)
+                              .get();
+
+                          final user = AppUser.fromJson(studentsDoc.data()!);
+
+                          ref
+                              .read(AuthLocalDataSource.provider)
+                              .cacheUser(user);
+
                           isLoading.value = false;
-                          Get.offAllNamed(StaffPage.id);
+
+                          user.status == "Student"
+                              ? Get.offAllNamed(StudentPage.id)
+                              : Get.offAllNamed(StaffPage.id);
                         } on FirebaseAuthException catch (e) {
                           isLoading.value = false;
                           Get.dialog(

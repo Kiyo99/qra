@@ -7,6 +7,7 @@ import 'package:qra/constants.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
 
 class SplashScreen extends HookConsumerWidget {
@@ -16,13 +17,13 @@ class SplashScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(AuthLocalDataSource.provider).getCachedUser();
+    final appUser = ref.read(AuthLocalDataSource.provider).getCachedUser();
     final auth = FirebaseAuth.instance;
-    print("User is ${user}");
+    print("User is ${appUser}");
     User? authUser = auth.currentUser;
     final viewedIntro = ref.read(AuthLocalDataSource.provider).viewedIntro();
 
-    print("Usgger is ${viewedIntro}");
+    print("Viewd is ${viewedIntro}");
 
     Future.delayed(const Duration(seconds: 5), () {
       // Get.offNamed(IntroScreen.id);
@@ -36,11 +37,11 @@ class SplashScreen extends HookConsumerWidget {
       //   Get.offNamed(LoginPage.id);
       // }
 
-      if (user?.status != null) {
-        if (user!.status == "Student") {
+      if (appUser?.status != null) {
+        if (appUser!.status == "Student") {
           Get.offNamed(StudentPage.id);
-        } else if (user.status == "Student") {
-          Get.offNamed(StudentPage.id);
+        } else if (appUser.status == "Staff") {
+          Get.offNamed(StaffPage.id);
         } else {
           print("What the hell is going on");
         }
@@ -71,12 +72,3 @@ class SplashScreen extends HookConsumerWidget {
     );
   }
 }
-
-//Container(
-//         width: double.infinity,
-//         decoration: const BoxDecoration(
-//           image: DecorationImage(
-//             image: AssetImage("assets/images/qra_logo.jpg"),
-//             fit: BoxFit.contain,
-//           ),
-//         ),
