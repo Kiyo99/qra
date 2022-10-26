@@ -25,11 +25,9 @@ class UploadCourseScreen extends HookWidget {
     final TextEditingController teacher = TextEditingController();
     final isLoading = useState(false);
 
-
     DateTime currentDate = DateTime.now();
     DateTime expiry = DateTime.parse("2022-10-24");
     print("Expiry is: ${expiry}");
-
 
     _selectDate(BuildContext context) async {
       await showDatePicker(
@@ -64,109 +62,120 @@ class UploadCourseScreen extends HookWidget {
         backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
             ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Center(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      AppTextField(
-                          controller: courseName, title: "Course Name"),
-                      AppTextField(
-                          controller: courseCode, title: "Course Code"),
-                      AppTextField(controller: teacher, title: "Teacher"),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: TextField(
-                          controller: dueDate,
-                          focusNode: AlwaysDisabledFocusNode(),
-                          onTap: () {
-                            _selectDate(context);
-                          },
-                          decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              border: const OutlineInputBorder(),
-                              labelText: 'Due date',
-                              labelStyle:
-                                  GoogleFonts.exo2(color: Colors.white)),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Center(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                AppTextField(
+                    controller: courseName, title: "Course Name"),
+                AppTextField(
+                    controller: courseCode, title: "Course Code"),
+                AppTextField(controller: teacher, title: "Teacher"),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: dueDate,
+                    focusNode: AlwaysDisabledFocusNode(),
+                    onTap: () {
+                      _selectDate(context);
+                    },
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                          const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(
+                            15.0,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 30),
-                      PrimaryAppButton(
-                        title: "Upload Course",
-                        onPressed: () async {
-                          if (courseCode.text.isEmpty ||
-                              courseName.text.isEmpty ||
-                              teacher.text.isEmpty ||
-                              dueDate.text.isEmpty) {
-                            AppModal.showToast(
-                                context, 'Please enter all fields');
-                            return;
-                          }
-
-                          AppModal.showModal(
-                              context: context,
-                              title: "Upload?",
-                              message:
-                                  "Are you sure you want to upload ${courseName.text}?",
-                              asset: "assets/lottie/warning.json",
-                              primaryAction: () async {
-                                Get.back();
-                                AppDialogs.lottieLoader();
-
-                                Map<String, Object> db = {};
-                                db['courseName'] = courseName.text;
-                                db['courseCode'] = courseCode.text;
-                                db['dueDate'] = dueDate.text;
-                                db['teacher'] = teacher.text;
-
-                                _firestore
-                                    .collection("Courses")
-                                    .doc(db['courseCode'].toString())
-                                    .set(db)
-                                    .whenComplete(() {
-                                  Get.back();
-
-                                  AppModal.showModal(
-                                    context: context,
-                                    title: 'Success',
-                                    message:
-                                        'You have successfully uploaded ${courseCode.text}.',
-                                    asset: 'assets/lottie/success.json',
-                                    primaryAction: () {
-                                      Get.back();
-                                    },
-                                    buttonText: 'Okay',
-                                  );
-
-                                  courseName.clear();
-                                  courseCode.clear();
-                                  dueDate.clear();
-                                  teacher.clear();
-                                }).onError((error, stackTrace) => () {
-                                          Get.back();
-                                          AppModal.showModal(
-                                            context: context,
-                                            title: 'Error',
-                                            message:
-                                                'Failed to upload ${courseCode.text}.',
-                                            asset: 'assets/lottie/error.json',
-                                            primaryAction: () {
-                                              Get.back();
-                                            },
-                                            buttonText: 'Okay',
-                                          );
-                                        });
-                              },
-                              buttonText: "Yes, upload",
-                              showSecondary: true);
-                        },
-                      )
-                    ],
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              15.0,
+                            ),
+                            borderSide:
+                            BorderSide(color: Constants.coolOrange)),
+                        border: const OutlineInputBorder(),
+                        labelText: 'Due date',
+                        labelStyle:
+                        GoogleFonts.exo2(color: Colors.white)),
                   ),
                 ),
-              )
+                const SizedBox(height: 30),
+                PrimaryAppButton(
+                  title: "Upload Course",
+                  onPressed: () async {
+                    if (courseCode.text.isEmpty ||
+                        courseName.text.isEmpty ||
+                        teacher.text.isEmpty ||
+                        dueDate.text.isEmpty) {
+                      AppModal.showToast(
+                          context, 'Please enter all fields');
+                      return;
+                    }
+
+                    AppModal.showModal(
+                        context: context,
+                        title: "Upload?",
+                        message:
+                        "Are you sure you want to upload ${courseName.text}?",
+                        asset: "assets/lottie/warning.json",
+                        primaryAction: () async {
+                          Get.back();
+                          AppDialogs.lottieLoader();
+
+                          Map<String, Object> db = {};
+                          db['courseName'] = courseName.text;
+                          db['courseCode'] = courseCode.text;
+                          db['dueDate'] = dueDate.text;
+                          db['teacher'] = teacher.text;
+
+                          _firestore
+                              .collection("Courses")
+                              .doc(db['courseCode'].toString())
+                              .set(db)
+                              .whenComplete(() {
+                            Get.back();
+
+                            AppModal.showModal(
+                              context: context,
+                              title: 'Success',
+                              message:
+                              'You have successfully uploaded ${courseCode.text}.',
+                              asset: 'assets/lottie/success.json',
+                              primaryAction: () {
+                                Get.back();
+                              },
+                              buttonText: 'Okay',
+                            );
+
+                            courseName.clear();
+                            courseCode.clear();
+                            dueDate.clear();
+                            teacher.clear();
+                          }).onError((error, stackTrace) => () {
+                            Get.back();
+                            AppModal.showModal(
+                              context: context,
+                              title: 'Error',
+                              message:
+                              'Failed to upload ${courseCode.text}.',
+                              asset: 'assets/lottie/error.json',
+                              primaryAction: () {
+                                Get.back();
+                              },
+                              buttonText: 'Okay',
+                            );
+                          });
+                        },
+                        buttonText: "Yes, upload",
+                        showSecondary: true);
+                  },
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                )
+              ],
+            ),
+          ),
+        )
             : const Center(child: CircularProgressIndicator()));
   }
 }

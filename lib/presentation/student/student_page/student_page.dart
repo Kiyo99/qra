@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/data/fb_student_model/student_model.dart';
 import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
@@ -11,7 +13,7 @@ import 'package:qra/presentation/student/generate/generator_improved.dart';
 import 'package:qra/presentation/student/student_options_view.dart';
 import 'package:qra/presentation/student/student_search_delegate/student_delegate.dart';
 
-class StudentPage extends HookWidget {
+class StudentPage extends HookConsumerWidget {
   static const id = 'student_page';
 
   StudentPage({Key? key}) : super(key: key);
@@ -20,17 +22,12 @@ class StudentPage extends HookWidget {
   final _fireStore = FirebaseFirestore.instance;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final greeting = useState("Welcome");
     useEffect(() {
       WidgetsBinding.instance?.addPostFrameCallback((_) async {
-        final studentsDoc = await _fireStore
-            .collection("Users")
-            .doc(auth.currentUser!.email.toString())
-            .get();
-
-        final student = StudentModel.fromJson(studentsDoc.data()!);
-        greeting.value = "Welcome, ${student.firstName}";
+        final user = ref.read(AuthLocalDataSource.provider).getCachedUser();
+        greeting.value = "Welcome, ${user!.firstName}";
       });
       return;
     }, const []);

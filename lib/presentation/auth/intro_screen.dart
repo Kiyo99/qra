@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/components/intro_pager_item.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
@@ -21,17 +22,6 @@ class IntroScreen extends HookConsumerWidget {
     final pageController = usePageController();
     final auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
-    //
-    // useEffect(() {
-    //   WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-    //     //firebase auth check
-    //     if (user != null) {
-    //       //todo: To be refactored to first time lunch
-    //       Get.offAllNamed(StudentPage.id);
-    //     }
-    //   });
-    //   return;
-    // });
 
     return Scaffold(
       backgroundColor: Constants.coolBlue,
@@ -63,21 +53,25 @@ class IntroScreen extends HookConsumerWidget {
                   ),
                 ),
                 PrimaryAppButton(
-                  padding: const EdgeInsets.all(0),
                   title: currentSlide.value < 3 ? "Next" : "Done",
-                  onPressed: () => currentSlide.value < 3
-                      ? pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear,
-                        )
-                      : user == null
+                  onPressed: () {
+                    if (currentSlide.value < 3) {
+                      pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.linear,
+                      );
+                    } else {
+                      ref.read(AuthLocalDataSource.provider).setViewedIntro();
+                      user == null
                           ? Get.offAllNamed(LoginPage.id)
-                          : Get.offAllNamed(StudentPage.id),
+                          : Get.offAllNamed(StudentPage.id);
+                    }
+                  },
                 ),
                 const SizedBox(height: 10),
                 AnimatedContainer(
                   curve: Curves.linear,
-                  margin: const EdgeInsets.only(bottom: 15),
+                  margin: const EdgeInsets.only(bottom: 30),
                   duration: const Duration(milliseconds: 300),
                   child: Visibility(
                     replacement: const SizedBox(
@@ -87,12 +81,11 @@ class IntroScreen extends HookConsumerWidget {
                     child: SecondaryAppButton(
                       title: "Skip",
                       onPressed: () {
-                        print(user);
+                        ref.read(AuthLocalDataSource.provider).setViewedIntro();
                         user == null
                             ? Get.offAllNamed(LoginPage.id)
                             : Get.offAllNamed(StaffPage.id);
                       },
-                      padding: EdgeInsets.zero,
                     ),
                   ),
                 ),

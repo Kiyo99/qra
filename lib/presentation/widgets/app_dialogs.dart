@@ -337,11 +337,11 @@ class AppDialogs {
   }
 
   static lottieLoader() {
-    Get.dialog(
+    return Get.dialog(
       Transform.scale(
         scale: 1,
         child: Lottie.asset(
-          "assets/lottie/loading_yellow.json",
+          "assets/lottie/loader.json",
           frameRate: FrameRate(60),
         ),
       ),

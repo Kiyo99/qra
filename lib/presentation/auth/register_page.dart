@@ -5,11 +5,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/app_user/app_user.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
 
@@ -33,6 +35,8 @@ class RegisterPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = useState(false);
+    final items = useState(["Registering as ...", "Teacher", "Student"]);
+    final selectedValue = useState(items.value[0]);
     return Scaffold(
         backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
@@ -87,6 +91,39 @@ class RegisterPage extends HookConsumerWidget {
                       controller: numberController,
                       title: "Phone number",
                     ),
+                    Container(
+                      height: 55,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(
+                          15.0,
+                        ),
+                      ),
+                      child: DropdownButtonFormField(
+                        items: items.value
+                            .map<DropdownMenuItem<String>>(
+                                (String value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    ))
+                            .toList(),
+                        value: selectedValue.value,
+                        hint: const Text("Choose a course..."),
+                        focusColor: Colors.white,
+                        iconEnabledColor: Constants.coolOrange,
+                        // decoration: InputDecoration(
+                        //   // fillColor: Colors.blue[200],
+                        // ),
+                        style:
+                            GoogleFonts.exo2(color: Colors.white, fontSize: 16),
+                        dropdownColor: Constants.coolBlue,
+                        onChanged: (val) {
+                          selectedValue.value = val.toString();
+                        },
+                      ),
+                    ),
                     AppTextField(
                         controller: passwordController,
                         title: "Password",
@@ -116,7 +153,8 @@ class RegisterPage extends HookConsumerWidget {
                             majorController.text.isEmpty ||
                             genderController.text.isEmpty ||
                             iDController.text.isEmpty ||
-                            numberController.text.isEmpty) {
+                            numberController.text.isEmpty ||
+                            selectedValue.value == "Registering as ...") {
                           _showToast(context, 'Please enter all fields');
                           return;
                         }
@@ -157,7 +195,7 @@ class RegisterPage extends HookConsumerWidget {
                           db['major'] = majorController.text;
                           db['isEligible'] = "false";
                           db['phoneNumber'] = numberController.text;
-                          db['status'] = "Student";
+                          db['status'] = selectedValue.value;
 
                           _firestore
                               .collection("Users")
@@ -167,7 +205,9 @@ class RegisterPage extends HookConsumerWidget {
                             _showToast(context, 'Successfully saved user');
 
                             final user = AppUser.fromJson(db);
-                            ref.read(AuthLocalDataSource.provider).cacheUser(user);
+                            ref
+                                .read(AuthLocalDataSource.provider)
+                                .cacheUser(user);
                             isLoading.value = false;
                             Get.offAllNamed(StaffPage.id);
                           }).catchError((error, stackTrace) => () {
@@ -190,6 +230,7 @@ class RegisterPage extends HookConsumerWidget {
                           );
                         }
                       },
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                     ),
                     Row(
                       children: <Widget>[
@@ -210,7 +251,15 @@ class RegisterPage extends HookConsumerWidget {
                     ),
                   ],
                 ))
-            : const Center(child: CircularProgressIndicator()));
+            : Center(
+                child: Transform.scale(
+                  scale: 1,
+                  child: Lottie.asset(
+                    "assets/lottie/loader.json",
+                    frameRate: FrameRate(60),
+                  ),
+                ),
+              ));
   }
 }
 
