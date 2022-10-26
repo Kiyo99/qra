@@ -32,42 +32,63 @@ class BuildCourseCard extends HookWidget {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              courses[index].courseName,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    courses[index].courseName,
+                                    style: TextStyle(
+                                        color: Colors.white.withOpacity(0.8),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                                // IconButton(
+                                //     onPressed: () {},
+                                //     icon: Icon(
+                                //       Icons.chevron_right_outlined,
+                                //       color: Constants.coolOrange,
+                                //     ))
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              courses[index].courseCode,
                               style: TextStyle(
                                   color: Colors.white.withOpacity(0.8),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
+                                  fontSize: 14),
                             ),
-                          ),
+                            const SizedBox(height: 20),
+                            Text(
+                              courses[index].teacher,
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.toNamed(ViewCourseDetails.id,
+                                    arguments: courses[index]);
+                              },
                               icon: Icon(
                                 Icons.chevron_right_outlined,
                                 color: Constants.coolOrange,
                               ))
                         ],
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        courses[index].courseCode,
-                        style: TextStyle(
-                            color: Colors.white.withOpacity(0.8), fontSize: 14),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        courses[index].teacher,
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
+                      )
                     ],
                   ),
                 ),

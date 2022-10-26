@@ -21,7 +21,7 @@ import 'package:qra/presentation/staff/courses/view_course_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider =
-Provider<SharedPreferences>((ref) => throw UnimplementedError());
+    Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -51,7 +51,7 @@ class ImprovedScanner extends HookConsumerWidget {
                       child: Text("Let's Scan these students",
                           style: GoogleFonts.exo2(
                               fontSize: 20,
-                              color: Color(0xffbfbfbf),
+                              color: Constants.coolWhite,
                               fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 50),
@@ -133,7 +133,7 @@ class ImprovedScanner extends HookConsumerWidget {
                         Get.to(QrScanner(), arguments: selectedValue.value);
                       },
                       height: 50,
-                      foregroundColor: Constants.blueish,
+                      foregroundColor: Constants.coolBlue,
                       backgroundColor: Constants.coolOrange,
                       backgroundColorEnd: Constants.coolOrange,
                       shadow: const BoxShadow(color: Colors.transparent),
