@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
@@ -24,7 +25,8 @@ class ViewCoursesScreen extends HookWidget {
     return Scaffold(
         backgroundColor: Constants.coolBlue,
         appBar: AppBar(
-          title: const Text("View courses"),
+          title: Text("View courses",
+              style: GoogleFonts.exo2(fontWeight: FontWeight.bold)),
           backgroundColor: Constants.coolBlue,
           elevation: 0,
           actions: [

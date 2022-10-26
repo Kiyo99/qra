@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
@@ -44,32 +45,29 @@ class BuildCourseCard extends HookWidget {
                                 Expanded(
                                   child: Text(
                                     courses[index].courseName,
-                                    style: TextStyle(
-                                        color: Colors.white.withOpacity(0.8),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
+                                    style: GoogleFonts.exo2(
+                                        fontSize: 18,
+                                        color: Constants.coolWhite,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                // IconButton(
-                                //     onPressed: () {},
-                                //     icon: Icon(
-                                //       Icons.chevron_right_outlined,
-                                //       color: Constants.coolOrange,
-                                //     ))
                               ],
                             ),
                             const SizedBox(height: 10),
                             Text(
                               courses[index].courseCode,
-                              style: TextStyle(
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontSize: 14),
+                              style: GoogleFonts.exo2(
+                                  fontSize: 14,
+                                  color: Constants.coolWhite,
+                                  fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 20),
                             Text(
                               courses[index].teacher,
-                              style: const TextStyle(
-                                  color: Colors.grey, fontSize: 14),
+                              style: GoogleFonts.exo2(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),

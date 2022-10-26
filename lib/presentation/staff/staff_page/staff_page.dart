@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_search_delegate/staff_delegate.dart';
@@ -42,7 +43,7 @@ class StaffPage extends HookWidget {
     final topAppBar = AppBar(
       elevation: 0.1,
       backgroundColor: Constants.coolBlue,
-      title: const Text("Qra"),
+      title: Text("Qra", style: GoogleFonts.exo2(fontWeight: FontWeight.bold)),
       actions: <Widget>[
         if (_selectedIndex.value == 0)
           SearchButton(
