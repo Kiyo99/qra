@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
 
 class SubscribeToCourseScreen extends HookWidget {
@@ -40,6 +41,7 @@ class SubscribeToCourseScreen extends HookWidget {
               return const Center(child: CircularProgressIndicator());
             }
             return ListView(
+              physics: const BouncingScrollPhysics(),
               children:
                   snapshot.data!.docs.map((DocumentSnapshot documentSnapshot) {
                 Map<String, dynamic> data =
@@ -48,71 +50,66 @@ class SubscribeToCourseScreen extends HookWidget {
 
                 return GestureDetector(
                   onTap: () async {
-                    showModalBottomSheet(
+                    AppModal.showModal(
                       context: context,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.0),
-                          topRight: Radius.circular(25.0),
-                        ),
-                      ),
-                      isScrollControlled: true,
-                      builder: (ctx) => AppPrompts(
-                        asset: 'assets/lottie/warning.json',
-                        primaryAction: () async {
-                          Get.back();
-                          AppDialogs.lottieLoader();
-                          // print("Entry: ${auth.currentUser}");
-                          final studentsDoc = await _fireStore
-                              .collection("Users")
-                              .doc(auth.currentUser!.email.toString())
-                              .get();
+                      asset: 'assets/lottie/warning.json',
+                      primaryAction: () async {
+                        Get.back();
+                        AppDialogs.lottieLoader();
+                        // print("Entry: ${auth.currentUser}");
+                        final studentsDoc = await _fireStore
+                            .collection("Users")
+                            .doc(auth.currentUser!.email.toString())
+                            .get();
 
-                          await _fireStore
-                              .collection("Courses")
-                              .doc(course.courseCode)
-                              .update({
-                            "students": FieldValue.arrayUnion([
-                              studentsDoc.data()!,
-                            ])
-                          }).whenComplete(() {
-                            Get.back();
-                            showModalBottomSheet(
-                              context: context,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(25.0),
-                                  topRight: Radius.circular(25.0),
-                                ),
+                        await _fireStore
+                            .collection("Courses")
+                            .doc(course.courseCode)
+                            .update({
+                          "students": FieldValue.arrayUnion([
+                            studentsDoc.data()!,
+                          ])
+                        }).whenComplete(() {
+                          Get.back();
+                          showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25.0),
+                                topRight: Radius.circular(25.0),
                               ),
-                              isScrollControlled: true,
-                              builder: (ctx) => AppPrompts(
-                                asset: 'assets/lottie/success.json',
-                                primaryAction: () {
-                                  Get.back();
-                                },
-                                message:
-                                    'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
-                                title: 'Success',
-                                showSecondary: false,
-                                buttonText: 'Okay',
-                              ),
-                            );
-                          }).onError((error, stackTrace) => _showToast(context,
-                                  'Failed to subscribe to ${course.courseName}'));
-                        },
-                        message:
-                            'Are you sure you want to subscribe to ${course.courseName}?',
-                        title: 'Subscribe?',
-                        showSecondary: true,
-                        buttonText: 'Yes, subscribe',
-                      ),
+                            ),
+                            isScrollControlled: true,
+                            builder: (ctx) => AppPrompts(
+                              asset: 'assets/lottie/success.json',
+                              primaryAction: () {
+                                Get.back();
+                              },
+                              message:
+                                  'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
+                              title: 'Success',
+                              showSecondary: false,
+                              buttonText: 'Okay',
+                            ),
+                          );
+                        }).onError((error, stackTrace) => _showToast(context,
+                                'Failed to subscribe to ${course.courseName}'));
+                      },
+                      message:
+                          'Are you sure you want to subscribe to ${course.courseName}?',
+                      title: 'Subscribe?',
+                      showSecondary: true,
+                      buttonText: 'Yes, subscribe',
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    margin:
+                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                     decoration: BoxDecoration(
                       color: Colors.black,
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                     padding: const EdgeInsets.all(20),
@@ -120,15 +117,7 @@ class SubscribeToCourseScreen extends HookWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(course.courseName,
-                                  style: GoogleFonts.exo2()),
-                            ),
-                          ],
-                        ),
+                        Text(course.courseName, style: GoogleFonts.exo2()),
                         const SizedBox(height: 10),
                         Text(course.courseCode, style: GoogleFonts.exo2()),
                       ],

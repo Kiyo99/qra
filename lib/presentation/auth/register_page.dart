@@ -5,11 +5,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/app_user/app_user.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
 
@@ -250,7 +252,14 @@ class RegisterPage extends HookConsumerWidget {
                   ],
                 ))
             : Center(
-                child: CircularProgressIndicator(color: Constants.coolOrange)));
+                child: Transform.scale(
+                  scale: 1,
+                  child: Lottie.asset(
+                    "assets/lottie/loader.json",
+                    frameRate: FrameRate(60),
+                  ),
+                ),
+              ));
   }
 }
 

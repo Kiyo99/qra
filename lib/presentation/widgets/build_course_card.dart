@@ -27,6 +27,7 @@ class BuildCourseCard extends HookWidget {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white.withOpacity(0.4)),
                     color: Constants.secondaryBlue,
                     borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -41,8 +42,8 @@ class BuildCourseCard extends HookWidget {
                           Expanded(
                             child: Text(
                               courses[index].courseName,
-                              style: const TextStyle(
-                                  color: Colors.white,
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(0.8),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),
                             ),
@@ -58,8 +59,8 @@ class BuildCourseCard extends HookWidget {
                       const SizedBox(height: 10),
                       Text(
                         courses[index].courseCode,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 14),
+                        style: TextStyle(
+                            color: Colors.white.withOpacity(0.8), fontSize: 14),
                       ),
                       const SizedBox(height: 20),
                       Text(
