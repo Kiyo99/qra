@@ -16,8 +16,10 @@ class SubscribeToCourseScreen extends HookWidget {
   SubscribeToCourseScreen({Key? key}) : super(key: key);
   final auth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
-  final Stream<QuerySnapshot> _courseStream =
-      FirebaseFirestore.instance.collection("Courses").snapshots();
+  final Stream<QuerySnapshot> _courseStream = FirebaseFirestore.instance
+      .collection("Courses")
+      .orderBy("courseName")
+      .snapshots();
 
   @override
   Widget build(BuildContext context) {

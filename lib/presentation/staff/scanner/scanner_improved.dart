@@ -22,6 +22,8 @@ class ImprovedScanner extends HookConsumerWidget {
     final auth = FirebaseAuth.instance;
     User? currentUser = auth.currentUser;
 
+    // print("Media: ${MediaQuery.of(context).size}");
+
     final items = useState(['Course code...']);
     final selectedValue = useState(items.value[0]);
 
@@ -32,18 +34,20 @@ class ImprovedScanner extends HookConsumerWidget {
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Constants.coolBlue,
               ),
               child: Center(
                 child: Column(
                   children: [
-                    Transform.scale(
-                      scale: 0.60,
-                      child: Lottie.asset(
-                        "assets/lottie/scanning.json",
-                        frameRate: FrameRate(40),
+                    Expanded(
+                      child: Transform.scale(
+                        scale: 0.60,
+                        child: Lottie.asset(
+                          "assets/lottie/scanning.json",
+                          frameRate: FrameRate(60),
+                        ),
                       ),
                     ),
                     FittedBox(
@@ -66,7 +70,6 @@ class ImprovedScanner extends HookConsumerWidget {
                           return const Text("Loading");
                         }
                         final userDocument = snapshot.data!.docs;
-                        print("Doc: ${userDocument}");
 
                         for (int i = 0; i < userDocument.length; i++) {
                           items.value.addIf(
@@ -77,7 +80,6 @@ class ImprovedScanner extends HookConsumerWidget {
                         return Container(
                           height: 50,
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          margin: const EdgeInsets.symmetric(horizontal: 30),
                           decoration: BoxDecoration(
                               color: Color(0xffbfbfbf),
                               borderRadius: BorderRadius.circular(15.0)),
@@ -109,6 +111,7 @@ class ImprovedScanner extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 20),
                     ConfirmationSlider(
+                      width: MediaQuery.of(context).size.width,
                       stickToEnd: false,
                       text: "Slide to scan",
                       textStyle: GoogleFonts.exo2(
@@ -135,12 +138,13 @@ class ImprovedScanner extends HookConsumerWidget {
                       height: 50,
                       foregroundColor: Constants.coolBlue,
                       backgroundColor: Constants.coolOrange,
-                      backgroundColorEnd: Constants.coolOrange,
+                      backgroundColorEnd: Colors.greenAccent,
                       shadow: const BoxShadow(color: Colors.transparent),
                       backgroundShape: BorderRadius.circular(15.0),
                       sliderButtonContent: const Icon(Icons.chevron_right,
                           color: Colors.white, size: 30),
                     ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),
