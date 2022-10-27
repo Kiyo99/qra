@@ -6,6 +6,7 @@ class Constants {
   // static Color secondaryBlue = const Color.fromRGBO(64, 75, 96, .9);
   // static Color coolBlue = const Color(0xff111111);
   static Color coolBlue = const Color(0xff1f1f1f);
+  static Color coolWhite = const Color(0xffbfbfbf);
   // static Color coolBlue = const Color(0xff1c1b1b);
   static Color secondaryBlue = const Color(0xff111111);
   // static Color coolBlue = const Color(0xff3A4256);
