@@ -27,7 +27,7 @@ class ImprovedQrGenerator extends HookConsumerWidget {
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Constants.coolBlue,
               ),
@@ -93,14 +93,16 @@ class ImprovedQrGenerator extends HookConsumerWidget {
                         });
                       },
                       height: 50,
+                      width: MediaQuery.of(context).size.width,
                       foregroundColor: Colors.black,
                       backgroundColor: Constants.coolOrange,
-                      backgroundColorEnd: Constants.coolOrange,
+                      backgroundColorEnd: Colors.greenAccent,
                       shadow: const BoxShadow(color: Colors.transparent),
                       backgroundShape: BorderRadius.circular(15.0),
                       sliderButtonContent: const Icon(Icons.chevron_right,
                           color: Colors.white, size: 30),
                     ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),

@@ -12,6 +12,7 @@ import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
 
@@ -216,17 +217,13 @@ class RegisterPage extends HookConsumerWidget {
                                   });
                         } on FirebaseAuthException catch (e) {
                           isLoading.value = false;
-                          Get.dialog(
-                            AlertDialog(
-                                title: const Text(
-                                  "Registration failed 😪",
-                                  textAlign: TextAlign.center,
-                                ),
-                                content: Text(
-                                  "${e.message}",
-                                  textAlign: TextAlign.center,
-                                ),
-                                contentPadding: const EdgeInsets.all(10)),
+                          AppModal.showModal(
+                            context: context,
+                            title: "Registration failed 😪",
+                            message: e.message!,
+                            asset: "assets/lottie/error.json",
+                            primaryAction: () => Get.back(),
+                            buttonText: "Okay",
                           );
                         }
                       },

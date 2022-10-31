@@ -14,7 +14,7 @@ class Constants {
   // static Color coolBlue = Colors.deepPurpleAccent;
   static Color coolOrange = const Color(0xffff9933);
   static Color coolRed = const Color(0xff742525);
-  static const WHATSAPP = '+233247726432';
+  static const WHATSAPP = '+233501230563';
 
   //todo redo color combinations
 

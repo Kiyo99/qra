@@ -13,6 +13,7 @@ import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
 
@@ -34,114 +35,113 @@ class LoginPage extends HookConsumerWidget {
         body: isLoading.value == false
             ? Container(
                 padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'Sign in',
-                          style: GoogleFonts.exo2(
-                              color: Colors.white, fontSize: 25),
-                        )),
-                    AppTextField(
-                      controller: emailController,
-                      title: "Email",
-                    ),
-                    AppTextField(
-                      controller: passwordController,
-                      title: "Password",
-                      obscureText: true,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        //forgot password screen
-                      },
-                      child: Text(
-                        'Forgot Password?',
-                        style: GoogleFonts.exo2(color: Constants.coolOrange),
-                      ),
-                    ),
-                    PrimaryAppButton(
-                      title: "Login",
-                      onPressed: () async {
-                        //todo All of these should be done in the viewmodel.
-                        //todo cache the user using shared preferences so that the user doesnt have to log in multiple times
-
-                        if (emailController.text.isEmpty ||
-                            passwordController.text.isEmpty) {
-                          print("Please enter all fields");
-                          _showToast(context, 'Please enter all fields');
-                          // const AlertDialog(
-                          //   title: Text("Please enter all fields"),
-                          // );
-                          return;
-                        }
-
-                        isLoading.value = true;
-
-                        try {
-                          await auth.signInWithEmailAndPassword(
-                              email: emailController.text,
-                              password: passwordController.text);
-
-                          //todo: Add something here like setting user destination
-
-                          final studentsDoc = await store
-                              .collection("Users")
-                              .doc(emailController.text)
-                              .get();
-
-                          final user = AppUser.fromJson(studentsDoc.data()!);
-
-                          ref
-                              .read(AuthLocalDataSource.provider)
-                              .cacheUser(user);
-
-                          isLoading.value = false;
-
-                          user.status == "Student"
-                              ? Get.offAllNamed(StudentPage.id)
-                              : Get.offAllNamed(StaffPage.id);
-                        } on FirebaseAuthException catch (e) {
-                          isLoading.value = false;
-                          Get.dialog(
-                            AlertDialog(
-                                title: const Text(
-                                  "Login failed 😪",
-                                  textAlign: TextAlign.center,
-                                ),
-                                content: Text(
-                                  "${e.message}",
-                                  textAlign: TextAlign.center,
-                                ),
-                                contentPadding: const EdgeInsets.all(10)),
-                          );
-                        }
-                      },
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Don\'t have account?',
-                          style: GoogleFonts.exo2(color: Colors.white),
-                        ),
-                        TextButton(
+                child: Center(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(10),
                           child: Text(
-                            'Sign up',
+                            'Sign in',
                             style: GoogleFonts.exo2(
-                                color: Constants.coolOrange, fontSize: 20),
+                                color: Colors.white, fontSize: 25),
+                          )),
+                      AppTextField(
+                        controller: emailController,
+                        title: "Email",
+                      ),
+                      AppTextField(
+                        controller: passwordController,
+                        title: "Password",
+                        obscureText: true,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          //forgot password screen
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: GoogleFonts.exo2(color: Constants.coolOrange),
+                        ),
+                      ),
+                      PrimaryAppButton(
+                        title: "Login",
+                        onPressed: () async {
+                          //todo All of these should be done in the viewmodel.
+                          //todo cache the user using shared preferences so that the user doesnt have to log in multiple times
+
+                          if (emailController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            print("Please enter all fields");
+                            _showToast(context, 'Please enter all fields');
+                            // const AlertDialog(
+                            //   title: Text("Please enter all fields"),
+                            // );
+                            return;
+                          }
+
+                          isLoading.value = true;
+
+                          try {
+                            await auth.signInWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text);
+
+                            //todo: Add something here like setting user destination
+
+                            final studentsDoc = await store
+                                .collection("Users")
+                                .doc(emailController.text)
+                                .get();
+
+                            final user = AppUser.fromJson(studentsDoc.data()!);
+
+                            ref
+                                .read(AuthLocalDataSource.provider)
+                                .cacheUser(user);
+
+                            isLoading.value = false;
+
+                            user.status == "Student"
+                                ? Get.offAllNamed(StudentPage.id)
+                                : Get.offAllNamed(StaffPage.id);
+                          } on FirebaseAuthException catch (e) {
+                            isLoading.value = false;
+
+                            AppModal.showModal(
+                              context: context,
+                              title: "Login failed 😪",
+                              message: e.message!,
+                              asset: "assets/lottie/error.json",
+                              primaryAction: () => Get.back(),
+                              buttonText: "Okay",
+                            );
+                          }
+                        },
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            'Don\'t have account?',
+                            style: GoogleFonts.exo2(color: Colors.white),
                           ),
-                          onPressed: () {
-                            Get.to(RegisterPage());
-                            //signup screen
-                          },
-                        )
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ),
-                  ],
+                          TextButton(
+                            child: Text(
+                              'Sign up',
+                              style: GoogleFonts.exo2(
+                                  color: Constants.coolOrange, fontSize: 20),
+                            ),
+                            onPressed: () {
+                              Get.to(RegisterPage());
+                              //signup screen
+                            },
+                          )
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    ],
+                  ),
                 ),
               )
             : Center(
