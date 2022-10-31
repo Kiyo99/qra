@@ -28,9 +28,8 @@ class StudentOptionsScreen extends HookConsumerWidget {
       // height: MediaQuery.of(context).size.height - 100,
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Constants.coolBlue,
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         ),

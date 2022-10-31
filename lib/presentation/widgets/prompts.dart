@@ -33,7 +33,6 @@ class AppPrompts extends HookConsumerWidget {
           width: double.infinity,
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 30),
           decoration: BoxDecoration(
-            color: Constants.coolBlue,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),

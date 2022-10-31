@@ -35,9 +35,6 @@ class ImprovedScanner extends HookConsumerWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Constants.coolBlue,
-              ),
               child: Center(
                 child: Column(
                   children: [
@@ -55,7 +52,7 @@ class ImprovedScanner extends HookConsumerWidget {
                       child: Text("Let's Scan these students",
                           style: GoogleFonts.exo2(
                               fontSize: 20,
-                              color: Constants.coolWhite,
+                              color: Constants.coolGrey,
                               fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 50),
@@ -111,7 +108,7 @@ class ImprovedScanner extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 20),
                     ConfirmationSlider(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width - 35,
                       stickToEnd: false,
                       text: "Slide to scan",
                       textStyle: GoogleFonts.exo2(

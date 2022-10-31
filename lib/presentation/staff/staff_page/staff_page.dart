@@ -28,10 +28,7 @@ class StaffPage extends HookWidget {
         BottomNavigationBarItem(
             icon: Icon(Icons.menu_book_outlined), label: "Upload course"),
       ],
-      backgroundColor: Constants.coolBlue,
       currentIndex: _selectedIndex.value,
-      selectedItemColor: Constants.coolOrange,
-      unselectedItemColor: Colors.grey,
       showUnselectedLabels: false,
       onTap: (index) {
         _selectedIndex.value = index;
@@ -41,8 +38,7 @@ class StaffPage extends HookWidget {
     );
 
     final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: Constants.coolBlue,
+      elevation: 0.0,
       title: Text("Qra", style: GoogleFonts.exo2(fontWeight: FontWeight.bold)),
       actions: <Widget>[
         if (_selectedIndex.value == 0)
@@ -83,7 +79,6 @@ class StaffPage extends HookWidget {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xff3A4256),
       appBar: topAppBar,
       body: ultimateBody,
       bottomNavigationBar: ultimateBottom,

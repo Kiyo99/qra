@@ -28,9 +28,6 @@ class ImprovedQrGenerator extends HookConsumerWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Constants.coolBlue,
-              ),
               child: Center(
                 child: Column(
                   children: [
@@ -45,9 +42,7 @@ class ImprovedQrGenerator extends HookConsumerWidget {
                       fit: BoxFit.contain,
                       child: Text("Let's generate your QR information",
                           style: GoogleFonts.exo2(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 50),
                     ConfirmationSlider(
@@ -93,7 +88,7 @@ class ImprovedQrGenerator extends HookConsumerWidget {
                         });
                       },
                       height: 50,
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width - 35,
                       foregroundColor: Colors.black,
                       backgroundColor: Constants.coolOrange,
                       backgroundColorEnd: Colors.greenAccent,

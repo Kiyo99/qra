@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
@@ -59,7 +60,8 @@ class MyApp extends HookConsumerWidget {
           useInheritedMediaQuery: true,
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
-          theme: ThemeData.dark(),
+          theme: Constants.lightTheme,
+          darkTheme: Constants.darkTheme,
           // darkTheme: ThemeData.dark(),
           themeMode: ThemeMode.system,
           title: 'QRA',

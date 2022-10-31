@@ -18,15 +18,17 @@ class ViewCourseDetails extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final course = useState<CourseModel>(Get.arguments);
+    final brightness = Theme.of(context).brightness;
 
     Card makeCard(StudentModel studentModel) {
       return Card(
         elevation: 4.0,
-        color: Constants.coolBlue,
         margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
           decoration: BoxDecoration(
-              color: Constants.secondaryBlue,
+              color: brightness == Brightness.light
+                  ? Constants.coolWhite
+                  : Constants.secondaryBlue,
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: ListTile(
             contentPadding:

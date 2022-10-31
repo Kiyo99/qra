@@ -13,6 +13,7 @@ class BuildCourseCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: ListView.builder(
@@ -28,8 +29,22 @@ class BuildCourseCard extends HookWidget {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white.withOpacity(0.4)),
-                    color: Constants.secondaryBlue,
+                    // gradient: const LinearGradient(
+                    //   begin: Alignment.topLeft,
+                    //   end: Alignment.bottomRight,
+                    //   colors: [
+                    //     Color(0xffF8B405),
+                    //     Color(0xffF84605),
+                    //   ],
+                    // ),
+                    color: brightness == Brightness.light
+                        ? Constants.coolWhite
+                        : Constants.secondaryBlue,
+                    border: Border.all(
+                      color: brightness == Brightness.light
+                          ? Constants.coolBlue
+                          : Colors.white.withOpacity(0.4),
+                    ),
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   padding: const EdgeInsets.all(20),
@@ -47,7 +62,6 @@ class BuildCourseCard extends HookWidget {
                                     courses[index].courseName,
                                     style: GoogleFonts.exo2(
                                         fontSize: 18,
-                                        color: Constants.coolWhite,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -57,17 +71,13 @@ class BuildCourseCard extends HookWidget {
                             Text(
                               courses[index].courseCode,
                               style: GoogleFonts.exo2(
-                                  fontSize: 14,
-                                  color: Constants.coolWhite,
-                                  fontWeight: FontWeight.bold),
+                                  fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 20),
                             Text(
                               courses[index].teacher,
                               style: GoogleFonts.exo2(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold),
+                                  fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),

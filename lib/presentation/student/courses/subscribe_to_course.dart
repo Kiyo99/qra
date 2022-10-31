@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
@@ -24,11 +23,9 @@ class SubscribeToCourseScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Constants.coolBlue,
         appBar: AppBar(
           title: const Text("Subscribe to a course"),
           titleTextStyle: GoogleFonts.exo2(fontSize: 20),
-          backgroundColor: Constants.coolBlue,
           elevation: 0,
         ),
         body: StreamBuilder<QuerySnapshot>(
@@ -104,11 +101,9 @@ class SubscribeToCourseScreen extends HookWidget {
                       buttonText: 'Yes, subscribe',
                     );
                   },
-                  child: Container(
-                    margin:
+                  child: Container(margin:
                         const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                     decoration: BoxDecoration(
-                      color: Colors.black,
                       border: Border.all(
                         color: Colors.grey,
                       ),

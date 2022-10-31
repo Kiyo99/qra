@@ -20,9 +20,8 @@ class FilterView extends HookWidget {
       padding: const EdgeInsets.all(8.0),
       height: 300,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Constants.coolBlue,
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         ),
