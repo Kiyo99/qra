@@ -20,9 +20,6 @@ class ImprovedScanner extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _fireStore = FirebaseFirestore.instance;
     final auth = FirebaseAuth.instance;
-    User? currentUser = auth.currentUser;
-
-    // print("Media: ${MediaQuery.of(context).size}");
 
     final items = useState(['Course code...']);
     final selectedValue = useState(items.value[0]);

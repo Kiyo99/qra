@@ -15,27 +15,7 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
   @override
   ThemeData appBarTheme(BuildContext context) {
     return Theme.of(context).copyWith(
-      inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 10,
-        ),
-        fillColor: Constants.coolBlue,
-        filled: true,
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
-        ),
-      ),
-      appBarTheme: Theme.of(context).appBarTheme.copyWith(
-          color: Constants.coolBlue,
-          shadowColor: Constants.coolBlue,
-          elevation: 0),
+      appBarTheme: Theme.of(context).appBarTheme.copyWith(elevation: 0),
     );
   }
 
@@ -47,9 +27,8 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container(
-      color: Constants.coolBlue,
-      child: StreamBuilder(
+    return Scaffold(
+      body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Courses').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return const Text('Loading...');
@@ -123,7 +102,6 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
                   child: Container(
                       margin: const EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
-                        // color: const Color.fromRGBO(64, 75, 96, .9),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       padding: const EdgeInsets.all(10),
@@ -148,7 +126,6 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
   @override
   Widget buildSuggestions(BuildContext context) {
     return Container(
-      color: Constants.coolBlue,
       child: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Courses').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

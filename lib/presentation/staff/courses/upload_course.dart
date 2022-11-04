@@ -24,6 +24,7 @@ class UploadCourseScreen extends HookWidget {
     final TextEditingController dueDate = TextEditingController();
     final TextEditingController teacher = TextEditingController();
     final isLoading = useState(false);
+    final brightness = Theme.of(context).brightness;
 
     _selectDate(BuildContext context) async {
       await showDatePicker(
@@ -55,7 +56,6 @@ class UploadCourseScreen extends HookWidget {
     }
 
     return Scaffold(
-        backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -78,8 +78,10 @@ class UploadCourseScreen extends HookWidget {
                           },
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.white),
+                                borderSide: BorderSide(
+                                    color: brightness == Brightness.light
+                                        ? Constants.coolBlue
+                                        : Constants.coolWhite),
                                 borderRadius: BorderRadius.circular(
                                   15.0,
                                 ),
@@ -92,8 +94,7 @@ class UploadCourseScreen extends HookWidget {
                                       BorderSide(color: Constants.coolOrange)),
                               border: const OutlineInputBorder(),
                               labelText: 'Due date',
-                              labelStyle:
-                                  GoogleFonts.exo2(color: Colors.white)),
+                              labelStyle: GoogleFonts.exo2()),
                         ),
                       ),
                       const SizedBox(height: 30),

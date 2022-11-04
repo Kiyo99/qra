@@ -37,7 +37,7 @@ Future<void> main() async {
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
       child: DevicePreview(
-        enabled: false,
+        enabled: true,
         builder: (context) => const MyApp(),
       ),
     ),
@@ -94,3 +94,4 @@ class MyApp extends HookConsumerWidget {
 
 //todo: When scanning, not just the eligibility, check whether the student has registered for that course
 //todo: Filter by department?
+//todo: Make the qr page dismissble
