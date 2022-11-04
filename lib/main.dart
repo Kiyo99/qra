@@ -1,5 +1,4 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +36,7 @@ Future<void> main() async {
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
       child: DevicePreview(
-        enabled: true,
+        enabled: false,
         builder: (context) => const MyApp(),
       ),
     ),
@@ -50,7 +49,6 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    final auth = FirebaseAuth.instance;
 
     return GestureDetector(
       onTap: () {

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
@@ -22,10 +23,13 @@ class ViewCourseDetails extends HookConsumerWidget {
 
     Card makeCard(StudentModel studentModel) {
       return Card(
-        elevation: 4.0,
         margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
           decoration: BoxDecoration(
+              border: Border.all(
+                  color: brightness == Brightness.light
+                      ? Constants.coolBlue
+                      : Constants.coolWhite),
               color: brightness == Brightness.light
                   ? Constants.coolWhite
                   : Constants.secondaryBlue,
@@ -79,17 +83,13 @@ class ViewCourseDetails extends HookConsumerWidget {
                 )),
             title: Text(
               studentModel.fullName,
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
+              style: GoogleFonts.exo(fontWeight: FontWeight.bold),
             ),
             subtitle: Row(
               children: [
                 Expanded(
                   flex: 4,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(studentModel.iD,
-                          style: const TextStyle(color: Colors.white))),
+                  child: Text(studentModel.iD, style: GoogleFonts.exo()),
                 )
               ],
             ),
@@ -106,10 +106,8 @@ class ViewCourseDetails extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.1,
-        backgroundColor: Constants.coolBlue,
         title: Text(course.value.courseCode),
       ),
-      backgroundColor: Constants.coolBlue,
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('Courses')

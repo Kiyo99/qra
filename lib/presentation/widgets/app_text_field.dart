@@ -38,8 +38,10 @@ class AppTextField extends HookWidget {
                 borderSide: BorderSide(color: Constants.coolOrange)),
             border: const OutlineInputBorder(),
             labelText: title,
-            hoverColor: Colors.red,
-            labelStyle: GoogleFonts.exo2()),
+            labelStyle: GoogleFonts.exo2(
+                color: brightness == Brightness.light
+                    ? Constants.coolBlue
+                    : Constants.coolWhite)),
       ),
     );
   }

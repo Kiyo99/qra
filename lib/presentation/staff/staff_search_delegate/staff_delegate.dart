@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
 
@@ -27,8 +26,7 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder(
+    return StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Courses').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return const Text('Loading...');
@@ -119,101 +117,98 @@ class StaffDelegate extends SearchDelegate<Map<String, dynamic>> {
             ),
           );
         },
-      ),
-    );
+      );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container(
-      child: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Courses').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) return const Text('Loading...');
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('Courses').snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) return const Text('Loading...');
 
-          final results = snapshot.data!.docs.where((DocumentSnapshot a) =>
-              a['courseCode'].toString().contains(query.toUpperCase()));
+        final results = snapshot.data!.docs.where((DocumentSnapshot a) =>
+            a['courseCode'].toString().contains(query.toUpperCase()));
 
-          if (results.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Transform.scale(
-                      scale: 0.70,
-                      child: Lottie.asset(
-                        "assets/lottie/search_error_demo.json",
-                        frameRate: FrameRate(60),
-                      ),
+        if (results.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Transform.scale(
+                    scale: 0.70,
+                    child: Lottie.asset(
+                      "assets/lottie/search_error_demo.json",
+                      frameRate: FrameRate(60),
                     ),
-                    const Expanded(
-                      child: Text(
-                        "Hmm, can't seem find that course",
-                        style: TextStyle(fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-
-          if (query.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ListView(
-                  children: [
-                    Transform.scale(
-                      scale: 0.70,
-                      child: Lottie.asset(
-                        "assets/lottie/search.json",
-                        frameRate: FrameRate(60),
-                      ),
-                    ),
-                    const Text(
-                      "Remember to search by course codes ... happy searching!",
+                  ),
+                  const Expanded(
+                    child: Text(
+                      "Hmm, can't seem find that course",
                       style: TextStyle(fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            );
-          }
-
-          return Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: ListView(
-              children: results.map((DocumentSnapshot documentSnapshot) {
-                Map<String, dynamic> data =
-                    documentSnapshot.data()! as Map<String, dynamic>;
-                final course = CourseModel.fromJson(data);
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        // color: const Color.fromRGBO(64, 75, 96, .9),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: ListTile(
-                        title: Text(course.courseName),
-                        subtitle: Text(course.courseCode),
-                        onTap: () {
-                          Get.toNamed(ViewCourseDetails.id, arguments: course);
-                        },
-                      )),
-                );
-              }).toList(),
             ),
           );
-        },
-      ),
+        }
+
+        if (query.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ListView(
+                children: [
+                  Transform.scale(
+                    scale: 0.70,
+                    child: Lottie.asset(
+                      "assets/lottie/search.json",
+                      frameRate: FrameRate(60),
+                    ),
+                  ),
+                  const Text(
+                    "Remember to search by course codes ... happy searching!",
+                    style: TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return Container(
+          margin: const EdgeInsets.only(top: 10),
+          child: ListView(
+            children: results.map((DocumentSnapshot documentSnapshot) {
+              Map<String, dynamic> data =
+                  documentSnapshot.data()! as Map<String, dynamic>;
+              final course = CourseModel.fromJson(data);
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      // color: const Color.fromRGBO(64, 75, 96, .9),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    child: ListTile(
+                      title: Text(course.courseName),
+                      subtitle: Text(course.courseCode),
+                      onTap: () {
+                        Get.toNamed(ViewCourseDetails.id, arguments: course);
+                      },
+                    )),
+              );
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 }

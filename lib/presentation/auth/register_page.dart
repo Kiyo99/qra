@@ -11,7 +11,6 @@ import 'package:qra/data/app_user/app_user.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
-import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
@@ -35,11 +34,11 @@ class RegisterPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final brightness = Theme.of(context).brightness;
     final isLoading = useState(false);
     final items = useState(["Registering as ...", "Teacher", "Student"]);
     final selectedValue = useState(items.value[0]);
     return Scaffold(
-        backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
             ? Padding(
                 padding: const EdgeInsets.all(10),
@@ -60,8 +59,7 @@ class RegisterPage extends HookConsumerWidget {
                         padding: const EdgeInsets.all(10),
                         child: Text(
                           "Let's get you registered 😃",
-                          style: GoogleFonts.exo2(
-                              fontSize: 28, color: Colors.white),
+                          style: GoogleFonts.exo2(fontSize: 28),
                         )),
                     const SizedBox(height: 50),
                     AppTextField(
@@ -97,7 +95,10 @@ class RegisterPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       margin: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
+                        border: Border.all(
+                            color: brightness == Brightness.light
+                                ? Constants.coolBlue
+                                : Constants.coolWhite),
                         borderRadius: BorderRadius.circular(
                           15.0,
                         ),
@@ -107,18 +108,19 @@ class RegisterPage extends HookConsumerWidget {
                             .map<DropdownMenuItem<String>>(
                                 (String value) => DropdownMenuItem<String>(
                                       value: value,
-                                      child: Text(value),
+                                      child: Text(value,
+                                          style: GoogleFonts.exo(
+                                              color:
+                                                  brightness == Brightness.light
+                                                      ? Constants.coolBlue
+                                                      : Constants.coolWhite)),
                                     ))
                             .toList(),
                         value: selectedValue.value,
                         hint: const Text("Choose a course..."),
                         focusColor: Colors.white,
                         iconEnabledColor: Constants.coolOrange,
-                        // decoration: InputDecoration(
-                        //   // fillColor: Colors.blue[200],
-                        // ),
-                        style:
-                            GoogleFonts.exo2(color: Colors.white, fontSize: 16),
+                        style: GoogleFonts.exo2(fontSize: 16),
                         dropdownColor: Constants.coolBlue,
                         onChanged: (val) {
                           selectedValue.value = val.toString();
