@@ -173,7 +173,7 @@ class UploadCourseScreen extends HookWidget {
                   ),
                 ),
               )
-            : const Center(child: CircularProgressIndicator()));
+            : Center(child: CircularProgressIndicator(color: Constants.coolOrange)));
   }
 }
 

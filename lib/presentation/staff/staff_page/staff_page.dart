@@ -70,7 +70,6 @@ class StaffPage extends HookWidget {
       onPageChanged: (value) {
         _selectedIndex.value = value;
       },
-      physics: const NeverScrollableScrollPhysics(),
       children: [
         ViewCoursesScreen(),
         const ImprovedScanner(),

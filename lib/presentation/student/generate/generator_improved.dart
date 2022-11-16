@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/student/generate/viewQr.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/primary_app_button.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
@@ -45,58 +46,41 @@ class ImprovedQrGenerator extends HookConsumerWidget {
                               fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 50),
-                    ConfirmationSlider(
-                      stickToEnd: false,
-                      text: "Slide to generate code",
-                      textStyle: GoogleFonts.exo2(
-                          color: Constants.coolBlue,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15),
-                      onConfirmation: () async {
-                        AppDialogs.lottieLoader();
-                        _fireStore
-                            .collection("Users")
-                            .doc(currentUser!.email)
-                            .get()
-                            .then((doc) {
-                          if (doc.exists) {
-                            Get.back();
-                            data = doc.data();
-                            Get.to(ViewQr(), arguments: data);
-                          } else {
-                            showModalBottomSheet(
-                              context: context,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(25.0),
-                                  topRight: Radius.circular(25.0),
-                                ),
+                    PrimaryAppButton(title: "Generate QR Code", onPressed: () async {
+                      AppDialogs.lottieLoader();
+                      _fireStore
+                          .collection("Users")
+                          .doc(currentUser!.email)
+                          .get()
+                          .then((doc) {
+                        if (doc.exists) {
+                          Get.back();
+                          data = doc.data();
+                          Get.to(ViewQr(), arguments: data);
+                        } else {
+                          showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25.0),
+                                topRight: Radius.circular(25.0),
                               ),
-                              isScrollControlled: true,
-                              builder: (ctx) => AppPrompts(
-                                asset: 'assets/lottie/error.json',
-                                primaryAction: () {
-                                  Get.back();
-                                },
-                                message: 'Failed to fetch details',
-                                title: 'Error',
-                                showSecondary: false,
-                                buttonText: 'Okay',
-                              ),
-                            );
-                          }
-                        });
-                      },
-                      height: 50,
-                      width: MediaQuery.of(context).size.width - 35,
-                      foregroundColor: Colors.black,
-                      backgroundColor: Constants.coolOrange,
-                      backgroundColorEnd: Colors.greenAccent,
-                      shadow: const BoxShadow(color: Colors.transparent),
-                      backgroundShape: BorderRadius.circular(15.0),
-                      sliderButtonContent: const Icon(Icons.chevron_right,
-                          color: Colors.white, size: 30),
-                    ),
+                            ),
+                            isScrollControlled: true,
+                            builder: (ctx) => AppPrompts(
+                              asset: 'assets/lottie/error.json',
+                              primaryAction: () {
+                                Get.back();
+                              },
+                              message: 'Failed to fetch details',
+                              title: 'Error',
+                              showSecondary: false,
+                              buttonText: 'Okay',
+                            ),
+                          );
+                        }
+                      });
+                    }),
                     const SizedBox(height: 30),
                   ],
                 ),

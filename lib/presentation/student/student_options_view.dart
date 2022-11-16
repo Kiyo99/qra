@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StudentOptionsScreen extends HookConsumerWidget {
@@ -41,7 +42,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
             child: Text(
               title,
               style:
-              GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
+                  GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
           ),
@@ -57,13 +58,25 @@ class StudentOptionsScreen extends HookConsumerWidget {
                 return ListTile(
                   onTap: () async {
                     if (items[index] == 'Log out') {
-                      final auth = FirebaseAuth.instance;
-                      //
-                      await auth.signOut();
-                      ref.read(AuthLocalDataSource.provider).clearUserData();
+                      AppModal.showModal(
+                        context: context,
+                        title: "Log out?",
+                        message: "Are you sure you want to log out?",
+                        asset: "assets/lottie/warning.json",
+                        primaryAction: () async {
+                          final auth = FirebaseAuth.instance;
+                          //
+                          await auth.signOut();
+                          ref
+                              .read(AuthLocalDataSource.provider)
+                              .clearUserData();
 
-                      // print(auth.currentUser);
-                      Get.offAndToNamed(LoginPage.id);
+                          // print(auth.currentUser);
+                          Get.offAndToNamed(LoginPage.id);
+                        },
+                        buttonText: "Yes, log out",
+                      );
+
                       // navigate(context);
                       return;
                     }
@@ -84,14 +97,14 @@ class StudentOptionsScreen extends HookConsumerWidget {
                   leading: items[index] == 'Update student information'
                       ? const Icon(Icons.account_circle_outlined)
                       : items[index] == 'Log out'
-                      ? const Icon(Icons.logout_outlined)
-                      : items[index] == 'Live chat'
-                      ? const Icon(Icons.chat_bubble_outline_outlined)
-                      : items[index] == 'Subscribed courses'
-                      ? const Icon(Icons.menu_book_outlined)
-                      : items[index] == 'About Qra'
-                      ? const Icon(Icons.info_outline)
-                      : const Icon(Icons.title),
+                          ? const Icon(Icons.logout_outlined)
+                          : items[index] == 'Live chat'
+                              ? const Icon(Icons.chat_bubble_outline_outlined)
+                              : items[index] == 'Subscribed courses'
+                                  ? const Icon(Icons.menu_book_outlined)
+                                  : items[index] == 'About Qra'
+                                      ? const Icon(Icons.info_outline)
+                                      : const Icon(Icons.title),
                 );
               },
             ),

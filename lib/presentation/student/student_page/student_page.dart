@@ -81,7 +81,6 @@ class StudentPage extends HookConsumerWidget {
             ],
           ),
           body: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
             children: [
               const ImprovedQrGenerator(),
               SubscribeToCourseScreen(),

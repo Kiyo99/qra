@@ -9,7 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
-import 'package:slide_to_confirm/slide_to_confirm.dart';
+import 'package:qra/presentation/widgets/primary_app_button.dart';
 
 class ImprovedScanner extends HookConsumerWidget {
   static const id = "/generate";
@@ -104,40 +104,25 @@ class ImprovedScanner extends HookConsumerWidget {
                       },
                     ),
                     const SizedBox(height: 20),
-                    ConfirmationSlider(
-                      width: MediaQuery.of(context).size.width - 35,
-                      stickToEnd: false,
-                      text: "Slide to scan",
-                      textStyle: GoogleFonts.exo2(
-                          color: Constants.coolBlue,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15),
-                      onConfirmation: () {
-                        if (selectedValue.value == "Course code...") {
-                          AppModal.showModal(
-                            context: context,
-                            title: "Error",
-                            message: "Please select a course code to proceed",
-                            asset: "assets/lottie/error.json",
-                            primaryAction: () {
-                              Get.back();
-                            },
-                            buttonText: "Okay",
-                          );
-                          return;
-                        }
+                    PrimaryAppButton(
+                        title: "Scan",
+                        onPressed: () {
+                          if (selectedValue.value == "Course code...") {
+                            AppModal.showModal(
+                              context: context,
+                              title: "Error",
+                              message: "Please select a course code to proceed",
+                              asset: "assets/lottie/error.json",
+                              primaryAction: () {
+                                Get.back();
+                              },
+                              buttonText: "Okay",
+                            );
+                            return;
+                          }
 
-                        Get.to(QrScanner(), arguments: selectedValue.value);
-                      },
-                      height: 50,
-                      foregroundColor: Constants.coolBlue,
-                      backgroundColor: Constants.coolOrange,
-                      backgroundColorEnd: Colors.greenAccent,
-                      shadow: const BoxShadow(color: Colors.transparent),
-                      backgroundShape: BorderRadius.circular(15.0),
-                      sliderButtonContent: const Icon(Icons.chevron_right,
-                          color: Colors.white, size: 30),
-                    ),
+                          Get.to(QrScanner(), arguments: selectedValue.value);
+                        }),
                     const SizedBox(height: 30),
                   ],
                 ),
