@@ -72,7 +72,7 @@ class StudentPage extends HookConsumerWidget {
                       ),
                     ),
                     isScrollControlled: true,
-                    builder: (ctx) => const StudentOptionsScreen(
+                    builder: (ctx) => StudentOptionsScreen(
                       title: 'Hey there, select an option',
                     ),
                   );

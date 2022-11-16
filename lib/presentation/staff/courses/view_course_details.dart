@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
-import 'package:qra/data/fb_student_model/student_model.dart';
+import 'package:qra/data/student_model/student_model.dart';
 import 'package:qra/presentation/student/student_details.dart';
 
 class ViewCourseDetails extends HookConsumerWidget {

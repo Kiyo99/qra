@@ -15,6 +15,7 @@ dependencies:
   flutter_remix: ^0.0.3
   lottie: ^1.2.1
   cupertino_icons: ^1.0.2
+  dismissible_page: ^0.7.3
   jiffy: ^5.0.0
   flutter_platform_widgets: ^1.20.0
   flutter_feather_icons: ^2.0.0+1

@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
-import 'package:qra/data/fb_student_model/student_model.dart';
+import 'package:qra/data/student_model/student_model.dart';
 
 class StudentDetailPage extends HookWidget {
   static const id = "/student_detail_page";

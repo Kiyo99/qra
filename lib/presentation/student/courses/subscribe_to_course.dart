@@ -38,7 +38,9 @@ class SubscribeToCourseScreen extends HookWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator(color: Constants.coolOrange));
+              return Center(
+                  child:
+                      CircularProgressIndicator(color: Constants.coolOrange));
             }
             return ListView(
               physics: const BouncingScrollPhysics(),
@@ -69,29 +71,43 @@ class SubscribeToCourseScreen extends HookWidget {
                           "students": FieldValue.arrayUnion([
                             studentsDoc.data()!,
                           ])
-                        }).whenComplete(() {
-                          Get.back();
-                          showModalBottomSheet(
-                            context: context,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25.0),
-                                topRight: Radius.circular(25.0),
+                        }).whenComplete(() async {
+                          final studentCourse = CourseModel(
+                              courseName: course.courseName,
+                              courseCode: course.courseCode,
+                              dueDate: course.dueDate,
+                              teacher: course.teacher);
+                          await _fireStore
+                              .collection("Users")
+                              .doc(auth.currentUser!.email.toString())
+                              .update({
+                            "courses": FieldValue.arrayUnion([
+                              studentCourse.toJson(),
+                            ])
+                          }).whenComplete(() {
+                            Get.back();
+                            showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25.0),
+                                  topRight: Radius.circular(25.0),
+                                ),
                               ),
-                            ),
-                            isScrollControlled: true,
-                            builder: (ctx) => AppPrompts(
-                              asset: 'assets/lottie/success.json',
-                              primaryAction: () {
-                                Get.back();
-                              },
-                              message:
-                                  'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
-                              title: 'Success',
-                              showSecondary: false,
-                              buttonText: 'Okay',
-                            ),
-                          );
+                              isScrollControlled: true,
+                              builder: (ctx) => AppPrompts(
+                                asset: 'assets/lottie/success.json',
+                                primaryAction: () {
+                                  Get.back();
+                                },
+                                message:
+                                    'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
+                                title: 'Success',
+                                showSecondary: false,
+                                buttonText: 'Okay',
+                              ),
+                            );
+                          });
                         }).onError((error, stackTrace) => _showToast(context,
                                 'Failed to subscribe to ${course.courseName}'));
                       },
@@ -102,7 +118,8 @@ class SubscribeToCourseScreen extends HookWidget {
                       buttonText: 'Yes, subscribe',
                     );
                   },
-                  child: Container(margin:
+                  child: Container(
+                    margin:
                         const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(

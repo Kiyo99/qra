@@ -20,6 +20,8 @@ import 'package:qra/presentation/student/student_page/student_page.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'presentation/student/courses/subscribed_courses.dart';
+
 final sharedPreferencesProvider =
     Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
@@ -75,6 +77,7 @@ class MyApp extends HookConsumerWidget {
             ViewCourseDetails.id: (context) => ViewCourseDetails(),
             StudentDetailPage.id: (context) => const StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
+            SubscribedCoursesScreen.id: (context) => SubscribedCoursesScreen(),
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
           },
@@ -84,12 +87,8 @@ class MyApp extends HookConsumerWidget {
 }
 
 //todo: Implement a My courses section?
-//todo: try to set light and dark theme
 //todo: Should the lecturer be able to download pdf of the attendance sheet?
 //todo: Handle errors on view course details and all possible errors
 //todo: When registering as a staff, make some things null according to the model
 //todo: Refactor code to have a global textTheme style called KTextStyle
-
 //todo: When scanning, not just the eligibility, check whether the student has registered for that course
-//todo: Filter by department?
-//todo: Make the qr page dismissble

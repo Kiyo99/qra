@@ -31,7 +31,8 @@ class _$StudentModelTearOff {
       required String firstName,
       required String lastName,
       required String gender,
-      required String status}) {
+      required String status,
+      List<CourseModel>? courses}) {
     return _StudentModel(
       fullName: fullName,
       iD: iD,
@@ -43,6 +44,7 @@ class _$StudentModelTearOff {
       lastName: lastName,
       gender: gender,
       status: status,
+      courses: courses,
     );
   }
 
@@ -66,6 +68,7 @@ mixin _$StudentModel {
   String get lastName => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
+  List<CourseModel>? get courses => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -88,7 +91,8 @@ abstract class $StudentModelCopyWith<$Res> {
       String firstName,
       String lastName,
       String gender,
-      String status});
+      String status,
+      List<CourseModel>? courses});
 }
 
 /// @nodoc
@@ -111,6 +115,7 @@ class _$StudentModelCopyWithImpl<$Res> implements $StudentModelCopyWith<$Res> {
     Object? lastName = freezed,
     Object? gender = freezed,
     Object? status = freezed,
+    Object? courses = freezed,
   }) {
     return _then(_value.copyWith(
       fullName: fullName == freezed
@@ -153,6 +158,10 @@ class _$StudentModelCopyWithImpl<$Res> implements $StudentModelCopyWith<$Res> {
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      courses: courses == freezed
+          ? _value.courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
     ));
   }
 }
@@ -174,7 +183,8 @@ abstract class _$StudentModelCopyWith<$Res>
       String firstName,
       String lastName,
       String gender,
-      String status});
+      String status,
+      List<CourseModel>? courses});
 }
 
 /// @nodoc
@@ -199,6 +209,7 @@ class __$StudentModelCopyWithImpl<$Res> extends _$StudentModelCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? gender = freezed,
     Object? status = freezed,
+    Object? courses = freezed,
   }) {
     return _then(_StudentModel(
       fullName: fullName == freezed
@@ -241,6 +252,10 @@ class __$StudentModelCopyWithImpl<$Res> extends _$StudentModelCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      courses: courses == freezed
+          ? _value.courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
     ));
   }
 }
@@ -258,7 +273,8 @@ class _$_StudentModel extends _StudentModel {
       required this.firstName,
       required this.lastName,
       required this.gender,
-      required this.status})
+      required this.status,
+      this.courses})
       : super._();
 
   factory _$_StudentModel.fromJson(Map<String, dynamic> json) =>
@@ -284,10 +300,12 @@ class _$_StudentModel extends _StudentModel {
   final String gender;
   @override
   final String status;
+  @override
+  final List<CourseModel>? courses;
 
   @override
   String toString() {
-    return 'StudentModel(fullName: $fullName, iD: $iD, isEligible: $isEligible, major: $major, email: $email, phoneNumber: $phoneNumber, firstName: $firstName, lastName: $lastName, gender: $gender, status: $status)';
+    return 'StudentModel(fullName: $fullName, iD: $iD, isEligible: $isEligible, major: $major, email: $email, phoneNumber: $phoneNumber, firstName: $firstName, lastName: $lastName, gender: $gender, status: $status, courses: $courses)';
   }
 
   @override
@@ -318,7 +336,9 @@ class _$_StudentModel extends _StudentModel {
             (identical(other.gender, gender) ||
                 const DeepCollectionEquality().equals(other.gender, gender)) &&
             (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)));
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.courses, courses) ||
+                const DeepCollectionEquality().equals(other.courses, courses)));
   }
 
   @override
@@ -333,7 +353,8 @@ class _$_StudentModel extends _StudentModel {
       const DeepCollectionEquality().hash(firstName) ^
       const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(gender) ^
-      const DeepCollectionEquality().hash(status);
+      const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(courses);
 
   @JsonKey(ignore: true)
   @override
@@ -357,7 +378,8 @@ abstract class _StudentModel extends StudentModel {
       required String firstName,
       required String lastName,
       required String gender,
-      required String status}) = _$_StudentModel;
+      required String status,
+      List<CourseModel>? courses}) = _$_StudentModel;
   _StudentModel._() : super._();
 
   factory _StudentModel.fromJson(Map<String, dynamic> json) =
@@ -383,6 +405,8 @@ abstract class _StudentModel extends StudentModel {
   String get gender => throw _privateConstructorUsedError;
   @override
   String get status => throw _privateConstructorUsedError;
+  @override
+  List<CourseModel>? get courses => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$StudentModelCopyWith<_StudentModel> get copyWith =>
