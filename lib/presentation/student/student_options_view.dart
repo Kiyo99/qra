@@ -75,6 +75,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
                           Get.offAndToNamed(LoginPage.id);
                         },
                         buttonText: "Yes, log out",
+                        showSecondary: true
                       );
 
                       // navigate(context);
