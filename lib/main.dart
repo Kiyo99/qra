@@ -86,7 +86,6 @@ class MyApp extends HookConsumerWidget {
   }
 }
 
-//todo: Implement a My courses section?
 //todo: Should the lecturer be able to download pdf of the attendance sheet?
 //todo: Handle errors on view course details and all possible errors
 //todo: When registering as a staff, make some things null according to the model
