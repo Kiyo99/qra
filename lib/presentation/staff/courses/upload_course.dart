@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -9,13 +10,12 @@ import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
-import 'package:qra/presentation/widgets/prompts.dart';
 
 class UploadCourseScreen extends HookWidget {
   static const id = "/upload_course_screen";
 
   UploadCourseScreen({Key? key}) : super(key: key);
-  final _firestore = FirebaseFirestore.instance;
+  final _fireStore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,9 @@ class UploadCourseScreen extends HookWidget {
         //TODO: handle selected date
         if (selectedDate != null) {
           dueDate.text = DateFormat('yyyy-MM-dd').format(selectedDate);
-          print("New date: ${dueDate.text}");
+          if (kDebugMode) {
+            print("New date: ${dueDate.text}");
+          }
         }
       });
     }
@@ -126,7 +128,7 @@ class UploadCourseScreen extends HookWidget {
                                 db['dueDate'] = dueDate.text;
                                 db['teacher'] = teacher.text;
 
-                                _firestore
+                                _fireStore
                                     .collection("Courses")
                                     .doc(db['courseCode'].toString())
                                     .set(db)
@@ -173,7 +175,8 @@ class UploadCourseScreen extends HookWidget {
                   ),
                 ),
               )
-            : Center(child: CircularProgressIndicator(color: Constants.coolOrange)));
+            : Center(
+                child: CircularProgressIndicator(color: Constants.coolOrange)));
   }
 }
 

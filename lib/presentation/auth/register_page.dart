@@ -26,7 +26,6 @@ class RegisterPage extends HookConsumerWidget {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController iDController = TextEditingController();
   final TextEditingController majorController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
   final TextEditingController cPasswordController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -37,8 +36,12 @@ class RegisterPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final brightness = Theme.of(context).brightness;
     final isLoading = useState(false);
-    final items = useState(["Registering as ...", "Teacher", "Student"]);
-    final selectedValue = useState(items.value[0]);
+    final statusItems = useState(["Registering as ...", "Teacher", "Student"]);
+    final selectedStatusValue = useState(statusItems.value[0]);
+
+    final genderItems = useState(["Gender ...", "Male", "Female"]);
+    final selectedGenderValue = useState(genderItems.value[0]);
+
     return Scaffold(
         body: isLoading.value == false
             ? Padding(
@@ -83,9 +86,42 @@ class RegisterPage extends HookConsumerWidget {
                       controller: majorController,
                       title: "Major",
                     ),
-                    AppTextField(
-                      controller: genderController,
-                      title: "Gender",
+                    Container(
+                      height: 55,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: brightness == Brightness.light
+                                ? Constants.coolBlue
+                                : Constants.coolWhite),
+                        borderRadius: BorderRadius.circular(
+                          15.0,
+                        ),
+                      ),
+                      child: DropdownButtonFormField(
+                        items: genderItems.value
+                            .map<DropdownMenuItem<String>>(
+                                (String value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                          style: GoogleFonts.exo(
+                                              color:
+                                                  brightness == Brightness.light
+                                                      ? Constants.coolBlue
+                                                      : Constants.coolWhite)),
+                                    ))
+                            .toList(),
+                        value: selectedStatusValue.value,
+                        hint: const Text("Choose a course..."),
+                        focusColor: Colors.white,
+                        iconEnabledColor: Constants.coolOrange,
+                        style: GoogleFonts.exo2(fontSize: 16),
+                        dropdownColor: Constants.coolBlue,
+                        onChanged: (val) {
+                          selectedGenderValue.value = val.toString();
+                        },
+                      ),
                     ),
                     AppTextField(
                       controller: numberController,
@@ -105,7 +141,7 @@ class RegisterPage extends HookConsumerWidget {
                         ),
                       ),
                       child: DropdownButtonFormField(
-                        items: items.value
+                        items: statusItems.value
                             .map<DropdownMenuItem<String>>(
                                 (String value) => DropdownMenuItem<String>(
                                       value: value,
@@ -117,14 +153,14 @@ class RegisterPage extends HookConsumerWidget {
                                                       : Constants.coolWhite)),
                                     ))
                             .toList(),
-                        value: selectedValue.value,
+                        value: selectedStatusValue.value,
                         hint: const Text("Choose a course..."),
                         focusColor: Colors.white,
                         iconEnabledColor: Constants.coolOrange,
                         style: GoogleFonts.exo2(fontSize: 16),
                         dropdownColor: Constants.coolBlue,
                         onChanged: (val) {
-                          selectedValue.value = val.toString();
+                          selectedStatusValue.value = val.toString();
                         },
                       ),
                     ),
@@ -149,16 +185,19 @@ class RegisterPage extends HookConsumerWidget {
                     PrimaryAppButton(
                       title: "Register",
                       onPressed: () async {
+                        //todo: Check if status is empty
+                        //todo: Check if status is student, normal stuff
+                        //todo: Check if status is staff, exempt ID?, MAJOR
                         if (emailController.text.isEmpty ||
                             firstNameController.text.isEmpty ||
                             lastNameController.text.isEmpty ||
                             passwordController.text.isEmpty ||
                             cPasswordController.text.isEmpty ||
                             majorController.text.isEmpty ||
-                            genderController.text.isEmpty ||
                             iDController.text.isEmpty ||
                             numberController.text.isEmpty ||
-                            selectedValue.value == "Registering as ...") {
+                            selectedStatusValue.value == "Registering as ..." ||
+                            selectedGenderValue.value == "Gender ...") {
                           _showToast(context, 'Please enter all fields');
                           return;
                         }
@@ -194,12 +233,12 @@ class RegisterPage extends HookConsumerWidget {
                           db['fullName'] =
                               "${firstNameController.text} ${lastNameController.text}";
                           db['email'] = emailController.text;
-                          db['gender'] = genderController.text;
+                          db['gender'] = selectedGenderValue.value;
                           db['iD'] = iDController.text;
                           db['major'] = majorController.text;
                           db['isEligible'] = "false";
                           db['phoneNumber'] = numberController.text;
-                          db['status'] = selectedValue.value;
+                          db['status'] = selectedStatusValue.value;
 
                           _firestore
                               .collection("Users")
@@ -213,10 +252,9 @@ class RegisterPage extends HookConsumerWidget {
                                 .read(AuthLocalDataSource.provider)
                                 .cacheUser(user);
                             isLoading.value = false;
-                            if (selectedValue.value == "Student"){
+                            if (selectedStatusValue.value == "Student") {
                               Get.offAllNamed(StudentPage.id);
-                            }
-                            else {
+                            } else {
                               Get.offAllNamed(StaffPage.id);
                             }
                           }).catchError((error, stackTrace) => () {

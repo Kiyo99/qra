@@ -7,6 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/student_model/student_model.dart';
+import 'package:qra/presentation/staff/courses/pdf_view.dart';
+import 'package:qra/presentation/staff/courses/pdf_view_screen.dart';
 import 'package:qra/presentation/student/student_details.dart';
 
 class ViewCourseDetails extends HookConsumerWidget {
@@ -107,6 +109,68 @@ class ViewCourseDetails extends HookConsumerWidget {
       appBar: AppBar(
         elevation: 0.1,
         title: Text(course.value.courseCode),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf_outlined),
+            onPressed: () {
+              // showCupertinoDialog(context: context, builder: (BuildContext context){
+              //   return AlertDialog(
+              //     title: Text("Generate a PDF?"),
+              //     content: const Text(
+              //         "Do you want to generate a pdf document of this attendance list?"),
+              //     actions: [
+              //       TextButton(
+              //         child: const Text("Cancel"),
+              //         onPressed: () {
+              //           Get.back();
+              //         },
+              //       ),
+              //       TextButton(
+              //         child: const Text("Generate"),
+              //         onPressed: () {
+              //           //todo: Generate the pdf here
+              //         },
+              //       )
+              //     ],
+              //   );
+              // });
+              Get.defaultDialog(
+                title: "Generate PDF?",
+                titlePadding: const EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
+                content: const Text(
+                    "Do you want to generate a pdf document of this attendance list?"),
+                actions: [
+                  TextButton(
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                          color: brightness == Brightness.light
+                              ? Constants.coolBlue
+                              : Constants.coolWhite),
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                  TextButton(
+                    child: Text(
+                      "Generate",
+                      style: TextStyle(
+                          color: brightness == Brightness.light
+                              ? Constants.coolBlue
+                              : Constants.coolWhite),
+                    ),
+                    onPressed: () {
+                      Get.back();
+                      Get.toNamed(PdfViewScreen.id, arguments: course.value);
+                    },
+                  )
+                ],
+              );
+            },
+          ),
+        ],
       ),
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
