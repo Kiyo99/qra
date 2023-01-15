@@ -98,10 +98,10 @@ class StudentOptionsScreen extends HookConsumerWidget {
                         if (doc.exists) {
                           Get.back();
                           final student = StudentModel.fromJson(doc.data()!);
-                          print("fcgbjn: ${student}");
 
                           Get.toNamed(SubscribedCoursesScreen.id, arguments: student);
-                        } else {
+                        }
+                        else {
                           showModalBottomSheet(
                             context: context,
                             shape: const RoundedRectangleBorder(

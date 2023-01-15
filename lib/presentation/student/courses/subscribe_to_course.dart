@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
+import 'package:qra/data/student_model/student_model.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
@@ -64,6 +65,17 @@ class SubscribeToCourseScreen extends HookWidget {
                             .doc(auth.currentUser!.email.toString())
                             .get();
 
+                        final student =
+                            StudentModel.fromJson(studentsDoc.data()!);
+
+                        if (student.courses != null) {
+                          final f = student.courses!.where((element) =>
+                              element.courseCode == course.courseCode);
+                          if (f.first.courseCode == course.courseCode) {
+                            print("Already registered:");
+                          }
+                        }
+
                         await _fireStore
                             .collection("Courses")
                             .doc(course.courseCode)
@@ -108,7 +120,8 @@ class SubscribeToCourseScreen extends HookWidget {
                               ),
                             );
                           });
-                        }).onError((error, stackTrace) => Constants.showToast(context,
+                        }).onError((error, stackTrace) => Constants.showToast(
+                                context,
                                 'Failed to subscribe to ${course.courseName}'));
                       },
                       message:
