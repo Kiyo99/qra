@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
@@ -139,10 +140,10 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                           ])
                         })
                         .whenComplete(
-                          () => _showToast(context,
+                          () => Constants.showToast(context,
                               'Successfully subscribed to ${course.courseName}'),
                         )
-                        .onError((error, stackTrace) => _showToast(context,
+                        .onError((error, stackTrace) => Constants.showToast(context,
                             'Failed to subscribe to ${course.courseName}'));
                   },
                 ),
@@ -283,7 +284,7 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                             );
                           }).onError((error, stackTrace) => () {
                                     Get.back();
-                                    _showToast(context,
+                                    Constants.showToast(context,
                                         'Failed to subscribe to ${course.courseName}');
                                   });
                         },
@@ -303,15 +304,4 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
       },
     );
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }

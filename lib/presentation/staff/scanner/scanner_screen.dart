@@ -53,55 +53,58 @@ class ImprovedScanner extends HookConsumerWidget {
                               fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 50),
-                    StreamBuilder(
-                      stream: _fireStore
-                          .collection("Courses")
-                          .orderBy("courseCode")
-                          .snapshots(),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Text("Loading");
-                        }
-                        final userDocument = snapshot.data!.docs;
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: StreamBuilder(
+                        stream: _fireStore
+                            .collection("Courses")
+                            .orderBy("courseCode")
+                            .snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Text("Loading");
+                          }
+                          final userDocument = snapshot.data!.docs;
 
-                        for (int i = 0; i < userDocument.length; i++) {
-                          items.value.addIf(
-                              !(items.value.contains(userDocument[i].id)),
-                              userDocument[i].id);
-                        }
+                          for (int i = 0; i < userDocument.length; i++) {
+                            items.value.addIf(
+                                !(items.value.contains(userDocument[i].id)),
+                                userDocument[i].id);
+                          }
 
-                        return Container(
-                          height: 50,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                              color: Color(0xffbfbfbf),
-                              borderRadius: BorderRadius.circular(15.0)),
-                          child: DropdownButtonFormField(
-                            items: items.value
-                                .map<DropdownMenuItem<String>>(
-                                    (String value) => DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        ))
-                                .toList(),
-                            value: selectedValue.value,
-                            focusColor: Colors.white.withOpacity(0.8),
-                            iconEnabledColor: Constants.coolOrange,
-                            // decoration: InputDecoration(
-                            //   filled: true,
-                            //   hintStyle: TextStyle(color: Colors.grey[800]),
-                            //   hintText: "Name",
-                            //   // fillColor: Colors.blue[200],
-                            // ),
-                            style: const TextStyle(color: Colors.black),
-                            dropdownColor: Colors.grey,
-                            onChanged: (val) {
-                              selectedValue.value = val.toString();
-                            },
-                          ),
-                        );
-                      },
+                          return Container(
+                            height: 50,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                                color: Color(0xffbfbfbf),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: DropdownButtonFormField(
+                              items: items.value
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) => DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          ))
+                                  .toList(),
+                              value: selectedValue.value,
+                              focusColor: Colors.white.withOpacity(0.8),
+                              iconEnabledColor: Constants.coolOrange,
+                              // decoration: InputDecoration(
+                              //   filled: true,
+                              //   hintStyle: TextStyle(color: Colors.grey[800]),
+                              //   hintText: "Name",
+                              //   // fillColor: Colors.blue[200],
+                              // ),
+                              style: const TextStyle(color: Colors.black),
+                              dropdownColor: Colors.grey,
+                              onChanged: (val) {
+                                selectedValue.value = val.toString();
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     const SizedBox(height: 20),
                     PrimaryAppButton(

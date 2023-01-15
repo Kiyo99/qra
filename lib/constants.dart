@@ -20,7 +20,24 @@ class Constants {
   static Color coolRed = const Color(0xff742525);
   static const WHATSAPP = '+233501230563';
 
-  //todo redo color combinations
+  //Toast
+  static void showToast(BuildContext context, String message) {
+    final brightness = Theme.of(context).brightness;
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: TextStyle(color: coolWhite),
+        ),
+        action: SnackBarAction(
+          label: 'Got it',
+          textColor: coolWhite,
+          onPressed: scaffold.hideCurrentSnackBar,
+        ),
+      ),
+    );
+  }
 
   // Pref keys
   static const prefsUserKey = 'PREFS_USER_KEY';

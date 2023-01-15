@@ -108,7 +108,7 @@ class SubscribeToCourseScreen extends HookWidget {
                               ),
                             );
                           });
-                        }).onError((error, stackTrace) => _showToast(context,
+                        }).onError((error, stackTrace) => Constants.showToast(context,
                                 'Failed to subscribe to ${course.courseName}'));
                       },
                       message:
@@ -144,15 +144,4 @@ class SubscribeToCourseScreen extends HookWidget {
           },
         ));
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }

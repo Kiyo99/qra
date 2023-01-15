@@ -11,7 +11,7 @@ import 'package:qra/presentation/staff/staff_search_delegate/staff_delegate.dart
 import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
-import 'package:qra/presentation/staff/scanner/scanner_improved.dart';
+import 'package:qra/presentation/staff/scanner/scanner_screen.dart';
 import 'package:qra/presentation/staff/courses/upload_course.dart';
 
 class StaffPage extends HookConsumerWidget {

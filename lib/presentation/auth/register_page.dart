@@ -196,7 +196,7 @@ class RegisterPage extends HookConsumerWidget {
                       title: "Register",
                       onPressed: () async {
                         if (selectedStatusValue.value == "Registering as ..."){
-                          _showToast(context, "Select what you're registering as");
+                          Constants.showToast(context, "Select what you're registering as");
                           return;
                         }
 
@@ -209,24 +209,24 @@ class RegisterPage extends HookConsumerWidget {
                               iDController.text.isEmpty ||
                               numberController.text.isEmpty ||
                               selectedGenderValue.value == "Gender ...") {
-                            _showToast(context, 'Please enter all fields');
+                            Constants.showToast(context, 'Please enter all fields');
                             return;
                           }
 
                           if (numberController.text.length < 10) {
-                            _showToast(
+                            Constants.showToast(
                                 context, 'Please enter a valid phone number');
                             return;
                           }
 
                           if (!(passwordController.text ==
                               cPasswordController.text)) {
-                            _showToast(context, 'Passwords don\'t match');
+                            Constants.showToast(context, 'Passwords don\'t match');
                             return;
                           }
 
                           if (passwordController.text.length < 6) {
-                            _showToast(context,
+                            Constants.showToast(context,
                                 'Password should not be less than 6 characters');
                             return;
                           }
@@ -254,7 +254,7 @@ class RegisterPage extends HookConsumerWidget {
                                   .doc(auth.currentUser!.email.toString())
                                   .set(db)
                                   .whenComplete(() {
-                                _showToast(context, 'Successfully saved staff');
+                                Constants.showToast(context, 'Successfully saved staff');
 
                                 final user = AppUser.fromJson(db);
                                 ref
@@ -264,7 +264,7 @@ class RegisterPage extends HookConsumerWidget {
 
                                 Get.offAllNamed(StaffPage.id);
                               }).catchError((error, stackTrace) => () {
-                                        _showToast(
+                                        Constants.showToast(
                                             context, 'Failed to save 😪');
                                         print('Failed: $error');
                                       });
@@ -291,24 +291,24 @@ class RegisterPage extends HookConsumerWidget {
                               numberController.text.isEmpty ||
                               selectedStatusValue.value == "Registering as ..." ||
                               selectedGenderValue.value == "Gender ...") {
-                            _showToast(context, 'Please enter all fields');
+                            Constants.showToast(context, 'Please enter all fields');
                             return;
                           }
 
                           if (numberController.text.length < 10) {
-                            _showToast(
+                            Constants.showToast(
                                 context, 'Please enter a valid phone number');
                             return;
                           }
 
                           if (!(passwordController.text ==
                               cPasswordController.text)) {
-                            _showToast(context, 'Passwords don\'t match');
+                            Constants.showToast(context, 'Passwords don\'t match');
                             return;
                           }
 
                           if (passwordController.text.length < 6) {
-                            _showToast(context,
+                            Constants.showToast(context,
                                 'Password should not be less than 6 characters');
                             return;
                           }
@@ -337,7 +337,7 @@ class RegisterPage extends HookConsumerWidget {
                                 .doc(auth.currentUser!.email.toString())
                                 .set(db)
                                 .whenComplete(() {
-                              _showToast(context, 'Successfully saved student');
+                              Constants.showToast(context, 'Successfully saved student');
 
                               final user = AppUser.fromJson(db);
                               ref
@@ -346,7 +346,7 @@ class RegisterPage extends HookConsumerWidget {
                               isLoading.value = false;
                               Get.offAllNamed(StudentPage.id);
                             }).catchError((error, stackTrace) => () {
-                              _showToast(context, 'Failed to save 😪');
+                              Constants.showToast(context, 'Failed to save 😪');
                               print('Failed: $error');
                             });
                           } on FirebaseAuthException catch (e) {
@@ -394,15 +394,4 @@ class RegisterPage extends HookConsumerWidget {
                 ),
               ));
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }

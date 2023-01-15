@@ -71,7 +71,7 @@ class LoginPage extends HookConsumerWidget {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty) {
                             print("Please enter all fields");
-                            _showToast(context, 'Please enter all fields');
+                            Constants.showToast(context, 'Please enter all fields');
                             // const AlertDialog(
                             //   title: Text("Please enter all fields"),
                             // );
@@ -151,15 +151,4 @@ class LoginPage extends HookConsumerWidget {
                 ),
               ));
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }
