@@ -96,7 +96,11 @@ class UploadCourseScreen extends HookWidget {
                                       BorderSide(color: Constants.coolOrange)),
                               border: const OutlineInputBorder(),
                               labelText: 'Due date',
-                              labelStyle: GoogleFonts.exo2()),
+                              labelStyle: GoogleFonts.exo2(
+                                color: brightness == Brightness.light
+                                    ? Constants.coolBlue
+                                    : Constants.coolWhite,
+                              )),
                         ),
                       ),
                       const SizedBox(height: 30),

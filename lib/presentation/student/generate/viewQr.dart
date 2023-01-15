@@ -17,6 +17,7 @@ class ViewQr extends HookConsumerWidget {
     final args = useState(Get.arguments);
     final data = Map<String, dynamic>.from(args.value);
     final studentData = StudentModel.fromJson(data);
+    print(studentData);
     return DismissiblePage(
       dragSensitivity: .4,
       maxTransformValue: 4,
@@ -40,7 +41,7 @@ class ViewQr extends HookConsumerWidget {
                 child: QrImage(
                   foregroundColor: Colors.blue.shade900,
                   data:
-                      "{\n \"name\" : \"${studentData.fullName}\",\n  \"iD\" : \"${studentData.iD}\",\n \"eligible\" : \"${studentData.isEligible}\"}",
+                      "{\n \"name\" : \"${studentData.fullName}\",\n  \"iD\" : \"${studentData.iD}\",\n \"eligible\" : \"${studentData.isEligible}\",\n \"courses\" : \"${studentData.courses}\",}",
                 ),
               ),
             ),

@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/widgets/search_button.dart';
 import 'package:qra/presentation/student/courses/subscribe_to_course.dart';
-import 'package:qra/presentation/student/generate/generator_improved.dart';
+import 'package:qra/presentation/student/generate/generator_screen.dart';
 import 'package:qra/presentation/student/student_options_view.dart';
 import 'package:qra/presentation/student/student_search_delegate/student_delegate.dart';
 

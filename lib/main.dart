@@ -91,6 +91,3 @@ class MyApp extends HookConsumerWidget {
 //todo: Handle errors on view course details and all possible errors
 //todo: Refactor code to have a global textTheme style called KTextStyle
 //todo: When scanning, not just the eligibility, check whether the student has registered for that course
-
-//todo: Fix the minor color issues across the app with respect to brightness
-//todo: All toasts should be called from the Constants class

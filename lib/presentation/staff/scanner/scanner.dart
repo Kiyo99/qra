@@ -35,6 +35,7 @@ class QrScanner extends HookConsumerWidget {
             debugPrint('Nameee found! ${codd.name}');
             debugPrint('Idd found! ${codd.iD}');
             debugPrint('ELigible found! ${codd.eligible}');
+            debugPrint('courses! ${codd.courses}');
 
             //todo do not forget to change the codd.is == true
             if (codd.eligible == "false") {
