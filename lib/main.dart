@@ -9,7 +9,6 @@ import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/auth/splash_screen.dart';
-import 'package:qra/presentation/staff/courses/pdf_view.dart';
 import 'package:qra/presentation/staff/courses/pdf_view_screen.dart';
 import 'package:qra/presentation/student/student_details.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
@@ -82,7 +81,6 @@ class MyApp extends HookConsumerWidget {
             SubscribedCoursesScreen.id: (context) => SubscribedCoursesScreen(),
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
-            PdfView.id: (context) => const PdfView(),
             PdfViewScreen.id: (context) => const PdfViewScreen(),
           },
           home: const SplashScreen()),

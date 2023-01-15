@@ -30,7 +30,7 @@ class RegisterPage extends HookConsumerWidget {
   final TextEditingController cPasswordController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
+  final _fireStore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -128,7 +128,7 @@ class RegisterPage extends HookConsumerWidget {
                           registeringAsStaff.value ? "Staff ID" : "Student ID",
                     ),
                     registeringAsStaff.value
-                        ? SizedBox()
+                        ? const SizedBox()
                         : AppTextField(
                             controller: majorController,
                             title: "Major",
@@ -249,7 +249,7 @@ class RegisterPage extends HookConsumerWidget {
                               db['phoneNumber'] = numberController.text;
                               db['status'] = selectedStatusValue.value;
 
-                              _firestore
+                              _fireStore
                                   .collection("Users")
                                   .doc(auth.currentUser!.email.toString())
                                   .set(db)
@@ -332,7 +332,7 @@ class RegisterPage extends HookConsumerWidget {
                             db['phoneNumber'] = numberController.text;
                             db['status'] = selectedStatusValue.value;
 
-                            _firestore
+                            _fireStore
                                 .collection("Users")
                                 .doc(auth.currentUser!.email.toString())
                                 .set(db)

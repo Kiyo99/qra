@@ -94,37 +94,7 @@ class PdfViewScreen extends HookWidget {
   }
 
   static pdf.Table buildTable(CourseModel course) {
-    final headers = [
-      // pdf.Text(
-      //   "Index",
-      //   style: pdf.TextStyle(
-      //       fontWeight: pdf.FontWeight.bold, fontSize: 18, font: font1),
-      // ),
-
-      "Full name", "ID", "Eligible", "Date"
-
-      // pdf.Text(
-      //   "ID",
-      //   style: pdf.TextStyle(
-      //     fontWeight: pdf.FontWeight.bold,
-      //     fontSize: 18,
-      //   ),
-      // ),
-      // pdf.Text(
-      //   "Eligible",
-      //   style: pdf.TextStyle(
-      //     fontWeight: pdf.FontWeight.bold,
-      //     fontSize: 18,
-      //   ),
-      // ),
-      // pdf.Text(
-      //   "Date",
-      //   style: pdf.TextStyle(
-      //     fontWeight: pdf.FontWeight.bold,
-      //     fontSize: 18,
-      //   ),
-      // ),
-    ];
+    final headers = ["Full name", "ID", "Eligible", "Date"];
 
     if (course.students == null) {
       final data = [

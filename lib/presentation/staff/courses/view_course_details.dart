@@ -149,40 +149,6 @@ class ViewCourseDetails extends HookConsumerWidget {
                       ],
                     );
                   });
-              // Get.defaultDialog(
-              //   title: "Generate PDF?",
-              //   titlePadding: const EdgeInsets.all(10),
-              //   contentPadding: const EdgeInsets.all(10),
-              //   content: const Text(
-              //       "Do you want to generate a pdf document of this attendance list?"),
-              //   actions: [
-              //     TextButton(
-              //       child: Text(
-              //         "Cancel",
-              //         style: TextStyle(
-              //             color: brightness == Brightness.light
-              //                 ? Constants.coolBlue
-              //                 : Constants.coolWhite),
-              //       ),
-              //       onPressed: () {
-              //         Get.back();
-              //       },
-              //     ),
-              //     TextButton(
-              //       child: Text(
-              //         "Generate",
-              //         style: TextStyle(
-              //             color: brightness == Brightness.light
-              //                 ? Constants.coolBlue
-              //                 : Constants.coolWhite),
-              //       ),
-              //       onPressed: () {
-              //         Get.back();
-              //         Get.toNamed(PdfViewScreen.id, arguments: course.value);
-              //       },
-              //     )
-              //   ],
-              // );
             },
           ),
         ],
