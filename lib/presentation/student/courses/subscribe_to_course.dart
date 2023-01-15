@@ -71,8 +71,20 @@ class SubscribeToCourseScreen extends HookWidget {
                         if (student.courses != null) {
                           final f = student.courses!.where((element) =>
                               element.courseCode == course.courseCode);
-                          if (f.first.courseCode == course.courseCode) {
-                            print("Already registered:");
+                          if (f.isNotEmpty) {
+                            if (f.first.courseCode == course.courseCode) {
+                              Get.back();
+                              AppModal.showModal(
+                                context: context,
+                                title: "Already subscribed 😕",
+                                message:
+                                    "You've already subscribed to this course",
+                                asset: "assets/lottie/error.json",
+                                primaryAction: () => Get.back(),
+                                buttonText: "Okay",
+                              );
+                              return;
+                            }
                           }
                         }
 
