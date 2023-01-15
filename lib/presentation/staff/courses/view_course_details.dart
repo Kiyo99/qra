@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -7,9 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/student_model/student_model.dart';
-import 'package:qra/presentation/staff/courses/pdf_view.dart';
 import 'package:qra/presentation/staff/courses/pdf_view_screen.dart';
-import 'package:qra/presentation/student/student_details.dart';
 
 class ViewCourseDetails extends HookConsumerWidget {
   static const id = "/view_course_details";
@@ -95,10 +94,10 @@ class ViewCourseDetails extends HookConsumerWidget {
                 )
               ],
             ),
-            trailing: Icon(Icons.keyboard_arrow_right,
-                color: Constants.coolOrange, size: 30.0),
+            // trailing: Icon(Icons.keyboard_arrow_right,
+            //     color: Constants.coolOrange, size: 30.0),
             onTap: () {
-              Get.toNamed(StudentDetailPage.id, arguments: studentModel);
+              // Get.toNamed(StudentDetailPage.id, arguments: studentModel);
             },
           ),
         ),
@@ -113,61 +112,77 @@ class ViewCourseDetails extends HookConsumerWidget {
           IconButton(
             icon: const Icon(Icons.picture_as_pdf_outlined),
             onPressed: () {
-              // showCupertinoDialog(context: context, builder: (BuildContext context){
-              //   return AlertDialog(
-              //     title: Text("Generate a PDF?"),
-              //     content: const Text(
-              //         "Do you want to generate a pdf document of this attendance list?"),
-              //     actions: [
-              //       TextButton(
-              //         child: const Text("Cancel"),
-              //         onPressed: () {
-              //           Get.back();
-              //         },
+              showCupertinoDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Generate a PDF?"),
+                      content: const Text(
+                          "Do you want to generate a pdf document of this attendance list?"),
+                      actions: [
+                        TextButton(
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                                color: brightness == Brightness.light
+                                    ? Constants.coolBlue
+                                    : Constants.coolWhite),
+                          ),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                        TextButton(
+                          child: Text(
+                            "Generate",
+                            style: TextStyle(
+                                color: brightness == Brightness.light
+                                    ? Constants.coolBlue
+                                    : Constants.coolWhite),
+                          ),
+                          onPressed: () {
+                            Get.back();
+                            Get.toNamed(PdfViewScreen.id,
+                                arguments: course.value);
+                          },
+                        )
+                      ],
+                    );
+                  });
+              // Get.defaultDialog(
+              //   title: "Generate PDF?",
+              //   titlePadding: const EdgeInsets.all(10),
+              //   contentPadding: const EdgeInsets.all(10),
+              //   content: const Text(
+              //       "Do you want to generate a pdf document of this attendance list?"),
+              //   actions: [
+              //     TextButton(
+              //       child: Text(
+              //         "Cancel",
+              //         style: TextStyle(
+              //             color: brightness == Brightness.light
+              //                 ? Constants.coolBlue
+              //                 : Constants.coolWhite),
               //       ),
-              //       TextButton(
-              //         child: const Text("Generate"),
-              //         onPressed: () {
-              //           //todo: Generate the pdf here
-              //         },
-              //       )
-              //     ],
-              //   );
-              // });
-              Get.defaultDialog(
-                title: "Generate PDF?",
-                titlePadding: const EdgeInsets.all(10),
-                contentPadding: const EdgeInsets.all(10),
-                content: const Text(
-                    "Do you want to generate a pdf document of this attendance list?"),
-                actions: [
-                  TextButton(
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                          color: brightness == Brightness.light
-                              ? Constants.coolBlue
-                              : Constants.coolWhite),
-                    ),
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
-                  TextButton(
-                    child: Text(
-                      "Generate",
-                      style: TextStyle(
-                          color: brightness == Brightness.light
-                              ? Constants.coolBlue
-                              : Constants.coolWhite),
-                    ),
-                    onPressed: () {
-                      Get.back();
-                      Get.toNamed(PdfViewScreen.id, arguments: course.value);
-                    },
-                  )
-                ],
-              );
+              //       onPressed: () {
+              //         Get.back();
+              //       },
+              //     ),
+              //     TextButton(
+              //       child: Text(
+              //         "Generate",
+              //         style: TextStyle(
+              //             color: brightness == Brightness.light
+              //                 ? Constants.coolBlue
+              //                 : Constants.coolWhite),
+              //       ),
+              //       onPressed: () {
+              //         Get.back();
+              //         Get.toNamed(PdfViewScreen.id, arguments: course.value);
+              //       },
+              //     )
+              //   ],
+              // );
             },
           ),
         ],

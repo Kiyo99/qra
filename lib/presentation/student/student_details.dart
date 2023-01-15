@@ -13,19 +13,7 @@ class StudentDetailPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-
     final studentModel = useState<StudentModel>(Get.arguments);
-
-    // final coursePrice = Container(
-    //   padding: const EdgeInsets.all(7.0),
-    //   decoration: BoxDecoration(
-    //       border: Border.all(color: Colors.white),
-    //       borderRadius: BorderRadius.circular(5.0)),
-    //   child: Text(
-    //     "\$" + lesson.price.toString(),
-    //     style: const TextStyle(color: Colors.white),
-    //   ),
-    // );
 
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,

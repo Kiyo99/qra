@@ -90,8 +90,6 @@ class MyApp extends HookConsumerWidget {
   }
 }
 
-//todo: Should the lecturer be able to download pdf of the attendance sheet?
 //todo: Handle errors on view course details and all possible errors
-//todo: When registering as a staff, make some things null according to the model
 //todo: Refactor code to have a global textTheme style called KTextStyle
 //todo: When scanning, not just the eligibility, check whether the student has registered for that course

@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pdf;
 import 'package:printing/printing.dart';
+import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/student_model/student_model.dart';
 
@@ -18,26 +19,45 @@ class PdfViewScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final course = useState<CourseModel>(Get.arguments);
+    final brightness = Theme.of(context).brightness;
+
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(10.0),
-        child: PdfPreview(
-          canChangeOrientation: false,
-          canChangePageFormat: false,
-          canDebug: false,
-          pdfFileName: "${course.value.courseName} attendance.pdf",
-          previewPageMargin: const EdgeInsets.all(5),
-          loadingWidget: Center(
-            child: Transform.scale(
-              scale: 0.5,
-              child: Lottie.asset(
-                "assets/lottie/loader.json",
-                frameRate: FrameRate(60),
-              ),
+      appBar: AppBar(
+        title: Text(
+          "PDF Preview of ${course.value.courseCode}",
+          style: const TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Get.back();
+          },
+          color: Colors.white,
+        ),
+        foregroundColor: Colors.white,
+        backgroundColor:
+            brightness == Brightness.dark ? Constants.coolBlue : Colors.blue,
+      ),
+      body: PdfPreview(
+        canChangeOrientation: false,
+        canChangePageFormat: false,
+        canDebug: false,
+        scrollViewDecoration: BoxDecoration(color: Constants.coolWhite),
+        pdfPreviewPageDecoration: BoxDecoration(
+          color: Constants.coolWhite,
+        ),
+        pdfFileName: "${course.value.courseName} attendance.pdf",
+        previewPageMargin: const EdgeInsets.all(0),
+        loadingWidget: Center(
+          child: Transform.scale(
+            scale: 0.5,
+            child: Lottie.asset(
+              "assets/lottie/loader.json",
+              frameRate: FrameRate(60),
             ),
           ),
-          build: (format) => generateDocument(format, course.value),
         ),
+        build: (format) => generateDocument(format, course.value),
       ),
     );
   }
@@ -62,7 +82,9 @@ class PdfViewScreen extends HookWidget {
                 buildTable(course),
                 pdf.SizedBox(height: 20),
                 pdf.Text(
-                  "Total number of students: ${course.students?.length}",
+                  course.students == null
+                      ? "Total number of students: 0"
+                      : "Total number of students: ${course.students?.length}",
                   style: pdf.TextStyle(
                       fontWeight: pdf.FontWeight.bold, font: font2),
                 ),
@@ -104,19 +126,35 @@ class PdfViewScreen extends HookWidget {
       // ),
     ];
 
-    final data = course.students!.map((e) {
-      final std = StudentModel.fromJson(e);
-      return [
-        std.fullName,
-        std.iD,
-        std.isEligible == "true" ? 'Eligible' : 'Not Eligible',
-        DateTime.now(),
+    if (course.students == null) {
+      final data = [
+        [
+          "",
+          "",
+          "",
+          "",
+        ]
       ];
-    }).toList();
 
-    return pdf.Table.fromTextArray(
-      headers: headers,
-      data: data,
-    );
+      return pdf.Table.fromTextArray(
+        headers: headers,
+        data: data,
+      );
+    } else {
+      final data = course.students!.map((e) {
+        final std = StudentModel.fromJson(e);
+        return [
+          std.fullName,
+          std.iD,
+          std.isEligible == "true" ? 'Eligible' : 'Not Eligible',
+          DateTime.now(),
+        ];
+      }).toList();
+
+      return pdf.Table.fromTextArray(
+        headers: headers,
+        data: data,
+      );
+    }
   }
 }
