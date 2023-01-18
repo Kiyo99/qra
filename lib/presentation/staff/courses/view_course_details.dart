@@ -21,6 +21,7 @@ class ViewCourseDetails extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final course = useState<CourseModel>(Get.arguments);
     final brightness = Theme.of(context).brightness;
+    final fireStoreCourse = useState<Map<String, dynamic>>({});
 
     Card makeCard(StudentModel studentModel) {
       return Card(
@@ -37,7 +38,7 @@ class ViewCourseDetails extends HookConsumerWidget {
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: ListTile(
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+            const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
             leading: Container(
                 padding: const EdgeInsets.only(right: 5.0),
                 decoration: const BoxDecoration(
@@ -60,11 +61,11 @@ class ViewCourseDetails extends HookConsumerWidget {
                     final studentDoc = courseModel.students;
 
                     final studentToUpdate = studentDoc?.firstWhere(
-                        (student) => student['iD'] == studentModel.iD);
+                            (student) => student['iD'] == studentModel.iD);
                     studentToUpdate['isEligible'] = v.toString();
 
                     studentDoc?.removeWhere(
-                        (student) => student['iD'] == studentModel.iD);
+                            (student) => student['iD'] == studentModel.iD);
                     studentDoc?.add(studentToUpdate);
 
                     await _fireStore
@@ -142,8 +143,13 @@ class ViewCourseDetails extends HookConsumerWidget {
                           ),
                           onPressed: () {
                             Get.back();
+                            final courseDetails =
+                            CourseModel.fromJson(fireStoreCourse.value);
+
                             Get.toNamed(PdfViewScreen.id,
-                                arguments: course.value);
+                                arguments: fireStoreCourse.value.isEmpty
+                                    ? course.value
+                                    : courseDetails);
                           },
                         )
                       ],
@@ -163,8 +169,8 @@ class ViewCourseDetails extends HookConsumerWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                   child: CircularProgressIndicator(
-                color: Constants.coolOrange,
-              ));
+                    color: Constants.coolOrange,
+                  ));
             }
 
             if (snapshot.hasError) {
@@ -172,8 +178,10 @@ class ViewCourseDetails extends HookConsumerWidget {
             }
 
             Map<String, dynamic> data =
-                snapshot.data!.data()! as Map<String, dynamic>;
+            snapshot.data!.data()! as Map<String, dynamic>;
+            fireStoreCourse.value = data;
             final courseDetails = CourseModel.fromJson(data);
+
             return ListView.builder(
               padding: const EdgeInsets.all(8),
               scrollDirection: Axis.vertical,
