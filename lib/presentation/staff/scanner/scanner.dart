@@ -91,16 +91,15 @@ class QrScanner extends HookConsumerWidget {
               );
 
               final courseDoc =
-              await _fireStore.collection("Courses").doc(courseCode).get();
+                  await _fireStore.collection("Courses").doc(courseCode).get();
               final courseModel = CourseModel.fromJson(
                   courseDoc.data() as Map<String, dynamic>);
               final studentDoc = courseModel.students;
 
               final studentToUpdate =
-              studentDoc?.firstWhere((student) => student['iD'] == codd.iD);
+                  studentDoc?.firstWhere((student) => student['iD'] == codd.iD);
 
-              studentToUpdate['isEligible'] =
-              studentToUpdate['isEligible'] == "true" ? "false" : "true";
+              studentToUpdate['attended'] = "true";
 
               studentDoc?.removeWhere((student) => student['iD'] == codd.iD);
               studentDoc?.add(studentToUpdate);

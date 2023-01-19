@@ -8,6 +8,7 @@ import 'package:qra/constants.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/data/student_model/student_model.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/courses/subscribed_courses.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
@@ -49,7 +50,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
             child: Text(
               title,
               style:
-                  GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
+              GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
           ),
@@ -90,7 +91,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
 
                     if (items[index] == 'Subscribed courses') {
                       AppDialogs.lottieLoader();
-                     await _fireStore
+                      await _fireStore
                           .collection("Users")
                           .doc(auth.currentUser!.email)
                           .get()
@@ -127,6 +128,11 @@ class StudentOptionsScreen extends HookConsumerWidget {
                       return;
                     }
 
+                    if (items[index] == 'About Qra') {
+                      Get.toNamed(StaffPage.id);
+                      return;
+                    }
+
                     if (items[index] == 'Live chat') {
                       var url = "https://wa.me/${Constants.WHATSAPP}";
                       await launch(url);
@@ -143,14 +149,14 @@ class StudentOptionsScreen extends HookConsumerWidget {
                   leading: items[index] == 'Update student information'
                       ? const Icon(Icons.account_circle_outlined)
                       : items[index] == 'Log out'
-                          ? const Icon(Icons.logout_outlined)
-                          : items[index] == 'Live chat'
-                              ? const Icon(Icons.chat_bubble_outline_outlined)
-                              : items[index] == 'Subscribed courses'
-                                  ? const Icon(Icons.menu_book_outlined)
-                                  : items[index] == 'About Qra'
-                                      ? const Icon(Icons.info_outline)
-                                      : const Icon(Icons.title),
+                      ? const Icon(Icons.logout_outlined)
+                      : items[index] == 'Live chat'
+                      ? const Icon(Icons.chat_bubble_outline_outlined)
+                      : items[index] == 'Subscribed courses'
+                      ? const Icon(Icons.menu_book_outlined)
+                      : items[index] == 'About Qra'
+                      ? const Icon(Icons.info_outline)
+                      : const Icon(Icons.title),
                 );
               },
             ),
