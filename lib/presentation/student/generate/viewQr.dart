@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,7 +19,13 @@ class ViewQr extends HookConsumerWidget {
     final args = useState(Get.arguments);
     final data = Map<String, dynamic>.from(args.value);
     final studentData = StudentModel.fromJson(data);
-    print(data['courses']);
+
+    final studentDetailsToSend = {
+      "name" : studentData.fullName,
+      "iD": studentData.iD,
+      "eligible": studentData.isEligible,
+      "courses": args.value['courses'],
+    };
     // print(studentData);
     return DismissiblePage(
       dragSensitivity: .4,
@@ -41,13 +49,7 @@ class ViewQr extends HookConsumerWidget {
                 width: 400,
                 child: QrImage(
                   foregroundColor: Colors.blue.shade900,
-                  data:
-                      "{"
-                          "\n \"name\" : \"${studentData.fullName}\","
-                          "\n  \"iD\" : \"${studentData.iD}\","
-                          "\n \"eligible\" : \"${studentData.isEligible}\","
-                          "\n \"courses\" : \"${data['courses']}\""
-                          "}",
+                  data: json.encode(studentDetailsToSend),
                 ),
               ),
             ),
