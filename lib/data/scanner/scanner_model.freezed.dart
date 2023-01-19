@@ -22,11 +22,15 @@ class _$ScannerModelTearOff {
   const _$ScannerModelTearOff();
 
   _ScannerModel call(
-      {required String name, required String iD, required String eligible}) {
+      {required String name,
+      required String iD,
+      required String eligible,
+      List<CourseModel>? courses}) {
     return _ScannerModel(
       name: name,
       iD: iD,
       eligible: eligible,
+      courses: courses,
     );
   }
 
@@ -43,6 +47,7 @@ mixin _$ScannerModel {
   String get name => throw _privateConstructorUsedError;
   String get iD => throw _privateConstructorUsedError;
   String get eligible => throw _privateConstructorUsedError;
+  List<CourseModel>? get courses => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +60,8 @@ abstract class $ScannerModelCopyWith<$Res> {
   factory $ScannerModelCopyWith(
           ScannerModel value, $Res Function(ScannerModel) then) =
       _$ScannerModelCopyWithImpl<$Res>;
-  $Res call({String name, String iD, String eligible});
+  $Res call(
+      {String name, String iD, String eligible, List<CourseModel>? courses});
 }
 
 /// @nodoc
@@ -71,6 +77,7 @@ class _$ScannerModelCopyWithImpl<$Res> implements $ScannerModelCopyWith<$Res> {
     Object? name = freezed,
     Object? iD = freezed,
     Object? eligible = freezed,
+    Object? courses = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -85,6 +92,10 @@ class _$ScannerModelCopyWithImpl<$Res> implements $ScannerModelCopyWith<$Res> {
           ? _value.eligible
           : eligible // ignore: cast_nullable_to_non_nullable
               as String,
+      courses: courses == freezed
+          ? _value.courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
     ));
   }
 }
@@ -96,7 +107,8 @@ abstract class _$ScannerModelCopyWith<$Res>
           _ScannerModel value, $Res Function(_ScannerModel) then) =
       __$ScannerModelCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String iD, String eligible});
+  $Res call(
+      {String name, String iD, String eligible, List<CourseModel>? courses});
 }
 
 /// @nodoc
@@ -114,6 +126,7 @@ class __$ScannerModelCopyWithImpl<$Res> extends _$ScannerModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? iD = freezed,
     Object? eligible = freezed,
+    Object? courses = freezed,
   }) {
     return _then(_ScannerModel(
       name: name == freezed
@@ -128,6 +141,10 @@ class __$ScannerModelCopyWithImpl<$Res> extends _$ScannerModelCopyWithImpl<$Res>
           ? _value.eligible
           : eligible // ignore: cast_nullable_to_non_nullable
               as String,
+      courses: courses == freezed
+          ? _value.courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
     ));
   }
 }
@@ -136,7 +153,10 @@ class __$ScannerModelCopyWithImpl<$Res> extends _$ScannerModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ScannerModel extends _ScannerModel {
   _$_ScannerModel(
-      {required this.name, required this.iD, required this.eligible})
+      {required this.name,
+      required this.iD,
+      required this.eligible,
+      this.courses})
       : super._();
 
   factory _$_ScannerModel.fromJson(Map<String, dynamic> json) =>
@@ -148,10 +168,12 @@ class _$_ScannerModel extends _ScannerModel {
   final String iD;
   @override
   final String eligible;
+  @override
+  final List<CourseModel>? courses;
 
   @override
   String toString() {
-    return 'ScannerModel(name: $name, iD: $iD, eligible: $eligible)';
+    return 'ScannerModel(name: $name, iD: $iD, eligible: $eligible, courses: $courses)';
   }
 
   @override
@@ -164,7 +186,9 @@ class _$_ScannerModel extends _ScannerModel {
                 const DeepCollectionEquality().equals(other.iD, iD)) &&
             (identical(other.eligible, eligible) ||
                 const DeepCollectionEquality()
-                    .equals(other.eligible, eligible)));
+                    .equals(other.eligible, eligible)) &&
+            (identical(other.courses, courses) ||
+                const DeepCollectionEquality().equals(other.courses, courses)));
   }
 
   @override
@@ -172,7 +196,8 @@ class _$_ScannerModel extends _ScannerModel {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(iD) ^
-      const DeepCollectionEquality().hash(eligible);
+      const DeepCollectionEquality().hash(eligible) ^
+      const DeepCollectionEquality().hash(courses);
 
   @JsonKey(ignore: true)
   @override
@@ -189,7 +214,8 @@ abstract class _ScannerModel extends ScannerModel {
   factory _ScannerModel(
       {required String name,
       required String iD,
-      required String eligible}) = _$_ScannerModel;
+      required String eligible,
+      List<CourseModel>? courses}) = _$_ScannerModel;
   _ScannerModel._() : super._();
 
   factory _ScannerModel.fromJson(Map<String, dynamic> json) =
@@ -201,6 +227,8 @@ abstract class _ScannerModel extends ScannerModel {
   String get iD => throw _privateConstructorUsedError;
   @override
   String get eligible => throw _privateConstructorUsedError;
+  @override
+  List<CourseModel>? get courses => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ScannerModelCopyWith<_ScannerModel> get copyWith =>

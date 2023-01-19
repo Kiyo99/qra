@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qra/constants.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/components/intro_pager_item.dart';
 import 'package:qra/presentation/auth/login_page.dart';
@@ -24,7 +23,6 @@ class IntroScreen extends HookConsumerWidget {
     User? user = auth.currentUser;
 
     return Scaffold(
-      backgroundColor: Constants.coolBlue,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

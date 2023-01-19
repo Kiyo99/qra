@@ -23,11 +23,9 @@ class ViewCoursesScreen extends HookWidget {
         .orderBy(filter.value)
         .snapshots();
     return Scaffold(
-        backgroundColor: Constants.coolBlue,
         appBar: AppBar(
           title: Text("View courses",
               style: GoogleFonts.exo2(fontWeight: FontWeight.bold)),
-          backgroundColor: Constants.coolBlue,
           elevation: 0,
           actions: [
             IconButton(

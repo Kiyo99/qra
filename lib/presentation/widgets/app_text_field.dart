@@ -12,6 +12,8 @@ class AppTextField extends HookWidget {
       {required this.controller, required this.title, this.obscureText});
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextField(
@@ -20,7 +22,11 @@ class AppTextField extends HookWidget {
         controller: controller,
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white),
+              borderSide: BorderSide(
+                color: brightness == Brightness.light
+                    ? Constants.coolBlue
+                    : Constants.coolWhite,
+              ),
               borderRadius: BorderRadius.circular(
                 15.0,
               ),
@@ -32,7 +38,10 @@ class AppTextField extends HookWidget {
                 borderSide: BorderSide(color: Constants.coolOrange)),
             border: const OutlineInputBorder(),
             labelText: title,
-            labelStyle: GoogleFonts.exo2(color: Colors.white)),
+            labelStyle: GoogleFonts.exo2(
+                color: brightness == Brightness.light
+                    ? Constants.coolBlue
+                    : Constants.coolWhite)),
       ),
     );
   }

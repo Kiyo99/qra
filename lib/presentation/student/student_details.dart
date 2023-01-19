@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
-import 'package:qra/data/fb_student_model/student_model.dart';
+import 'package:qra/data/student_model/student_model.dart';
 
 class StudentDetailPage extends HookWidget {
   static const id = "/student_detail_page";
@@ -11,18 +12,8 @@ class StudentDetailPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     final studentModel = useState<StudentModel>(Get.arguments);
-
-    // final coursePrice = Container(
-    //   padding: const EdgeInsets.all(7.0),
-    //   decoration: BoxDecoration(
-    //       border: Border.all(color: Colors.white),
-    //       borderRadius: BorderRadius.circular(5.0)),
-    //   child: Text(
-    //     "\$" + lesson.price.toString(),
-    //     style: const TextStyle(color: Colors.white),
-    //   ),
-    // );
 
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +86,7 @@ class StudentDetailPage extends HookWidget {
 
     final bottomContentText = Text(
       studentModel.value.major,
-      style: const TextStyle(fontSize: 18.0),
+      style: GoogleFonts.exo(fontSize: 22),
     );
     // final readButton = Container(
     //     padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -123,13 +114,17 @@ class StudentDetailPage extends HookWidget {
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
+            border: Border.all(
+                color: brightness == Brightness.light
+                    ? Constants.coolBlue
+                    : Constants.coolWhite),
             borderRadius: BorderRadius.circular(20),
-            color: Constants.coolBlue,
           ),
           height: 60,
-          child: const Center(
+          child: Center(
             child: Text(
               "Mark this student",
+              style: GoogleFonts.exo(fontSize: 18, color: Constants.coolOrange),
             ),
           ),
         ),

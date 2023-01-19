@@ -1,14 +1,15 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qra/constants.dart';
 import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/auth/splash_screen.dart';
+import 'package:qra/presentation/staff/courses/pdf_view_screen.dart';
 import 'package:qra/presentation/student/student_details.dart';
 import 'package:qra/presentation/staff/courses/view_courses.dart';
 import 'package:qra/presentation/staff/scanner/scanner.dart';
@@ -20,8 +21,10 @@ import 'package:qra/presentation/student/student_page/student_page.dart';
 import 'package:qra/presentation/staff/courses/view_course_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'presentation/student/courses/subscribed_courses.dart';
+
 final sharedPreferencesProvider =
-    Provider<SharedPreferences>((ref) => throw UnimplementedError());
+Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +52,6 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    final auth = FirebaseAuth.instance;
 
     return GestureDetector(
       onTap: () {
@@ -59,7 +61,8 @@ class MyApp extends HookConsumerWidget {
           useInheritedMediaQuery: true,
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
-          theme: ThemeData.dark(),
+          theme: Constants.lightTheme,
+          darkTheme: Constants.darkTheme,
           // darkTheme: ThemeData.dark(),
           themeMode: ThemeMode.system,
           title: 'QRA',
@@ -75,20 +78,21 @@ class MyApp extends HookConsumerWidget {
             ViewCourseDetails.id: (context) => ViewCourseDetails(),
             StudentDetailPage.id: (context) => const StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
+            SubscribedCoursesScreen.id: (context) => SubscribedCoursesScreen(),
             RegisterPage.id: (context) => RegisterPage(),
             ViewQr.id: (context) => ViewQr(),
+            PdfViewScreen.id: (context) => const PdfViewScreen(),
           },
           home: const SplashScreen()),
     );
   }
 }
 
-//todo: Implement a My courses section?
-//todo: try to set light and dark theme
-//todo: Should the lecturer be able to download pdf of the attendance sheet?
 //todo: Handle errors on view course details and all possible errors
-//todo: When registering as a staff, make some things null according to the model
 //todo: Refactor code to have a global textTheme style called KTextStyle
-
 //todo: When scanning, not just the eligibility, check whether the student has registered for that course
-//todo: Filter by department?
+
+//todo: When scanning, check for course is registered - Scanner
+//todo: When marking, add a new field called attended - ViewCourses
+//todo: When generating pdf, check for that field - PDFScreen
+

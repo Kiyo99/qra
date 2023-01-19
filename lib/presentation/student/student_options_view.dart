@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,14 +6,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
+import 'package:qra/data/student_model/student_model.dart';
 import 'package:qra/presentation/auth/login_page.dart';
+import 'package:qra/presentation/student/courses/subscribed_courses.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
+import 'package:qra/presentation/widgets/prompts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StudentOptionsScreen extends HookConsumerWidget {
-  const StudentOptionsScreen({Key? key, required this.title}) : super(key: key);
+  StudentOptionsScreen({Key? key, required this.title}) : super(key: key);
 
   // static final appOrderViewModel = AppOrderViewModel.provider;
   final String title;
+  final auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,9 +36,8 @@ class StudentOptionsScreen extends HookConsumerWidget {
       // height: MediaQuery.of(context).size.height - 100,
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Constants.coolBlue,
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         ),
@@ -42,7 +49,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
             child: Text(
               title,
               style:
-              GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
+                  GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
           ),
@@ -58,14 +65,65 @@ class StudentOptionsScreen extends HookConsumerWidget {
                 return ListTile(
                   onTap: () async {
                     if (items[index] == 'Log out') {
-                      final auth = FirebaseAuth.instance;
-                      //
-                      await auth.signOut();
-                      ref.read(AuthLocalDataSource.provider).clearUserData();
+                      AppModal.showModal(
+                          context: context,
+                          title: "Log out?",
+                          message: "Are you sure you want to log out?",
+                          asset: "assets/lottie/warning.json",
+                          primaryAction: () async {
+                            final auth = FirebaseAuth.instance;
+                            //
+                            await auth.signOut();
+                            ref
+                                .read(AuthLocalDataSource.provider)
+                                .clearUserData();
 
-                      // print(auth.currentUser);
-                      Get.offAndToNamed(LoginPage.id);
+                            // print(auth.currentUser);
+                            Get.offAndToNamed(LoginPage.id);
+                          },
+                          buttonText: "Yes, log out",
+                          showSecondary: true);
+
                       // navigate(context);
+                      return;
+                    }
+
+                    if (items[index] == 'Subscribed courses') {
+                      AppDialogs.lottieLoader();
+                     await _fireStore
+                          .collection("Users")
+                          .doc(auth.currentUser!.email)
+                          .get()
+                          .then((doc) {
+                        if (doc.exists) {
+                          Get.back();
+                          final student = StudentModel.fromJson(doc.data()!);
+
+                          Get.toNamed(SubscribedCoursesScreen.id, arguments: student);
+                        }
+                        else {
+                          showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25.0),
+                                topRight: Radius.circular(25.0),
+                              ),
+                            ),
+                            isScrollControlled: true,
+                            builder: (ctx) => AppPrompts(
+                              asset: 'assets/lottie/error.json',
+                              primaryAction: () {
+                                Get.back();
+                              },
+                              message: 'Failed to fetch details',
+                              title: 'Error',
+                              showSecondary: false,
+                              buttonText: 'Okay',
+                            ),
+                          );
+                        }
+                      });
                       return;
                     }
 
@@ -85,14 +143,14 @@ class StudentOptionsScreen extends HookConsumerWidget {
                   leading: items[index] == 'Update student information'
                       ? const Icon(Icons.account_circle_outlined)
                       : items[index] == 'Log out'
-                      ? const Icon(Icons.logout_outlined)
-                      : items[index] == 'Live chat'
-                      ? const Icon(Icons.chat_bubble_outline_outlined)
-                      : items[index] == 'Subscribed courses'
-                      ? const Icon(Icons.menu_book_outlined)
-                      : items[index] == 'About Qra'
-                      ? const Icon(Icons.info_outline)
-                      : const Icon(Icons.title),
+                          ? const Icon(Icons.logout_outlined)
+                          : items[index] == 'Live chat'
+                              ? const Icon(Icons.chat_bubble_outline_outlined)
+                              : items[index] == 'Subscribed courses'
+                                  ? const Icon(Icons.menu_book_outlined)
+                                  : items[index] == 'About Qra'
+                                      ? const Icon(Icons.info_outline)
+                                      : const Icon(Icons.title),
                 );
               },
             ),
