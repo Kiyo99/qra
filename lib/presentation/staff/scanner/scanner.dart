@@ -76,8 +76,7 @@ class QrScanner extends HookConsumerWidget {
             }
 
             //todo do not forget to change the codd.is == true
-            if (possibleCourse.isNotEmpty &&
-                scannedCourse.eligible == "false") {
+            if (possibleCourse.isNotEmpty && scannedCourse.eligible == "true") {
               Get.back();
 
               AppModal.showModal(
@@ -119,7 +118,8 @@ class QrScanner extends HookConsumerWidget {
               });
             }
 
-            if (possibleCourse.isNotEmpty && scannedCourse.eligible == "true") {
+            if (possibleCourse.isNotEmpty &&
+                scannedCourse.eligible == "false") {
               Get.back();
               showModalBottomSheet(
                 context: context,

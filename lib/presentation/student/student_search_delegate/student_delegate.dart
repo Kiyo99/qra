@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
+import 'package:qra/data/student_model/student_model.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
 
 class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
@@ -33,9 +35,9 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
           borderSide: BorderSide(color: Colors.transparent),
         ),
       ),
-      appBarTheme: Theme.of(context).appBarTheme.copyWith(
-          titleTextStyle: GoogleFonts.exo2(),
-          elevation: 0),
+      appBarTheme: Theme.of(context)
+          .appBarTheme
+          .copyWith(titleTextStyle: GoogleFonts.exo2(), elevation: 0),
     );
   }
 
@@ -122,29 +124,107 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: ListTile(
                   title: Text(course.courseName, style: GoogleFonts.exo2()),
-                  subtitle:
-                      Text(course.courseCode, style: GoogleFonts.exo2()),
+                  subtitle: Text(course.courseCode, style: GoogleFonts.exo2()),
                   onTap: () async {
-                    // print("Entry: ${auth.currentUser}");
-                    final studentsDoc = await _fireStore
-                        .collection("Users")
-                        .doc(auth.currentUser!.email.toString())
-                        .get();
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0),
+                        ),
+                      ),
+                      isScrollControlled: true,
+                      builder: (ctx) => AppPrompts(
+                        asset: 'assets/lottie/warning.json',
+                        primaryAction: () async {
+                          Get.back();
+                          AppDialogs.lottieLoader();
+                          // print("Entry: ${auth.currentUser}");
+                          final studentsDoc = await _fireStore
+                              .collection("Users")
+                              .doc(auth.currentUser!.email.toString())
+                              .get();
 
-                    await _fireStore
-                        .collection("Courses")
-                        .doc(course.courseCode)
-                        .update({
-                          "students": FieldValue.arrayUnion([
-                            studentsDoc.data()!,
-                          ])
-                        })
-                        .whenComplete(
-                          () => Constants.showToast(context,
-                              'Successfully subscribed to ${course.courseName}'),
-                        )
-                        .onError((error, stackTrace) => Constants.showToast(context,
-                            'Failed to subscribe to ${course.courseName}'));
+                          final student =
+                              StudentModel.fromJson(studentsDoc.data()!);
+
+                          if (student.courses != null) {
+                            final f = student.courses!.where((element) =>
+                                element.courseCode == course.courseCode);
+                            if (f.isNotEmpty) {
+                              if (f.first.courseCode == course.courseCode) {
+                                Get.back();
+                                AppModal.showModal(
+                                  context: context,
+                                  title: "Already subscribed 😕",
+                                  message:
+                                      "You've already subscribed to this course",
+                                  asset: "assets/lottie/error.json",
+                                  primaryAction: () => Get.back(),
+                                  buttonText: "Okay",
+                                );
+                                return;
+                              }
+                            }
+                          }
+
+                          await _fireStore
+                              .collection("Courses")
+                              .doc(course.courseCode)
+                              .update({
+                            "students": FieldValue.arrayUnion([
+                              studentsDoc.data()!,
+                            ])
+                          }).whenComplete(() async {
+                            final studentCourse = CourseModel(
+                                courseName: course.courseName,
+                                courseCode: course.courseCode,
+                                dueDate: course.dueDate,
+                                teacher: course.teacher,
+                                attended: "false");
+                            await _fireStore
+                                .collection("Users")
+                                .doc(auth.currentUser!.email.toString())
+                                .update({
+                              "courses": FieldValue.arrayUnion([
+                                studentCourse.toJson(),
+                              ]),
+                            }).whenComplete(() {
+                              Get.back();
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25.0),
+                                    topRight: Radius.circular(25.0),
+                                  ),
+                                ),
+                                isScrollControlled: true,
+                                builder: (ctx) => AppPrompts(
+                                  asset: 'assets/lottie/success.json',
+                                  primaryAction: () {
+                                    Get.back();
+                                  },
+                                  message:
+                                      'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
+                                  title: 'Success',
+                                  showSecondary: false,
+                                  buttonText: 'Okay',
+                                ),
+                              );
+                            });
+                          }).onError((error, stackTrace) => Constants.showToast(
+                                  context,
+                                  'Failed to subscribe to ${course.courseName}'));
+                        },
+                        message:
+                            'Are you sure you want to subscribe to ${course.courseName}?',
+                        title: 'Subscribe?',
+                        showSecondary: true,
+                        buttonText: 'Yes, subscribe',
+                      ),
+                    );
                   },
                 ),
               );
@@ -229,8 +309,7 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: ListTile(
                   title: Text(course.courseName, style: GoogleFonts.exo2()),
-                  subtitle:
-                      Text(course.courseCode, style: GoogleFonts.exo2()),
+                  subtitle: Text(course.courseCode, style: GoogleFonts.exo2()),
                   onTap: () async {
                     showModalBottomSheet(
                       context: context,
@@ -252,6 +331,29 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                               .doc(auth.currentUser!.email.toString())
                               .get();
 
+                          final student =
+                              StudentModel.fromJson(studentsDoc.data()!);
+
+                          if (student.courses != null) {
+                            final f = student.courses!.where((element) =>
+                                element.courseCode == course.courseCode);
+                            if (f.isNotEmpty) {
+                              if (f.first.courseCode == course.courseCode) {
+                                Get.back();
+                                AppModal.showModal(
+                                  context: context,
+                                  title: "Already subscribed 😕",
+                                  message:
+                                      "You've already subscribed to this course",
+                                  asset: "assets/lottie/error.json",
+                                  primaryAction: () => Get.back(),
+                                  buttonText: "Okay",
+                                );
+                                return;
+                              }
+                            }
+                          }
+
                           await _fireStore
                               .collection("Courses")
                               .doc(course.courseCode)
@@ -259,34 +361,47 @@ class StudentDelegate extends SearchDelegate<Map<String, dynamic>> {
                             "students": FieldValue.arrayUnion([
                               studentsDoc.data()!,
                             ])
-                          }).whenComplete(() {
-                            Get.back();
-                            showModalBottomSheet(
-                              context: context,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(25.0),
-                                  topRight: Radius.circular(25.0),
+                          }).whenComplete(() async {
+                            final studentCourse = CourseModel(
+                                courseName: course.courseName,
+                                courseCode: course.courseCode,
+                                dueDate: course.dueDate,
+                                teacher: course.teacher,
+                                attended: "false");
+                            await _fireStore
+                                .collection("Users")
+                                .doc(auth.currentUser!.email.toString())
+                                .update({
+                              "courses": FieldValue.arrayUnion([
+                                studentCourse.toJson(),
+                              ]),
+                            }).whenComplete(() {
+                              Get.back();
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25.0),
+                                    topRight: Radius.circular(25.0),
+                                  ),
                                 ),
-                              ),
-                              isScrollControlled: true,
-                              builder: (ctx) => AppPrompts(
-                                asset: 'assets/lottie/success.json',
-                                primaryAction: () {
-                                  Get.back();
-                                },
-                                message:
-                                    'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
-                                title: 'Success',
-                                showSecondary: false,
-                                buttonText: 'Okay',
-                              ),
-                            );
-                          }).onError((error, stackTrace) => () {
+                                isScrollControlled: true,
+                                builder: (ctx) => AppPrompts(
+                                  asset: 'assets/lottie/success.json',
+                                  primaryAction: () {
                                     Get.back();
-                                    Constants.showToast(context,
-                                        'Failed to subscribe to ${course.courseName}');
-                                  });
+                                  },
+                                  message:
+                                      'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
+                                  title: 'Success',
+                                  showSecondary: false,
+                                  buttonText: 'Okay',
+                                ),
+                              );
+                            });
+                          }).onError((error, stackTrace) => Constants.showToast(
+                                  context,
+                                  'Failed to subscribe to ${course.courseName}'));
                         },
                         message:
                             'Are you sure you want to subscribe to ${course.courseName}?',

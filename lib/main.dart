@@ -74,7 +74,7 @@ class MyApp extends HookConsumerWidget {
             StaffPage.id: (context) => const StaffPage(),
             StudentPage.id: (context) => StudentPage(),
             UploadCourseScreen.id: (context) => UploadCourseScreen(),
-            ViewCoursesScreen.id: (context) => ViewCoursesScreen(),
+            ViewCoursesScreen.id: (context) => const ViewCoursesScreen(),
             ViewCourseDetails.id: (context) => ViewCourseDetails(),
             StudentDetailPage.id: (context) => const StudentDetailPage(),
             SubscribeToCourseScreen.id: (context) => SubscribeToCourseScreen(),
@@ -87,6 +87,3 @@ class MyApp extends HookConsumerWidget {
     );
   }
 }
-
-//todo: Handle errors on view course details and all possible errors
-//todo: Refactor code to have a global textTheme style called KTextStyle
