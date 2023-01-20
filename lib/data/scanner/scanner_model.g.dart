@@ -11,6 +11,9 @@ _$_ScannerModel _$$_ScannerModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       iD: json['iD'] as String,
       eligible: json['eligible'] as String,
+      courses: (json['courses'] as List<dynamic>?)
+          ?.map((e) => CourseModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_ScannerModelToJson(_$_ScannerModel instance) =>
@@ -18,4 +21,5 @@ Map<String, dynamic> _$$_ScannerModelToJson(_$_ScannerModel instance) =>
       'name': instance.name,
       'iD': instance.iD,
       'eligible': instance.eligible,
+      'courses': instance.courses,
     };

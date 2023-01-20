@@ -31,7 +31,6 @@ class LoginPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = useState(false);
     return Scaffold(
-        backgroundColor: Constants.coolBlue,
         body: isLoading.value == false
             ? Container(
                 padding: const EdgeInsets.all(10),
@@ -44,8 +43,7 @@ class LoginPage extends HookConsumerWidget {
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             'Sign in',
-                            style: GoogleFonts.exo2(
-                                color: Colors.white, fontSize: 25),
+                            style: GoogleFonts.exo2(fontSize: 25),
                           )),
                       AppTextField(
                         controller: emailController,
@@ -74,7 +72,8 @@ class LoginPage extends HookConsumerWidget {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty) {
                             print("Please enter all fields");
-                            _showToast(context, 'Please enter all fields');
+                            Constants.showToast(
+                                context, 'Please enter all fields');
                             // const AlertDialog(
                             //   title: Text("Please enter all fields"),
                             // );
@@ -124,7 +123,7 @@ class LoginPage extends HookConsumerWidget {
                         children: <Widget>[
                           Text(
                             'Don\'t have account?',
-                            style: GoogleFonts.exo2(color: Colors.white),
+                            style: GoogleFonts.exo2(),
                           ),
                           TextButton(
                             child: Text(
@@ -145,24 +144,7 @@ class LoginPage extends HookConsumerWidget {
                 ),
               )
             : Center(
-                child: Transform.scale(
-                  scale: 1,
-                  child: Lottie.asset(
-                    "assets/lottie/loader.json",
-                    frameRate: FrameRate(60),
-                  ),
-                ),
+                child: AppDialogs.loader(),
               ));
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }

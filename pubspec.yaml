@@ -15,12 +15,14 @@ dependencies:
   flutter_remix: ^0.0.3
   lottie: ^1.2.1
   cupertino_icons: ^1.0.2
+  dismissible_page: ^0.7.3
   jiffy: ^5.0.0
   flutter_platform_widgets: ^1.20.0
   flutter_feather_icons: ^2.0.0+1
   freezed: ^0.14.1+1
   get: ^4.6.5
   dartz: ^0.10.0
+  intl:
   shared_preferences: ^2.0.8
   url_launcher: ^6.1.2
 
@@ -48,6 +50,10 @@ dependencies:
 
   #UI
   slide_to_confirm: ^1.1.0
+
+  #pdf
+  pdf: 3.6.4
+  printing: ^5.6.5
 
 dev_dependencies:
   flutter_test:

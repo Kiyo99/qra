@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qra/data/course/course_model.dart';
 import 'package:qra/data/scanner/scanner_model.dart';
+import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
 
 class QrScanner extends HookConsumerWidget {
@@ -19,7 +20,6 @@ class QrScanner extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courseCode = Get.arguments;
-    print("GGGGGGGGG: $courseCode");
 
     return MobileScanner(
         allowDuplicates: false,
@@ -29,32 +29,68 @@ class QrScanner extends HookConsumerWidget {
           } else {
             final String code = barcode.rawValue!;
             debugPrint('Barcode found! $code');
+            final decodedCourse = json.decode(code);
 
-            final codd = ScannerModel.fromJson(json.decode(code));
-            debugPrint('Barcodeeee found! ${codd}');
-            debugPrint('Nameee found! ${codd.name}');
-            debugPrint('Idd found! ${codd.iD}');
-            debugPrint('ELigible found! ${codd.eligible}');
+            final scannedCourse = ScannerModel.fromJson(decodedCourse);
+            debugPrint('Barcodeeee found! ${scannedCourse}');
+            debugPrint('Nameee found! ${scannedCourse.name}');
+            debugPrint('Idd found! ${scannedCourse.iD}');
+            debugPrint('Eligible found! ${scannedCourse.eligible}');
+            debugPrint('courses! ${scannedCourse.courses}');
+
+            final registeredCourses = scannedCourse.courses;
+            if (registeredCourses == null) {
+              Get.back();
+              AppModal.showModal(
+                context: context,
+                title: "Error",
+                message:
+                    "${scannedCourse.name} hasn't registered for any exams",
+                asset: "assets/lottie/error.json",
+                primaryAction: () {
+                  Get.back();
+                },
+                buttonText: "Okay",
+                showSecondary: false,
+              );
+              return;
+            }
+
+            final possibleCourse = registeredCourses
+                .where((course) => course.courseCode == courseCode);
+
+            if (possibleCourse.isEmpty) {
+              Get.back();
+              AppModal.showModal(
+                context: context,
+                title: "Error",
+                message: "${scannedCourse.name} did not register for this exam",
+                asset: "assets/lottie/error.json",
+                primaryAction: () {
+                  Get.back();
+                },
+                buttonText: "Okay",
+                showSecondary: false,
+              );
+              return;
+            }
 
             //todo do not forget to change the codd.is == true
-            if (codd.eligible == "false") {
+            if (possibleCourse.isNotEmpty &&
+                scannedCourse.eligible == "false") {
               Get.back();
 
-              showModalBottomSheet(
-                  context: context,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.0),
-                          topRight: Radius.circular(25.0))),
-                  builder: (ctx) => AppPrompts(
-                      title: "Success",
-                      message: "${codd.name} is eligible to take this exam",
-                      asset: "assets/lottie/success.json",
-                      primaryAction: () {
-                        Get.back();
-                      },
-                      buttonText: "Okay",
-                      showSecondary: false));
+              AppModal.showModal(
+                context: context,
+                title: "Success",
+                message: "${scannedCourse.name} is eligible to take this exam",
+                asset: "assets/lottie/success.json",
+                primaryAction: () {
+                  Get.back();
+                },
+                buttonText: "Okay",
+                showSecondary: false,
+              );
 
               final courseDoc =
                   await _fireStore.collection("Courses").doc(courseCode).get();
@@ -62,13 +98,13 @@ class QrScanner extends HookConsumerWidget {
                   courseDoc.data() as Map<String, dynamic>);
               final studentDoc = courseModel.students;
 
-              final studentToUpdate =
-                  studentDoc?.firstWhere((student) => student['iD'] == codd.iD);
+              final studentToUpdate = studentDoc
+                  ?.firstWhere((student) => student['iD'] == scannedCourse.iD);
 
-              studentToUpdate['isEligible'] =
-                  studentToUpdate['isEligible'] == "true" ? "false" : "true";
+              studentToUpdate['attended'] = "true";
 
-              studentDoc?.removeWhere((student) => student['iD'] == codd.iD);
+              studentDoc
+                  ?.removeWhere((student) => student['iD'] == scannedCourse.iD);
               studentDoc?.add(studentToUpdate);
 
               await _fireStore
@@ -81,26 +117,30 @@ class QrScanner extends HookConsumerWidget {
               await _fireStore.collection("Courses").doc(courseCode).update({
                 "students": FieldValue.arrayUnion(studentDoc!),
               });
-            } else {
+            }
+
+            if (possibleCourse.isNotEmpty && scannedCourse.eligible == "true") {
+              Get.back();
               showModalBottomSheet(
-                  context: context,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.0),
-                          topRight: Radius.circular(25.0))),
-                  builder: (ctx) => AppPrompts(
-                      title: "Failure",
-                      message: "${codd.name} is not eligible to take this exam",
-                      asset: "assets/lottie/error.json",
-                      primaryAction: () {
-                        Get.back();
-                      },
-                      buttonText: "Okay",
-                      showSecondary: false));
+                context: context,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25.0),
+                        topRight: Radius.circular(25.0))),
+                builder: (ctx) => AppPrompts(
+                    title: "Failure",
+                    message:
+                        "${scannedCourse.name} is not eligible to take this exam",
+                    asset: "assets/lottie/error.json",
+                    primaryAction: () {
+                      Get.back();
+                    },
+                    buttonText: "Okay",
+                    showSecondary: false),
+              );
+              return;
             }
           }
         });
   }
 }
-
-//todo; find a way to change the string to a map

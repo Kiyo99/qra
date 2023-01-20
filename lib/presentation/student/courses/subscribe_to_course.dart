@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qra/constants.dart';
 import 'package:qra/data/course/course_model.dart';
+import 'package:qra/data/student_model/student_model.dart';
 import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/prompts.dart';
@@ -24,11 +25,9 @@ class SubscribeToCourseScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Constants.coolBlue,
         appBar: AppBar(
           title: const Text("Subscribe to a course"),
           titleTextStyle: GoogleFonts.exo2(fontSize: 20),
-          backgroundColor: Constants.coolBlue,
           elevation: 0,
         ),
         body: StreamBuilder<QuerySnapshot>(
@@ -40,7 +39,9 @@ class SubscribeToCourseScreen extends HookWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                  child:
+                      CircularProgressIndicator(color: Constants.coolOrange));
             }
             return ListView(
               physics: const BouncingScrollPhysics(),
@@ -64,6 +65,29 @@ class SubscribeToCourseScreen extends HookWidget {
                             .doc(auth.currentUser!.email.toString())
                             .get();
 
+                        final student =
+                            StudentModel.fromJson(studentsDoc.data()!);
+
+                        if (student.courses != null) {
+                          final f = student.courses!.where((element) =>
+                              element.courseCode == course.courseCode);
+                          if (f.isNotEmpty) {
+                            if (f.first.courseCode == course.courseCode) {
+                              Get.back();
+                              AppModal.showModal(
+                                context: context,
+                                title: "Already subscribed 😕",
+                                message:
+                                    "You've already subscribed to this course",
+                                asset: "assets/lottie/error.json",
+                                primaryAction: () => Get.back(),
+                                buttonText: "Okay",
+                              );
+                              return;
+                            }
+                          }
+                        }
+
                         await _fireStore
                             .collection("Courses")
                             .doc(course.courseCode)
@@ -71,30 +95,46 @@ class SubscribeToCourseScreen extends HookWidget {
                           "students": FieldValue.arrayUnion([
                             studentsDoc.data()!,
                           ])
-                        }).whenComplete(() {
-                          Get.back();
-                          showModalBottomSheet(
-                            context: context,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25.0),
-                                topRight: Radius.circular(25.0),
+                        }).whenComplete(() async {
+                          final studentCourse = CourseModel(
+                              courseName: course.courseName,
+                              courseCode: course.courseCode,
+                              dueDate: course.dueDate,
+                              teacher: course.teacher,
+                              attended: "false");
+                          await _fireStore
+                              .collection("Users")
+                              .doc(auth.currentUser!.email.toString())
+                              .update({
+                            "courses": FieldValue.arrayUnion([
+                              studentCourse.toJson(),
+                            ]),
+                          }).whenComplete(() {
+                            Get.back();
+                            showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25.0),
+                                  topRight: Radius.circular(25.0),
+                                ),
                               ),
-                            ),
-                            isScrollControlled: true,
-                            builder: (ctx) => AppPrompts(
-                              asset: 'assets/lottie/success.json',
-                              primaryAction: () {
-                                Get.back();
-                              },
-                              message:
-                                  'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
-                              title: 'Success',
-                              showSecondary: false,
-                              buttonText: 'Okay',
-                            ),
-                          );
-                        }).onError((error, stackTrace) => _showToast(context,
+                              isScrollControlled: true,
+                              builder: (ctx) => AppPrompts(
+                                asset: 'assets/lottie/success.json',
+                                primaryAction: () {
+                                  Get.back();
+                                },
+                                message:
+                                    'You have successfully subscribed to ${course.courseName}, good luck in your exams!',
+                                title: 'Success',
+                                showSecondary: false,
+                                buttonText: 'Okay',
+                              ),
+                            );
+                          });
+                        }).onError((error, stackTrace) => Constants.showToast(
+                                context,
                                 'Failed to subscribe to ${course.courseName}'));
                       },
                       message:
@@ -108,7 +148,6 @@ class SubscribeToCourseScreen extends HookWidget {
                     margin:
                         const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                     decoration: BoxDecoration(
-                      color: Colors.black,
                       border: Border.all(
                         color: Colors.grey,
                       ),
@@ -131,15 +170,4 @@ class SubscribeToCourseScreen extends HookWidget {
           },
         ));
   }
-}
-
-void _showToast(BuildContext context, String message) {
-  final scaffold = ScaffoldMessenger.of(context);
-  scaffold.showSnackBar(
-    SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-          label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
-    ),
-  );
 }

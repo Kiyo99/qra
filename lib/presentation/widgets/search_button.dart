@@ -9,12 +9,16 @@ class SearchButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return IconButton(
       onPressed: onPressed,
       icon: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Constants.coolOrange),
+          border: Border.all(
+              color: brightness == Brightness.light
+                  ? Constants.coolBlue
+                  : Constants.coolOrange),
         ),
         height: 30,
         width: 30,
@@ -22,7 +26,9 @@ class SearchButton extends HookWidget {
         child: Icon(
           Icons.search_outlined,
           size: 18,
-          color: Constants.coolOrange,
+          color: brightness == Brightness.light
+              ? Constants.coolBlue
+              : Constants.coolOrange,
         ),
       ),
     );

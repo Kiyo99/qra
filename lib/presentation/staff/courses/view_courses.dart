@@ -12,7 +12,7 @@ import 'package:qra/presentation/widgets/build_course_card.dart';
 class ViewCoursesScreen extends HookWidget {
   static const id = "/view_course_screen";
 
-  ViewCoursesScreen({Key? key}) : super(key: key);
+  const ViewCoursesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +23,9 @@ class ViewCoursesScreen extends HookWidget {
         .orderBy(filter.value)
         .snapshots();
     return Scaffold(
-        backgroundColor: Constants.coolBlue,
         appBar: AppBar(
           title: Text("View courses",
               style: GoogleFonts.exo2(fontWeight: FontWeight.bold)),
-          backgroundColor: Constants.coolBlue,
           elevation: 0,
           actions: [
             IconButton(
