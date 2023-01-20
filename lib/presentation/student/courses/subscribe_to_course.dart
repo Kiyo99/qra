@@ -145,8 +145,8 @@ class SubscribeToCourseScreen extends HookWidget {
                     );
                   },
                   child: Container(
-                    margin:
-                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    margin: const EdgeInsets.only(
+                        left: 10, right: 10, bottom: 10, top: 10),
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.grey,
