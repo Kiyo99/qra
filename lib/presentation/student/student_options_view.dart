@@ -129,7 +129,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
                     }
 
                     if (items[index] == 'About Qra') {
-                      Get.toNamed(StaffPage.id);
+                      // Get.toNamed(StaffPage.id);
                       return;
                     }
 
