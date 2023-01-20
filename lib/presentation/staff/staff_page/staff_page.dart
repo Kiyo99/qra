@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qra/constants.dart';
 import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/staff/staff_search_delegate/staff_delegate.dart';
@@ -56,7 +55,6 @@ class StaffPage extends HookConsumerWidget {
         IconButton(
           icon: const Icon(Icons.logout_outlined),
           onPressed: () async {
-
             AppModal.showModal(
                 context: context,
                 title: "Log out?",
@@ -66,16 +64,13 @@ class StaffPage extends HookConsumerWidget {
                   final auth = FirebaseAuth.instance;
                   //
                   await auth.signOut();
-                  ref
-                      .read(AuthLocalDataSource.provider)
-                      .clearUserData();
+                  ref.read(AuthLocalDataSource.provider).clearUserData();
 
                   // print(auth.currentUser);
                   Get.offAndToNamed(LoginPage.id);
                 },
                 buttonText: "Yes, log out",
-                showSecondary: true
-            );
+                showSecondary: true);
           },
         )
       ],
@@ -87,7 +82,7 @@ class StaffPage extends HookConsumerWidget {
         _selectedIndex.value = value;
       },
       children: [
-        ViewCoursesScreen(),
+        const ViewCoursesScreen(),
         const ImprovedScanner(),
         UploadCourseScreen(),
       ],
