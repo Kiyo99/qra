@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pdf;
@@ -94,7 +95,7 @@ class PdfViewScreen extends HookWidget {
   }
 
   static pdf.Table buildTable(CourseModel course) {
-    final headers = ["Full name", "ID", "Eligible", "Date"];
+    final headers = ["Full name", "ID", "Eligible", "Attended", "Date"];
 
     if (course.students == null) {
       final data = [
@@ -113,11 +114,16 @@ class PdfViewScreen extends HookWidget {
     } else {
       final data = course.students!.map((e) {
         final std = StudentModel.fromJson(e);
+        final dateFormat = DateFormat('yyyy-MM-dd');
+
+        //todo: attack each student attendance
+
         return [
           std.fullName,
           std.iD,
           std.isEligible == "true" ? 'Eligible' : 'Not Eligible',
-          DateTime.now(),
+          std.attended == "true" ? 'Yes' : 'No',
+          dateFormat.format(DateTime.now())
         ];
       }).toList();
 

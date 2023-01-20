@@ -11,6 +11,7 @@ class CourseModel with _$CourseModel {
     required String courseName,
     required String courseCode,
     required String? dueDate,
+    String? attended,
     required String teacher,
     List? students,
   }) = _CourseModel;

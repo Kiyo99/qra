@@ -100,14 +100,15 @@ class SubscribeToCourseScreen extends HookWidget {
                               courseName: course.courseName,
                               courseCode: course.courseCode,
                               dueDate: course.dueDate,
-                              teacher: course.teacher);
+                              teacher: course.teacher,
+                              attended: "false");
                           await _fireStore
                               .collection("Users")
                               .doc(auth.currentUser!.email.toString())
                               .update({
                             "courses": FieldValue.arrayUnion([
                               studentCourse.toJson(),
-                            ])
+                            ]),
                           }).whenComplete(() {
                             Get.back();
                             showModalBottomSheet(

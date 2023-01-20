@@ -24,7 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/student/courses/subscribed_courses.dart';
 
 final sharedPreferencesProvider =
-Provider<SharedPreferences>((ref) => throw UnimplementedError());
+    Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -90,9 +90,3 @@ class MyApp extends HookConsumerWidget {
 
 //todo: Handle errors on view course details and all possible errors
 //todo: Refactor code to have a global textTheme style called KTextStyle
-//todo: When scanning, not just the eligibility, check whether the student has registered for that course
-
-//todo: When scanning, check for course is registered - Scanner
-//todo: When marking, add a new field called attended - ViewCourses
-//todo: When generating pdf, check for that field - PDFScreen
-

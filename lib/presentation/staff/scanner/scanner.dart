@@ -31,20 +31,21 @@ class QrScanner extends HookConsumerWidget {
             debugPrint('Barcode found! $code');
             final decodedCourse = json.decode(code);
 
-            final codd = ScannerModel.fromJson(decodedCourse);
-            debugPrint('Barcodeeee found! ${codd}');
-            debugPrint('Nameee found! ${codd.name}');
-            debugPrint('Idd found! ${codd.iD}');
-            debugPrint('Eligible found! ${codd.eligible}');
-            debugPrint('courses! ${codd.courses}');
+            final scannedCourse = ScannerModel.fromJson(decodedCourse);
+            debugPrint('Barcodeeee found! ${scannedCourse}');
+            debugPrint('Nameee found! ${scannedCourse.name}');
+            debugPrint('Idd found! ${scannedCourse.iD}');
+            debugPrint('Eligible found! ${scannedCourse.eligible}');
+            debugPrint('courses! ${scannedCourse.courses}');
 
-            final registeredCourses = codd.courses;
+            final registeredCourses = scannedCourse.courses;
             if (registeredCourses == null) {
               Get.back();
               AppModal.showModal(
                 context: context,
                 title: "Error",
-                message: "${codd.name} hasn't registered for any exams",
+                message:
+                    "${scannedCourse.name} hasn't registered for any exams",
                 asset: "assets/lottie/error.json",
                 primaryAction: () {
                   Get.back();
@@ -63,7 +64,7 @@ class QrScanner extends HookConsumerWidget {
               AppModal.showModal(
                 context: context,
                 title: "Error",
-                message: "${codd.name} did not register for this exam",
+                message: "${scannedCourse.name} did not register for this exam",
                 asset: "assets/lottie/error.json",
                 primaryAction: () {
                   Get.back();
@@ -75,13 +76,14 @@ class QrScanner extends HookConsumerWidget {
             }
 
             //todo do not forget to change the codd.is == true
-            if (possibleCourse.isNotEmpty && codd.eligible == "false") {
+            if (possibleCourse.isNotEmpty &&
+                scannedCourse.eligible == "false") {
               Get.back();
 
               AppModal.showModal(
                 context: context,
                 title: "Success",
-                message: "${codd.name} is eligible to take this exam",
+                message: "${scannedCourse.name} is eligible to take this exam",
                 asset: "assets/lottie/success.json",
                 primaryAction: () {
                   Get.back();
@@ -91,18 +93,18 @@ class QrScanner extends HookConsumerWidget {
               );
 
               final courseDoc =
-              await _fireStore.collection("Courses").doc(courseCode).get();
+                  await _fireStore.collection("Courses").doc(courseCode).get();
               final courseModel = CourseModel.fromJson(
                   courseDoc.data() as Map<String, dynamic>);
               final studentDoc = courseModel.students;
 
-              final studentToUpdate =
-              studentDoc?.firstWhere((student) => student['iD'] == codd.iD);
+              final studentToUpdate = studentDoc
+                  ?.firstWhere((student) => student['iD'] == scannedCourse.iD);
 
-              studentToUpdate['isEligible'] =
-              studentToUpdate['isEligible'] == "true" ? "false" : "true";
+              studentToUpdate['attended'] = "true";
 
-              studentDoc?.removeWhere((student) => student['iD'] == codd.iD);
+              studentDoc
+                  ?.removeWhere((student) => student['iD'] == scannedCourse.iD);
               studentDoc?.add(studentToUpdate);
 
               await _fireStore
@@ -117,7 +119,7 @@ class QrScanner extends HookConsumerWidget {
               });
             }
 
-            if (possibleCourse.isNotEmpty && codd.eligible == "true") {
+            if (possibleCourse.isNotEmpty && scannedCourse.eligible == "true") {
               Get.back();
               showModalBottomSheet(
                 context: context,
@@ -127,7 +129,8 @@ class QrScanner extends HookConsumerWidget {
                         topRight: Radius.circular(25.0))),
                 builder: (ctx) => AppPrompts(
                     title: "Failure",
-                    message: "${codd.name} is not eligible to take this exam",
+                    message:
+                        "${scannedCourse.name} is not eligible to take this exam",
                     asset: "assets/lottie/error.json",
                     primaryAction: () {
                       Get.back();
