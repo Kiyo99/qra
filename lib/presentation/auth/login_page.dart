@@ -12,6 +12,7 @@ import 'package:qra/data/datasource/auth_local_datasource.dart';
 import 'package:qra/presentation/auth/register_page.dart';
 import 'package:qra/presentation/staff/staff_page/staff_page.dart';
 import 'package:qra/presentation/student/student_page/student_page.dart';
+import 'package:qra/presentation/widgets/app_dialogs.dart';
 import 'package:qra/presentation/widgets/app_modal.dart';
 import 'package:qra/presentation/widgets/app_text_field.dart';
 import 'package:qra/presentation/widgets/primary_app_button.dart';
@@ -71,7 +72,8 @@ class LoginPage extends HookConsumerWidget {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty) {
                             print("Please enter all fields");
-                            Constants.showToast(context, 'Please enter all fields');
+                            Constants.showToast(
+                                context, 'Please enter all fields');
                             // const AlertDialog(
                             //   title: Text("Please enter all fields"),
                             // );
@@ -142,13 +144,7 @@ class LoginPage extends HookConsumerWidget {
                 ),
               )
             : Center(
-                child: Transform.scale(
-                  scale: 1,
-                  child: Lottie.asset(
-                    "assets/lottie/loader.json",
-                    frameRate: FrameRate(60),
-                  ),
-                ),
+                child: AppDialogs.loader(),
               ));
   }
 }

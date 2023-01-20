@@ -21,6 +21,16 @@ class AppDialogs {
     );
   }
 
+  static loader() {
+    Transform.scale(
+      scale: 0.75,
+      child: Lottie.asset(
+        "assets/lottie/loader.json",
+        animate: true,
+      ),
+    );
+  }
+
   static showWelcomeUserDialog(String name, String message,
       {Function()? onPressed}) {
     _dialog(
@@ -339,7 +349,7 @@ class AppDialogs {
   static lottieLoader() {
     return Get.dialog(
       Transform.scale(
-        scale: 1,
+        scale: 0.75,
         child: Lottie.asset(
           "assets/lottie/loader.json",
           frameRate: FrameRate(60),

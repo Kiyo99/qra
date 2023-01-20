@@ -12,7 +12,7 @@ import 'package:qra/presentation/widgets/build_course_card.dart';
 class ViewCoursesScreen extends HookWidget {
   static const id = "/view_course_screen";
 
-  ViewCoursesScreen({Key? key}) : super(key: key);
+  const ViewCoursesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

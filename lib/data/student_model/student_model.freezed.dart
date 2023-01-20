@@ -25,6 +25,7 @@ class _$StudentModelTearOff {
       {required String fullName,
       required String iD,
       required String isEligible,
+      String? attended,
       required String major,
       required String email,
       required String phoneNumber,
@@ -37,6 +38,7 @@ class _$StudentModelTearOff {
       fullName: fullName,
       iD: iD,
       isEligible: isEligible,
+      attended: attended,
       major: major,
       email: email,
       phoneNumber: phoneNumber,
@@ -61,6 +63,7 @@ mixin _$StudentModel {
   String get fullName => throw _privateConstructorUsedError;
   String get iD => throw _privateConstructorUsedError;
   String get isEligible => throw _privateConstructorUsedError;
+  String? get attended => throw _privateConstructorUsedError;
   String get major => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
@@ -85,6 +88,7 @@ abstract class $StudentModelCopyWith<$Res> {
       {String fullName,
       String iD,
       String isEligible,
+      String? attended,
       String major,
       String email,
       String phoneNumber,
@@ -108,6 +112,7 @@ class _$StudentModelCopyWithImpl<$Res> implements $StudentModelCopyWith<$Res> {
     Object? fullName = freezed,
     Object? iD = freezed,
     Object? isEligible = freezed,
+    Object? attended = freezed,
     Object? major = freezed,
     Object? email = freezed,
     Object? phoneNumber = freezed,
@@ -130,6 +135,10 @@ class _$StudentModelCopyWithImpl<$Res> implements $StudentModelCopyWith<$Res> {
           ? _value.isEligible
           : isEligible // ignore: cast_nullable_to_non_nullable
               as String,
+      attended: attended == freezed
+          ? _value.attended
+          : attended // ignore: cast_nullable_to_non_nullable
+              as String?,
       major: major == freezed
           ? _value.major
           : major // ignore: cast_nullable_to_non_nullable
@@ -177,6 +186,7 @@ abstract class _$StudentModelCopyWith<$Res>
       {String fullName,
       String iD,
       String isEligible,
+      String? attended,
       String major,
       String email,
       String phoneNumber,
@@ -202,6 +212,7 @@ class __$StudentModelCopyWithImpl<$Res> extends _$StudentModelCopyWithImpl<$Res>
     Object? fullName = freezed,
     Object? iD = freezed,
     Object? isEligible = freezed,
+    Object? attended = freezed,
     Object? major = freezed,
     Object? email = freezed,
     Object? phoneNumber = freezed,
@@ -224,6 +235,10 @@ class __$StudentModelCopyWithImpl<$Res> extends _$StudentModelCopyWithImpl<$Res>
           ? _value.isEligible
           : isEligible // ignore: cast_nullable_to_non_nullable
               as String,
+      attended: attended == freezed
+          ? _value.attended
+          : attended // ignore: cast_nullable_to_non_nullable
+              as String?,
       major: major == freezed
           ? _value.major
           : major // ignore: cast_nullable_to_non_nullable
@@ -267,6 +282,7 @@ class _$_StudentModel extends _StudentModel {
       {required this.fullName,
       required this.iD,
       required this.isEligible,
+      this.attended,
       required this.major,
       required this.email,
       required this.phoneNumber,
@@ -287,6 +303,8 @@ class _$_StudentModel extends _StudentModel {
   @override
   final String isEligible;
   @override
+  final String? attended;
+  @override
   final String major;
   @override
   final String email;
@@ -305,7 +323,7 @@ class _$_StudentModel extends _StudentModel {
 
   @override
   String toString() {
-    return 'StudentModel(fullName: $fullName, iD: $iD, isEligible: $isEligible, major: $major, email: $email, phoneNumber: $phoneNumber, firstName: $firstName, lastName: $lastName, gender: $gender, status: $status, courses: $courses)';
+    return 'StudentModel(fullName: $fullName, iD: $iD, isEligible: $isEligible, attended: $attended, major: $major, email: $email, phoneNumber: $phoneNumber, firstName: $firstName, lastName: $lastName, gender: $gender, status: $status, courses: $courses)';
   }
 
   @override
@@ -320,6 +338,9 @@ class _$_StudentModel extends _StudentModel {
             (identical(other.isEligible, isEligible) ||
                 const DeepCollectionEquality()
                     .equals(other.isEligible, isEligible)) &&
+            (identical(other.attended, attended) ||
+                const DeepCollectionEquality()
+                    .equals(other.attended, attended)) &&
             (identical(other.major, major) ||
                 const DeepCollectionEquality().equals(other.major, major)) &&
             (identical(other.email, email) ||
@@ -347,6 +368,7 @@ class _$_StudentModel extends _StudentModel {
       const DeepCollectionEquality().hash(fullName) ^
       const DeepCollectionEquality().hash(iD) ^
       const DeepCollectionEquality().hash(isEligible) ^
+      const DeepCollectionEquality().hash(attended) ^
       const DeepCollectionEquality().hash(major) ^
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
@@ -372,6 +394,7 @@ abstract class _StudentModel extends StudentModel {
       {required String fullName,
       required String iD,
       required String isEligible,
+      String? attended,
       required String major,
       required String email,
       required String phoneNumber,
@@ -391,6 +414,8 @@ abstract class _StudentModel extends StudentModel {
   String get iD => throw _privateConstructorUsedError;
   @override
   String get isEligible => throw _privateConstructorUsedError;
+  @override
+  String? get attended => throw _privateConstructorUsedError;
   @override
   String get major => throw _privateConstructorUsedError;
   @override
