@@ -26,10 +26,8 @@ class StudentOptionsScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var items = [
-      'Update student information',
       'Subscribed courses',
       'Live chat',
-      'About Qra',
       'Log out',
     ];
     return Container(
@@ -50,7 +48,7 @@ class StudentOptionsScreen extends HookConsumerWidget {
             child: Text(
               title,
               style:
-              GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
+                  GoogleFonts.exo2(fontSize: 20, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
           ),
@@ -100,9 +98,9 @@ class StudentOptionsScreen extends HookConsumerWidget {
                           Get.back();
                           final student = StudentModel.fromJson(doc.data()!);
 
-                          Get.toNamed(SubscribedCoursesScreen.id, arguments: student);
-                        }
-                        else {
+                          Get.toNamed(SubscribedCoursesScreen.id,
+                              arguments: student);
+                        } else {
                           showModalBottomSheet(
                             context: context,
                             shape: const RoundedRectangleBorder(
@@ -128,10 +126,10 @@ class StudentOptionsScreen extends HookConsumerWidget {
                       return;
                     }
 
-                    if (items[index] == 'About Qra') {
-                      // Get.toNamed(StaffPage.id);
-                      return;
-                    }
+                    // if (items[index] == 'About Qra') {
+                    //   // Get.toNamed(StaffPage.id);
+                    //   return;
+                    // }
 
                     if (items[index] == 'Live chat') {
                       var url = "https://wa.me/${Constants.WHATSAPP}";
@@ -146,17 +144,13 @@ class StudentOptionsScreen extends HookConsumerWidget {
                     items[index],
                     style: GoogleFonts.exo2(fontSize: 14),
                   ),
-                  leading: items[index] == 'Update student information'
-                      ? const Icon(Icons.account_circle_outlined)
-                      : items[index] == 'Log out'
+                  leading: items[index] == 'Log out'
                       ? const Icon(Icons.logout_outlined)
                       : items[index] == 'Live chat'
-                      ? const Icon(Icons.chat_bubble_outline_outlined)
-                      : items[index] == 'Subscribed courses'
-                      ? const Icon(Icons.menu_book_outlined)
-                      : items[index] == 'About Qra'
-                      ? const Icon(Icons.info_outline)
-                      : const Icon(Icons.title),
+                          ? const Icon(Icons.chat_bubble_outline_outlined)
+                          : items[index] == 'Subscribed courses'
+                              ? const Icon(Icons.menu_book_outlined)
+                              : const Icon(Icons.title),
                 );
               },
             ),
