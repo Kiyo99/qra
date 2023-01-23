@@ -87,20 +87,23 @@ class RegisterPage extends HookConsumerWidget {
                             .map<DropdownMenuItem<String>>(
                                 (String value) => DropdownMenuItem<String>(
                                       value: value,
-                                      child: Text(value,
-                                          style: GoogleFonts.exo(
-                                              color:
-                                                  brightness == Brightness.light
-                                                      ? Constants.coolBlue
-                                                      : Constants.coolWhite)),
+                                      child: Text(
+                                        value,
+                                        style: GoogleFonts.exo(
+                                            color:
+                                                brightness == Brightness.light
+                                                    ? Constants.coolBlue
+                                                    : Constants.coolWhite),
+                                      ),
                                     ))
                             .toList(),
                         value: selectedStatusValue.value,
-                        hint: const Text("Choose a course..."),
                         focusColor: Colors.white,
                         iconEnabledColor: Constants.coolOrange,
                         style: GoogleFonts.exo2(fontSize: 16),
-                        dropdownColor: Constants.coolBlue,
+                        dropdownColor: brightness == Brightness.light
+                            ? Constants.coolWhite
+                            : Constants.coolBlue,
                         onChanged: (val) {
                           selectedStatusValue.value = val.toString();
                           if (selectedStatusValue.value == "Staff") {
@@ -161,11 +164,12 @@ class RegisterPage extends HookConsumerWidget {
                                     ))
                             .toList(),
                         value: selectedGenderValue.value,
-                        hint: const Text("Choose a course..."),
                         focusColor: Colors.white,
                         iconEnabledColor: Constants.coolOrange,
                         style: GoogleFonts.exo2(fontSize: 16),
-                        dropdownColor: Constants.coolBlue,
+                        dropdownColor: brightness == Brightness.light
+                            ? Constants.coolWhite
+                            : Constants.coolBlue,
                         onChanged: (val) {
                           selectedGenderValue.value = val.toString();
                         },
@@ -196,8 +200,9 @@ class RegisterPage extends HookConsumerWidget {
                     PrimaryAppButton(
                       title: "Register",
                       onPressed: () async {
-                        if (selectedStatusValue.value == "Registering as ..."){
-                          Constants.showToast(context, "Select what you're registering as");
+                        if (selectedStatusValue.value == "Registering as ...") {
+                          Constants.showToast(
+                              context, "Select what you're registering as");
                           return;
                         }
 
@@ -210,7 +215,8 @@ class RegisterPage extends HookConsumerWidget {
                               iDController.text.isEmpty ||
                               numberController.text.isEmpty ||
                               selectedGenderValue.value == "Gender ...") {
-                            Constants.showToast(context, 'Please enter all fields');
+                            Constants.showToast(
+                                context, 'Please enter all fields');
                             return;
                           }
 
@@ -222,7 +228,8 @@ class RegisterPage extends HookConsumerWidget {
 
                           if (!(passwordController.text ==
                               cPasswordController.text)) {
-                            Constants.showToast(context, 'Passwords don\'t match');
+                            Constants.showToast(
+                                context, 'Passwords don\'t match');
                             return;
                           }
 
@@ -234,54 +241,54 @@ class RegisterPage extends HookConsumerWidget {
 
                           isLoading.value = true;
 
-                            try {
-                              await auth.createUserWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: cPasswordController.text);
+                          try {
+                            await auth.createUserWithEmailAndPassword(
+                                email: emailController.text,
+                                password: cPasswordController.text);
 
-                              Map<String, Object> db = {};
-                              db['firstName'] = firstNameController.text;
-                              db['lastName'] = lastNameController.text;
-                              db['fullName'] =
-                                  "${firstNameController.text} ${lastNameController.text}";
-                              db['email'] = emailController.text;
-                              db['gender'] = selectedGenderValue.value;
-                              db['iD'] = iDController.text;
-                              db['phoneNumber'] = numberController.text;
-                              db['status'] = selectedStatusValue.value;
+                            Map<String, Object> db = {};
+                            db['firstName'] = firstNameController.text;
+                            db['lastName'] = lastNameController.text;
+                            db['fullName'] =
+                                "${firstNameController.text} ${lastNameController.text}";
+                            db['email'] = emailController.text;
+                            db['gender'] = selectedGenderValue.value;
+                            db['iD'] = iDController.text;
+                            db['phoneNumber'] = numberController.text;
+                            db['status'] = selectedStatusValue.value;
 
-                              _fireStore
-                                  .collection("Users")
-                                  .doc(auth.currentUser!.email.toString())
-                                  .set(db)
-                                  .whenComplete(() {
-                                Constants.showToast(context, 'Successfully saved staff');
+                            _fireStore
+                                .collection("Users")
+                                .doc(auth.currentUser!.email.toString())
+                                .set(db)
+                                .whenComplete(() {
+                              Constants.showToast(
+                                  context, 'Successfully saved staff');
 
-                                final user = AppUser.fromJson(db);
-                                ref
-                                    .read(AuthLocalDataSource.provider)
-                                    .cacheUser(user);
-                                isLoading.value = false;
-
-                                Get.offAllNamed(StaffPage.id);
-                              }).catchError((error, stackTrace) => () {
-                                        Constants.showToast(
-                                            context, 'Failed to save 😪');
-                                        print('Failed: $error');
-                                      });
-                            } on FirebaseAuthException catch (e) {
+                              final user = AppUser.fromJson(db);
+                              ref
+                                  .read(AuthLocalDataSource.provider)
+                                  .cacheUser(user);
                               isLoading.value = false;
-                              AppModal.showModal(
-                                context: context,
-                                title: "Registration failed 😪",
-                                message: e.message!,
-                                asset: "assets/lottie/error.json",
-                                primaryAction: () => Get.back(),
-                                buttonText: "Okay",
-                              );
-                            }
+
+                              Get.offAllNamed(StaffPage.id);
+                            }).catchError((error, stackTrace) => () {
+                                      Constants.showToast(
+                                          context, 'Failed to save 😪');
+                                      print('Failed: $error');
+                                    });
+                          } on FirebaseAuthException catch (e) {
+                            isLoading.value = false;
+                            AppModal.showModal(
+                              context: context,
+                              title: "Registration failed 😪",
+                              message: e.message!,
+                              asset: "assets/lottie/error.json",
+                              primaryAction: () => Get.back(),
+                              buttonText: "Okay",
+                            );
                           }
-                        else {
+                        } else {
                           if (emailController.text.isEmpty ||
                               firstNameController.text.isEmpty ||
                               lastNameController.text.isEmpty ||
@@ -290,9 +297,11 @@ class RegisterPage extends HookConsumerWidget {
                               majorController.text.isEmpty ||
                               iDController.text.isEmpty ||
                               numberController.text.isEmpty ||
-                              selectedStatusValue.value == "Registering as ..." ||
+                              selectedStatusValue.value ==
+                                  "Registering as ..." ||
                               selectedGenderValue.value == "Gender ...") {
-                            Constants.showToast(context, 'Please enter all fields');
+                            Constants.showToast(
+                                context, 'Please enter all fields');
                             return;
                           }
 
@@ -304,7 +313,8 @@ class RegisterPage extends HookConsumerWidget {
 
                           if (!(passwordController.text ==
                               cPasswordController.text)) {
-                            Constants.showToast(context, 'Passwords don\'t match');
+                            Constants.showToast(
+                                context, 'Passwords don\'t match');
                             return;
                           }
 
@@ -324,7 +334,7 @@ class RegisterPage extends HookConsumerWidget {
                             db['firstName'] = firstNameController.text;
                             db['lastName'] = lastNameController.text;
                             db['fullName'] =
-                            "${firstNameController.text} ${lastNameController.text}";
+                                "${firstNameController.text} ${lastNameController.text}";
                             db['email'] = emailController.text;
                             db['gender'] = selectedGenderValue.value;
                             db['iD'] = iDController.text;
@@ -338,7 +348,8 @@ class RegisterPage extends HookConsumerWidget {
                                 .doc(auth.currentUser!.email.toString())
                                 .set(db)
                                 .whenComplete(() {
-                              Constants.showToast(context, 'Successfully saved student');
+                              Constants.showToast(
+                                  context, 'Successfully saved student');
 
                               final user = AppUser.fromJson(db);
                               ref
@@ -347,9 +358,10 @@ class RegisterPage extends HookConsumerWidget {
                               isLoading.value = false;
                               Get.offAllNamed(StudentPage.id);
                             }).catchError((error, stackTrace) => () {
-                              Constants.showToast(context, 'Failed to save 😪');
-                              print('Failed: $error');
-                            });
+                                      Constants.showToast(
+                                          context, 'Failed to save 😪');
+                                      print('Failed: $error');
+                                    });
                           } on FirebaseAuthException catch (e) {
                             isLoading.value = false;
                             AppModal.showModal(
@@ -362,7 +374,6 @@ class RegisterPage extends HookConsumerWidget {
                             );
                           }
                         }
-
                       },
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                     ),
