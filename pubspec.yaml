@@ -13,13 +13,13 @@ dependencies:
     sdk: flutter
 
   flutter_remix: ^0.0.3
-  lottie: ^1.2.1
+  lottie: ^2.7.0
   cupertino_icons: ^1.0.2
-  dismissible_page: ^0.7.3
-  jiffy: ^5.0.0
-  flutter_platform_widgets: ^1.20.0
+  dismissible_page: ^1.0.2
+  jiffy: ^6.2.1
+  flutter_platform_widgets: ^7.0.0
   flutter_feather_icons: ^2.0.0+1
-  freezed: ^0.14.1+1
+  freezed: ^2.4.6
   get: ^4.6.5
   dartz: ^0.10.0
   intl:
@@ -27,46 +27,46 @@ dependencies:
   url_launcher: ^6.1.2
 
   #Local auth
-  local_auth: ^1.1.6
+  local_auth: ^2.1.7
 
   #firebase
-  firebase_auth: ^3.3.5
-  firebase_core: ^1.11.0
-  cloud_firestore: ^3.1.6
+  firebase_auth: ^4.15.3
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.6
 
   #google font
-  google_fonts: ^3.0.1
+  google_fonts: ^6.1.0
 
   #device preview
-  device_preview: ^1.0.0
+#  device_preview: ^1.0.0
 
   #QR
   qr_flutter: ^4.0.0
-  mobile_scanner: ^1.1.2
+  mobile_scanner: ^3.5.5
 
   # State Management
-  hooks_riverpod: ^1.0.0
-  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.4.9
+  flutter_hooks: ^0.20.3
 
   #UI
   slide_to_confirm: ^1.1.0
 
   #pdf
-  pdf: 3.6.4
-  printing: ^5.6.5
+  pdf: ^3.10.7
+  printing: ^5.12.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # No version number means the latest version
   build_runner: ^2.1.10
-  flutter_lints: ^1.0.0
+  flutter_lints: ^3.0.1
   flutter_native_splash: ^2.1.1
   json_serializable: ^6.1.4
   http:
 
   #generating icons
-  flutter_launcher_icons: "^0.10.0"
+  flutter_launcher_icons: ^0.13.1
 
 #dependency_overrides:
 #  analyzer: ^4.1.0

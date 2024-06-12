@@ -47,7 +47,7 @@ class ViewQr extends HookConsumerWidget {
               ),
               child: SizedBox(
                 width: 400,
-                child: QrImage(
+                child: QrImageView(
                   foregroundColor: Colors.blue.shade900,
                   data: json.encode(studentDetailsToSend),
                 ),

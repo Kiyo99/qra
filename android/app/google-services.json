@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "574220462467",
-    "project_id": "qraa-b1574",
-    "storage_bucket": "qraa-b1574.appspot.com"
+    "project_number": "684761051082",
+    "project_id": "qra-favour",
+    "storage_bucket": "qra-favour.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:574220462467:android:7583d5f8259d8a6aa06eb6",
+        "mobilesdk_app_id": "1:684761051082:android:72dbabb15b388ec203e933",
         "android_client_info": {
           "package_name": "com.example.qra"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "574220462467-a677ffl05mducir62905aind5l1ua912.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCFgZzuVwF6jPa10pRc9UBfsFWKyJ-iZVk"
+          "current_key": "AIzaSyANBe6wMFkGvbDbaU_C2qHYAOmg8bpLEgc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "574220462467-a677ffl05mducir62905aind5l1ua912.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
