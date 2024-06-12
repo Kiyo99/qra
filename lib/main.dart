@@ -1,10 +1,10 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qra/constants.dart';
+import 'package:qra/firebase_options.dart';
 import 'package:qra/presentation/auth/intro_screen.dart';
 import 'package:qra/presentation/auth/login_page.dart';
 import 'package:qra/presentation/auth/register_page.dart';
@@ -31,17 +31,16 @@ Future<void> main() async {
 
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
-      child: DevicePreview(
-        enabled: false,
-        builder: (context) => const MyApp(),
-      ),
+      child: const MyApp(),
     ),
   );
 }
@@ -59,8 +58,6 @@ class MyApp extends HookConsumerWidget {
       },
       child: GetMaterialApp(
           useInheritedMediaQuery: true,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
           theme: Constants.lightTheme,
           darkTheme: Constants.darkTheme,
           // darkTheme: ThemeData.dark(),

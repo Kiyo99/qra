@@ -56,13 +56,12 @@ class Constants {
           iconTheme: IconThemeData(color: coolWhite),
           titleTextStyle: GoogleFonts.exo2(color: coolWhite, fontSize: 20)),
       primaryColor: coolBlue,
-      bottomAppBarColor: coolBlue,
       scaffoldBackgroundColor: coolBlue,
       colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: coolOrange,
           background: coolBlue,
           brightness: Brightness.dark,
-          primary: coolBlue));
+          primary: coolBlue), bottomAppBarTheme: BottomAppBarTheme(color: coolBlue));
 
   static final ThemeData lightTheme = ThemeData(
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -74,11 +73,10 @@ class Constants {
           backgroundColor: coolOrange,
           iconTheme: IconThemeData(color: coolBlue),
           titleTextStyle: GoogleFonts.exo2(color: coolBlue, fontSize: 20)),
-      bottomAppBarColor: coolWhite,
       scaffoldBackgroundColor: coolWhite,
       colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: coolOrange,
           background: coolWhite,
           brightness: Brightness.light,
-          primary: coolWhite));
+          primary: coolWhite), bottomAppBarTheme: BottomAppBarTheme(color: coolWhite));
 }

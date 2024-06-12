@@ -22,7 +22,7 @@ class AppDialogs {
   }
 
   static loader() {
-    Transform.scale(
+    return Transform.scale(
       scale: 0.75,
       child: Lottie.asset(
         "assets/lottie/loader.json",

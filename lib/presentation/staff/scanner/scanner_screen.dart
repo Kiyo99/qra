@@ -63,7 +63,8 @@ class ImprovedScanner extends HookConsumerWidget {
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
-                            return const Text("Loading");
+                            return const Text("Loading",
+                                style: TextStyle(color: Colors.grey));
                           }
                           final userDocument = snapshot.data!.docs;
 
@@ -82,7 +83,8 @@ class ImprovedScanner extends HookConsumerWidget {
                             child: DropdownButtonFormField(
                               items: items.value
                                   .map<DropdownMenuItem<String>>(
-                                      (String value) => DropdownMenuItem<String>(
+                                      (String value) =>
+                                          DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
                                           ))
